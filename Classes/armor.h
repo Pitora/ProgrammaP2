@@ -8,7 +8,7 @@ private:
 
     const string armor_type;  
     const unsigned int defense_value;
-    const unsigned int hardness;
+    const unsigned int durability;
     
 public:
 
