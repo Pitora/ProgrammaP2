@@ -7,7 +7,7 @@ class Melee : public Weapon {
 private:
 
     const string attack_type;  
-    const unsigned int hardness;
+    const unsigned int durability;
     const unsigned int precision;
 
     
