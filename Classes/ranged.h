@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct Packet {
+struct Magazine {
 	Ammo type;
 	int count;
 };
