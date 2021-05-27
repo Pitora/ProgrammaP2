@@ -7,9 +7,9 @@ class Ammo : public Consumable {
 private:
 
     const string attack_type;  
-    const int attack_value;
-    const int recoil;
-    const int reload_time;
+    const int attack_value;  
+    const int recoil;   //<--- lo metterei nelle armi non nelle munzioni
+    const int reload_time;  // stessa roba del recoil
     
 public:
 
