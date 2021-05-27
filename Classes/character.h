@@ -1,4 +1,10 @@
 #include<iostream>
+#include<string.h>
+#include "armor.h"
+#include "weapon.h"
+#include "consumable.h"
+#include "tc.h"
+#include "tdeep.h"
 
 
 using namespace std;
@@ -7,8 +13,15 @@ class Character {
 
 private:
 
-    //statistiche varie e equipaggiamento. Si, lo so. Sono pigro e non avevo voglia di farlo.
-
+    string name;
+    Weapon eq_weap;
+    dList<DeepPtr<Armor>> eq_armor;
+    dList<DeepPtr<Consumable>> inventory;
+    //Nomi temporanei
+    int statA; 
+    int statB;
+    int statC;
+    int statD;
     
 public:
 
@@ -16,6 +29,6 @@ public:
 
     ~Character();
 
-    //metodi input/output build, penso almeno.
+    //metodi input/output build, se non implementati su collection.
 
 };

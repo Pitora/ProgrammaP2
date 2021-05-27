@@ -7,6 +7,9 @@ class Ammo : public Consumable {
 private:
 
     const string attack_type;  
+    const int attack_value;
+    const int recoil;
+    const int reload_time;
     
 public:
 

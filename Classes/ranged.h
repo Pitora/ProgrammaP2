@@ -1,13 +1,20 @@
 #include<iostream>
+#include "ammo.h"
+#include "tc.h"
+#include "tdeep.h"
 
 using namespace std;
+
+struct Packet {
+	Ammo type;
+	int count;
+};
 
 class Ranged : public Weapon {
 
 private:
 
-    //creare struct per lista munizioni + max munizioni
-
+    dList<DeepPtr<Packet>> eq_ammo;
     
 public:
 
