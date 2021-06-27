@@ -1,8 +1,8 @@
 #include<iostream>
 #include "object.h"
 #include "character.h"
-#include "tc.h"
-#include "tdeep.h"
+#include "tc.cpp"
+#include "tdeep.cpp"
 
 using namespace std;
 
@@ -11,10 +11,30 @@ class Collection {
 private:
 
     dList<DeepPtr<Object>> list;
-    Character char;      
+    Character chara;      
     
 public:
 
-//metodi statici (caricamento al primo avvio, forse import/export se non implementato in character)
+
+
+static void initialize();
+
+void update();
+
+void add();   //forse necessario per ogni classe
+
+void remove(int i);
+
+
+
+static void importObj(string s);
+
+static void exportObj(int i, string s);
+
+static void importChara();
+
+static void exportChara();
+
+
 
 };

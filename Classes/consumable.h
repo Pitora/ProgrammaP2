@@ -6,9 +6,7 @@ class Consumable : public Object {
 
 private:
 
-    const string attack_type;  
-    const unsigned int hardness;
-    const unsigned int precision;
+    string s;
     
 
     
@@ -19,6 +17,10 @@ public:
     ~Consumable();
 
 	virtual int useObject () {} = 0;
+
+    virtual string export() {};
+
+    virtual void import(string imported) {}; 
 
 
 

@@ -6,20 +6,24 @@ class Object {
 
 private:
 
-    const unsigned int id;
-    const string name;   
+    unsigned int id;
+    string name;   
     
 public:
 
-	Object();
+	Object(int i, int n) : id(i), name(n);
 
-    ~Object();
+    virtual ~Object() {} = 0;
 
-	virtual List<string> getInfo() {} = 0;
+	//virtual List<string> getInfo() {} = 0;     quasi sicuro che non si possono utilizzare
 
     int getId() {return id;}
 
-    string getName() {return nome;}
+    string getName() {return name;}
+
+    virtual string export() {};
+
+    virtual void import(string imported) {}; 
 
 };
 

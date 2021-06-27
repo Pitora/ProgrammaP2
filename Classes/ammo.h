@@ -6,20 +6,23 @@ class Ammo : public Consumable {
 
 private:
 
-    const string attack_type;  
-    const int attack_value;  
-    const int recoil;   //<--- lo metterei nelle armi non nelle munzioni
-    const int reload_time;  // stessa roba del recoil
+    string attack_type;  
+    int attack_value;  
+
     
 public:
 
-	Ammo();
+	Ammo(string a_t, int a_v) : attack_type(a_t), attack_value(a_v);
 
     ~Ammo();
 
 	//virtual List<string> getInfo() {};
 
     //virtual int scaling() {};
+
+    virtual string export() {};
+
+    virtual void import(string imported) {}; 
 
 
 

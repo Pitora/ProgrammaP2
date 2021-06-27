@@ -6,20 +6,24 @@ class Melee : public Weapon {
 
 private:
 
-    const string attack_type;  
-    const unsigned int durability;
-    const unsigned int precision;
+    string attack_type;  
+    unsigned int durability;
+    unsigned int precision;
 
     
 public:
 
-	Melee();
+	Melee(string a_t, unsigned int d, unsigned int p) : attack_type(a_t), durability(d), precision(p);
 
     ~Melee();
 
 	//virtual List<string> getInfo() {};
 
     //virtual int scaling() {};
+
+    virtual string export() {};
+
+    virtual void import(string imported) {}; 
 
 
 

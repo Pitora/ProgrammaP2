@@ -6,14 +6,19 @@ class Buff : public Consumable {
 
 private:
 
-    const string effect;  
-    const unsigned int percentage;
-    const unsigned int duration;
+    string effect;  
+    unsigned int percentage;
+    unsigned int duration;
     
 public:
 
-	Buff();
+	Buff(string e, unsigned int p, unsigned int d) : effect(e);
 
     ~Buff();
+
+    virtual string export() {};
+
+    virtual void import(string imported) {}; 
+
 
 };
