@@ -11,12 +11,12 @@ private:
     
 public:
 
-	Healing(string a_v, unsigned int p) : affected_value(a_v), potency(p);
+	Healing(string a_v, unsigned int p);
+
+    Healing(string imported);
 
     ~Healing();
 
-    virtual string export() {};
-
-    virtual void import(string imported) {}; 
+    virtual string export();
 
 };

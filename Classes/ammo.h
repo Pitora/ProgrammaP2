@@ -12,7 +12,9 @@ private:
     
 public:
 
-	Ammo(string a_t, int a_v) : attack_type(a_t), attack_value(a_v);
+	Ammo(string a_t, int a_v);
+
+    Ammo(string imported);
 
     ~Ammo();
 
@@ -20,9 +22,7 @@ public:
 
     //virtual int scaling() {};
 
-    virtual string export() {};
-
-    virtual void import(string imported) {}; 
+    virtual string export();
 
 
 

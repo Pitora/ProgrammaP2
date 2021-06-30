@@ -26,6 +26,9 @@ void add();   //forse necessario per ogni classe
 void remove(int i);
 
 
+//getinfo
+
+
 
 static void importObj(string s);
 

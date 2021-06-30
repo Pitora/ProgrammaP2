@@ -13,7 +13,9 @@ private:
     
 public:
 
-	Melee(string a_t, unsigned int d, unsigned int p) : attack_type(a_t), durability(d), precision(p);
+	Melee(string a_t, unsigned int d, unsigned int p);
+
+    Melee(string imported);
 
     ~Melee();
 
@@ -23,7 +25,7 @@ public:
 
     virtual string export() {};
 
-    virtual void import(string imported) {}; 
+    
 
 
 

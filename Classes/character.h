@@ -25,8 +25,7 @@ private:
     
 public:
 
-	Character(string n, Weapon *wp, dList<DeepPtr<Armor>> armor, dList<DeepPtr<Consumable>> inv) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv));
-
+	Character(string n, Weapon *wp, dList<DeepPtr<Armor>> armor, dList<DeepPtr<Consumable>> inv); 
     ~Character();
 
     //metodi input/output build, se non implementati su collection.

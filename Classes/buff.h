@@ -12,13 +12,13 @@ private:
     
 public:
 
-	Buff(string e, unsigned int p, unsigned int d) : effect(e);
+	Buff(string e, unsigned int p, unsigned int d);
+
+    Buff(string imported);
 
     ~Buff();
 
-    virtual string export() {};
-
-    virtual void import(string imported) {}; 
+    virtual string export() ;
 
 
 };

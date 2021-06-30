@@ -17,15 +17,16 @@ private:
     
 public:
 
-	Weapon(int w, int c, int r, int rav, int eav, int cc) : weight(w), cost(c), rarity(r), raw_attack_value(rav), elem_attack_value(eav), critical_chance(cc);
+	Weapon(int w, int c, int r, int rav, int eav, int cc);
+
+    Weapon(string imported);
 
     ~Weapon();
 
 	//virtual List<string> getInfo() {};
 
-    virtual string export() {};
+    virtual string export();
 
-    virtual void import(string imported) {}; 
 
 
 };

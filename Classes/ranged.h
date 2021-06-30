@@ -20,7 +20,9 @@ private:
     
 public:
 
-	Ranged(dList<DeepPtr<Magazine>> a, int rec, int rel) : eq_ammo(a), recoil(rec), reload_time(rel);
+	Ranged(dList<DeepPtr<Magazine>> a, int rec, int rel);
+
+	Ranged(string imported);
 
     ~Ranged();
 

@@ -12,13 +12,13 @@ private:
     
 public:
 
-	Consumable();
+	Consumable(string imported) : Object(imported);
 
     ~Consumable();
 
 	virtual int useObject () {} = 0;
 
-    virtual string export() {};
+    virtual string export() { return Object::export(); };
 
     virtual void import(string imported) {}; 
 
