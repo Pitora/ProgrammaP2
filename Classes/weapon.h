@@ -1,3 +1,6 @@
+#ifndef WEAPON_H
+#define WEAPON_H
+
 #include<iostream>
 #include <string>
 #include "object.h"
@@ -30,6 +33,6 @@ public:
 
     virtual std::string exp();
 
-
-
 };
+
+#endif

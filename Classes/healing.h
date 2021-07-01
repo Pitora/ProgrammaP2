@@ -1,3 +1,6 @@
+#ifndef HEALING_H
+#define HEALING_H
+
 #include<iostream>
 #include <string>
 #include "consumable.h"
@@ -20,3 +23,5 @@ public:
     virtual std::string exp();
 
 };
+
+#endif

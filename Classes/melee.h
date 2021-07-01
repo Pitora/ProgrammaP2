@@ -1,3 +1,6 @@
+#ifndef MELEE_H
+#define MELEE_H
+
 #include<iostream>
 #include <string>
 #include "weapon.h"
@@ -26,8 +29,6 @@ public:
 
     virtual std::string exp();
 
-    
-
-
-
 };
+
+#endif

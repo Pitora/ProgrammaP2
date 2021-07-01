@@ -3,7 +3,7 @@
 
 Ranged::Ranged(dList<DeepPtr<Magazine>> a, int rec, int rel) : eq_ammo(a), recoil(rec), reload_time(rel) {}
 
-Ranged::Ranged(std::string imported) : Weapon(imported){       
+Ranged::Ranged(std::string imported) : Weapon(imported), eq_ammo(){       
     if (imported.find("<Ranged>") != -1 && imported.find("</Ranged>") != -1)
     {
         size_t pos1 = imported.find("<A0>");

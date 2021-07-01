@@ -21,15 +21,6 @@ Obj::Obj(std::string imported){
 Obj::~Obj() {}
 
 
-int getId() {
-    return id;
-}
-
-std::string getName() {
-    return name;
-}
-
-
 std::string Obj::exp() {       //Esempio di export?
     std::string s = "<Object>";
     s += "<Id>" + std::to_string(id) + "</Id>";

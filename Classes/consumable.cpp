@@ -2,7 +2,7 @@
 
 Consumable::Consumable() {}
 
-Consumable::Consumable(string imported) : Object(imported) {}
+Consumable::Consumable(string imported) : Obj(imported) {}
 
 Consumable::~Consumable() {
     std::cout<<"Consumabile cancellato"<<std::endl;

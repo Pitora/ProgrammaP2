@@ -1,3 +1,6 @@
+#ifndef AMMO_H
+#define AMMO_H
+
 #include<iostream>
 #include <string>
 #include "consumable.h"
@@ -29,3 +32,5 @@ public:
 
 
 };
+
+#endif

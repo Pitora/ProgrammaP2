@@ -1,3 +1,6 @@
+#ifndef ARMOR_H
+#define ARMOR_H
+
 #include<iostream>
 #include<string>
 #include "object.h"
@@ -23,3 +26,5 @@ public:
     virtual std::string exp();
 
 };
+
+#endif

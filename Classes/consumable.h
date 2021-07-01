@@ -1,3 +1,6 @@
+#ifndef CONSUMABLE_H
+#define CONSUMABLE_H
+
 #include<iostream>
 #include <string>
 #include "object.h"
@@ -23,3 +26,5 @@ public:
 
 
 };
+
+#endif

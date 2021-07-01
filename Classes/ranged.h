@@ -1,3 +1,6 @@
+#ifndef RANGED_H
+#define RANGED_H
+
 #include<iostream>
 #include <string>
 #include "ammo.h"
@@ -32,6 +35,6 @@ public:
 
 	virtual std::string exp() {};
 
-
-
 };
+
+#endif

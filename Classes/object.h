@@ -1,7 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-
 #include<iostream>
 #include <string>
 
@@ -26,9 +25,9 @@ public:
 
 	//virtual List<string> getInfo() {} = 0;     quasi sicuro che non si possono utilizzare
 
-    int getId();
+    int getId() {return id;}
 
-    std::string getName();
+    std::string getName() {return name;}
 
     virtual std::string exp();
 

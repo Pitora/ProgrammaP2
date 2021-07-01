@@ -35,6 +35,10 @@ private:
   
   
 public:
+
+  dList() {
+    first = last = nullptr;
+  }
   
   dList(const dList& l) {
     deep_copy(l.first,first,last);

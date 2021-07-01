@@ -1,3 +1,6 @@
+#ifndef CHARACTER_H
+#define CHARACTER_H
+
 #include<iostream>
 #include<string>
 #include "armor.h"
@@ -35,6 +38,6 @@ public:
 
     //void import(string imported);
 
-    
-
 };
+
+#endif
