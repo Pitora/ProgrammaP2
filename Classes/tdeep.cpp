@@ -1,3 +1,7 @@
+#ifndef TDEEP_H
+#define TDEEP_H
+
+
 template<class T>
 class DeepPtr {
 private:
@@ -22,3 +26,5 @@ public:
 
     //T* operator->() const {return &(ptr);}
 };
+
+#endif 

@@ -1,3 +1,7 @@
+#ifndef TC_H
+#define TC_H
+
+
 template<class T>
 class dList {
 private:
@@ -157,3 +161,5 @@ public:
   }
   
 };
+
+#endif
