@@ -19,4 +19,6 @@ public:
 
     bool operator== (const DeepPtr& x) const {return ptr == x.ptr;}
     T& operator* () const {return *ptr;}
+
+    T* operator->() const {return &(ptr);}
 };

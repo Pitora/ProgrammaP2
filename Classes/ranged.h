@@ -1,9 +1,9 @@
 #include<iostream>
+#include <string>
 #include "ammo.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
-
-using namespace std;
+#include "weapon.h"
 
 struct Magazine {
 	DeepPtr<Ammo> type;
@@ -22,7 +22,7 @@ public:
 
 	Ranged(dList<DeepPtr<Magazine>> a, int rec, int rel);
 
-	Ranged(string imported);
+	Ranged(std::string imported);
 
     ~Ranged();
 
@@ -30,9 +30,7 @@ public:
 
     //virtual int scaling() {};
 
-	virtual string export() {};
-
-    virtual void import(string imported) {}; 
+	virtual std::string exp() {};
 
 
 

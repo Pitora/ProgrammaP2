@@ -1,11 +1,11 @@
-#include <iostream>
-#include <string>
 #include "consumable.h"
 
-using namespace std;
+Consumable::Consumable() {}
 
-Consumable::Consumable(string imported) : Object(imported);
+Consumable::Consumable(string imported) : Object(imported) {}
 
-Consumable::~Consumable();
+Consumable::~Consumable() {
+    std::cout<<"Consumabile cancellato"<<std::endl;
+}
 
-virtual string  Consumable::export() { return Object::export(); };
+string Consumable::exp() { return Obj::exp(); }

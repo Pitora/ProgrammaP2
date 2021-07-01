@@ -1,21 +1,22 @@
 #include<iostream>
+#include <string>
+#include "weapon.h"
 
-using namespace std;
 
 class Melee : public Weapon {
 
 private:
 
-    string attack_type;  
+    std::string attack_type;  
     unsigned int durability;
     unsigned int precision;
 
     
 public:
 
-	Melee(string a_t, unsigned int d, unsigned int p);
+	Melee(std::string a_t, unsigned int d, unsigned int p);
 
-    Melee(string imported);
+    Melee(std::string imported);
 
     ~Melee();
 
@@ -23,7 +24,7 @@ public:
 
     //virtual int scaling() {};
 
-    virtual string export() {};
+    virtual std::string exp();
 
     
 

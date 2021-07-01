@@ -1,31 +1,28 @@
-#include <iostream>
-#include <string>
 #include "buff.h"
 
-using namespace std;
 
-Buff::Buff(string e, unsigned int p, unsigned int d) : effect(e), percentage(p), duration(d) {}
+Buff::Buff(std::string e, unsigned int p, unsigned int d) : effect(e), percentage(p), duration(d) {}
 
-Buff::Buff(string imported) : Consumable(imported){       
+Buff::Buff(std::string imported) : Consumable(imported){       
     if (imported.find("<Buff>") != -1 && imported.find("</Buff>") != -1)
     {
         size_t pos1 = imported.find("<Effect>");
         size_t pos2 = imported.find("</Effect>");
-        string l = "<Effect>";
+        std::string l = "<Effect>";
         pos1 += l.length();
         effect = imported.substr(pos1, pos2 - pos1); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 
         pos1 = imported.find("<Percentage>");
         pos2 = imported.find("</Percentage>");
-        string l = "<Percentage>";
+        l = "<Percentage>";
         pos1 += l.length();
-        percentage = imported.substr(pos1, pos2 - pos1);
+        percentage = stoi(imported.substr(pos1, pos2 - pos1));
 
         pos1 = imported.find("<Duration>");
         pos2 = imported.find("</Duration>");
-        string l = "<Duration>";
+        l = "<Duration>";
         pos1 += l.length();
-        duration = imported.substr(pos1, pos2 - pos1);
+        duration = stoi(imported.substr(pos1, pos2 - pos1));
 
 
     }else{
@@ -34,17 +31,15 @@ Buff::Buff(string imported) : Consumable(imported){
 } 
 
 Buff::~Buff(){
-    delete effect;
-    delete percentage;
-    delete duration;
+    std::cout<<"Cancellato un buff"<<std::endl;
 }
 
-virtual string Buff::export() {       
-    string s = "<Buff>";
-    s += Consumable::export();
+std::string Buff::exp() {       
+    std::string s = "<Buff>";
+    s += Consumable::exp();
     s += "<Effect>" + effect + "</Effect>";
-    s += "<Percentage>" + percentage + "</Percentage>";
-    s += "<duration>" + duration + "</duration>";
+    s += "<Percentage>" + std::to_string(percentage) + "</Percentage>";
+    s += "<duration>" + std::to_string(duration) + "</duration>";
     s += "</Buff>";
     return s;
 }

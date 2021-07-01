@@ -1,10 +1,7 @@
-#include <iostream>
-#include <string>
 #include "collection.h"
 
-using namespace std;
 
-static void Collection::initialize(){
+void Collection::initialize(){
 
 }
 
@@ -20,18 +17,18 @@ void Collection::remove(int i){
 
 }
 
-static void Collection::importObj(string s){
+void Collection::importObj(std::string s){
 
 }
 
-static void Collection::exportObj(int i, string s){
+void Collection::exportObj(int i, std::string s){
 
 }
 
-static void Collection::importChara(){
+void Collection::importChara(){
 
 }
 
-static void Collection::exportChara(){
+void Collection::exportChara(){
 
 }

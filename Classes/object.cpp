@@ -1,38 +1,38 @@
-#include <iostream>
-#include <string>
 #include "object.h"
 
-using namespace std;
+Obj::Obj(){}
 
-Object::Object(int i, int n) : id(i), name(n);
+Obj::Obj(int i, std::string n) : id(i), name(n) {}
 
-Object::Object(string imported){
+Obj::Obj(std::string imported){
     size_t pos1 = imported.find("<Id>");
     size_t pos2 = imported.find("</Id>");
-    string s = "<Id>";
+    std::string s = "<Id>";
     pos1 += s.length();
-    id = Int(str.substr(pos1,pos2-pos1));
+    id = stoi(imported.substr(pos1,pos2-pos1));
 
     pos1 = imported.find("<Name>");
     pos2 = imported.find("</Name>");
     s = "<Name>";
     pos1 += s.length();
-    name = str.substr(pos1, pos2-pos1);
+    name = imported.substr(pos1, pos2-pos1);
 }
 
-virtual Object::~Object() {
-    delete id;
-    delete name;
+Obj::~Obj() {}
+
+
+int getId() {
+    return id;
 }
 
-int getId() {return id;}
+std::string getName() {
+    return name;
+}
 
-string getName() {return name;}
 
-
-virtual string Object::export() {       //Esempio di export?
-    string s = "<Object>";
-    s += "<Id>" + id + "</Id>";
+std::string Obj::exp() {       //Esempio di export?
+    std::string s = "<Object>";
+    s += "<Id>" + std::to_string(id) + "</Id>";
     s += "<Name>" + name + "</Name>";
     s += "</Object>";
     return s;

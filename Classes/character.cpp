@@ -1,21 +1,15 @@
-#include <iostream>
-#include <string>
 #include "character.h"
 
-using namespace std;
 
-Character(string n, Weapon *wp, dList<DeepPtr<Armor>> armor, dList<DeepPtr<Consumable>> inv) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv)){}
+Character::Character(std::string n, Weapon *wp, dList<DeepPtr<Armor>> armor, dList<DeepPtr<Consumable>> inv) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv){}
 
-~Character(){
-    delete name_build;
-    delete eq_weap;
-    for (auto a : armor) delete eq_armor;
-    for (auto i : inventory) delete inventory;
+Character::~Character(){
+    std::cout<<"Cancellazione personaggio"<<std::endl;
 }
 
 
 int Character::scaling(){
-    if (eq_weap != null)
+    if (true)
     {
         return 1; // Calcolo 
     }else{
@@ -27,10 +21,10 @@ int Character::scalingElem(){
 //Stessa cosa di scaling
 }
 
-string Character::export() {       
+std::string Character::exp() {       
     
 }
 
-void Character::import(string imported){       
+//void Character::import(string imported){       
 
-} 
+//} 

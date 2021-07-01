@@ -1,8 +1,9 @@
 #include<iostream>
+#include <string>
+#include "object.h"
 
-using namespace std;
 
-class Weapon : public Object {
+class Weapon : public Obj{
 
 private:
 
@@ -17,15 +18,17 @@ private:
     
 public:
 
+    Weapon();
+
 	Weapon(int w, int c, int r, int rav, int eav, int cc);
 
-    Weapon(string imported);
+    Weapon(std::string imported);
 
     ~Weapon();
 
 	//virtual List<string> getInfo() {};
 
-    virtual string export();
+    virtual std::string exp();
 
 
 

@@ -1,8 +1,8 @@
 #include<iostream>
+#include <string>
+#include "object.h"
 
-using namespace std;
-
-class Consumable : public Object {
+class Consumable : public Obj {
 
 private:
 
@@ -10,13 +10,15 @@ private:
     
 public:
 
-	Consumable(string imported);
+    Consumable();
+
+	Consumable(std::string imported);
 
     ~Consumable();
 
-	virtual int useObject () {} = 0;
+	virtual int useObject ();
 
-    virtual string export();
+    virtual std::string exp();
  
 
 

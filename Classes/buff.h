@@ -1,24 +1,25 @@
 #include<iostream>
+#include <string>
+#include "consumable.h"
 
-using namespace std;
 
 class Buff : public Consumable {
 
 private:
 
-    string effect;  
+    std::string effect;  
     unsigned int percentage;
     unsigned int duration;
     
 public:
 
-	Buff(string e, unsigned int p, unsigned int d);
+	Buff(std::string e, unsigned int p, unsigned int d);
 
-    Buff(string imported);
+    Buff(std::string imported);
 
     ~Buff();
 
-    virtual string export() ;
+    virtual std::string exp();
 
 
 };

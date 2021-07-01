@@ -1,25 +1,25 @@
 #include<iostream>
+#include<string>
+#include "object.h"
 
-using namespace std;
-
-class Armor : public Object {
+class Armor : public Obj {
 
 private:
 
-    string armor_type;  
+    std::string armor_type;  
     unsigned int defense_value;
     unsigned int durability;
     
 public:
 
-	Armor(string a_t, unsigned int d_v, unsigned int d);
+	Armor(std::string a_t, unsigned int d_v, unsigned int d);
 
-    Armor(string imported);
+    Armor(std::string imported);
 
     ~Armor();
 
     int damageCalculation (int attack_value);
 
-    virtual string export();
+    virtual std::string exp();
 
 };

@@ -1,23 +1,23 @@
 #include<iostream>
+#include<string>
 #include "object.h"
 #include "character.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
 
-using namespace std;
 
 class Collection {
 
 private:
 
-    dList<DeepPtr<Object>> list;
+    dList<DeepPtr<Obj>> list;
     Character chara;      
     
 public:
 
 
 
-static void initialize();
+void initialize();
 
 void update();
 
@@ -30,13 +30,13 @@ void remove(int i);
 
 
 
-static void importObj(string s);
+void importObj(std::string s);
 
-static void exportObj(int i, string s);
+void exportObj(int i, std::string s);
 
-static void importChara();
+void importChara();
 
-static void exportChara();
+void exportChara();
 
 
 

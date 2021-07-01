@@ -1,21 +1,26 @@
+#ifndef OBJECT_H
+#define OBJECT_H
+
+
 #include<iostream>
+#include <string>
 
-using namespace std;
-
-class Object {
+class Obj {
 
 private:
 
     unsigned int id;
-    string name;   
+    std::string name;   
     
 public:
 
-	Object(int i, int n);
+    Obj();
 
-    Object(string imported);
+	Obj(int i, std::string n);
 
-    virtual ~Object() = 0;
+    Obj(std::string imported);
+
+    virtual ~Obj() = 0;
 
     
 
@@ -23,11 +28,13 @@ public:
 
     int getId();
 
-    string getName();
+    std::string getName();
 
-    virtual string export();
+    virtual std::string exp();
 
 };
+
+#endif
 
 
 
