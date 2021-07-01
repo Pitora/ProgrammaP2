@@ -61,8 +61,8 @@ std::string Ranged::exp() {
     for(DeepPtr<Magazine> p : eq_ammo)
     {
         s += "<A" + std::to_string(i) + ">";
-        s += p->type->exp(); 
-        s += "<Count>" + std::to_string(p->count) + "</Count>";
+        s += (*((*p).type)).exp(); 
+        s += "<Count>" + std::to_string((*p).count) + "</Count>";
         s += "</A" + std::to_string(i) + ">";
         i++;
     }
