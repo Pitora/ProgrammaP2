@@ -17,7 +17,7 @@ Ammo::Ammo(string imported) : Consumable(imported){
 
         pos1 = imported.find("<AttackValue>");
         pos2 = imported.find("</AttackValue>");
-        string l = "<AttackValue>";
+        l = "<AttackValue>";
         pos1 += l.length();
         attack_value = imported.substr(pos1, pos2 - pos1);
 

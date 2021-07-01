@@ -6,22 +6,18 @@ class Consumable : public Object {
 
 private:
 
-    string s;
-    
-
+    //string s; 
     
 public:
 
-	Consumable(string imported) : Object(imported);
+	Consumable(string imported);
 
     ~Consumable();
 
 	virtual int useObject () {} = 0;
 
-    virtual string export() { return Object::export(); };
-
-    virtual void import(string imported) {}; 
-
+    virtual string export();
+ 
 
 
 };
