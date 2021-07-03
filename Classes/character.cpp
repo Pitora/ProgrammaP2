@@ -1,7 +1,7 @@
 #include "character.h"
 
 
-Character::Character(std::string n, Weapon *wp, dList<DeepPtr<Armor>> armor, dList<DeepPtr<Consumable>> inv) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv){}
+Character::Character(std::string n, Weapon *wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv){}
 
 Character::~Character(){
     std::cout<<"Cancellazione personaggio"<<std::endl;

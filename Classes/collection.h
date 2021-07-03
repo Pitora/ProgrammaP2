@@ -1,6 +1,11 @@
 #include<iostream>
 #include<string>
+#include<fstream>
 #include "object.h"
+#include "melee.h"
+#include "ranged.h"
+#include "buff.h"
+#include "healing.h"
 #include "character.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
@@ -10,14 +15,16 @@ class Collection {
 
 private:
 
-    dList<DeepPtr<Obj>> list;
+    C<DeepPtr<Obj>> list;
     Character chara;      
     
 public:
 
-
+Collection();
 
 void initialize();
+
+void save();
 
 void update();
 
@@ -28,11 +35,13 @@ void remove(int i);
 
 //getinfo
 
+std::string readFile(std::string filename);
 
+bool checkCopy(DeepPtr<Obj>& o) const;
 
-void importObj(std::string s);
+bool importObj(std::string filename);
 
-void exportObj(int i, std::string s);
+void exportObj(int i, std::string filename);
 
 void importChara();
 

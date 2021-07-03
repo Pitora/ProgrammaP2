@@ -29,7 +29,11 @@ public:
 
     std::string getName() {return name;}
 
+    bool operator== (const Obj& x) const {return id == x.id;}
+
     virtual std::string exp();
+
+    //static string substring (string s, string w1, string w2)
 
 };
 

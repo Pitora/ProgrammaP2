@@ -15,8 +15,8 @@ private:
 
     std::string name_build;
     DeepPtr<Weapon> eq_weap;
-    dList<DeepPtr<Armor>> eq_armor;
-    dList<DeepPtr<Consumable>> inventory;
+    C<DeepPtr<Armor>> eq_armor;
+    C<DeepPtr<Consumable>> inventory;
     //Nomi temporanei
     int statA; 
     int statB;
@@ -25,7 +25,9 @@ private:
     
 public:
 
-	Character(std::string n, Weapon *wp, dList<DeepPtr<Armor>> armor, dList<DeepPtr<Consumable>> inv); 
+    Character();
+
+	Character(std::string n, Weapon *wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv); 
     ~Character();
 
     //metodi input/output build, se non implementati su collection.

@@ -7,7 +7,8 @@ class DeepPtr {
 private:
     T* ptr;
 public:
-    DeepPtr(const T* x = 0) : ptr(x ? new T(*x) : 0) {}
+    DeepPtr(){}
+    DeepPtr(const T* x) : ptr(x ? new T(*x) : 0) {}
     DeepPtr(const DeepPtr& x) : ptr(x.ptr ? new T(*(x.ptr)) : 0) {}
     ~DeepPtr() {delete ptr;}
 
@@ -24,7 +25,7 @@ public:
     bool operator== (const DeepPtr& x) const {return ptr == x.ptr;}
     T& operator* () const {return *ptr;}
 
-    //T* operator->() const {return &(ptr);}
+    T* operator->() const {return &(ptr);}
 };
 
 #endif 

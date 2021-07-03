@@ -3,27 +3,20 @@
 
 #include<iostream>
 #include <string>
-#include "ammo.h"
-#include "tc.cpp"
-#include "tdeep.cpp"
 #include "weapon.h"
 
-struct Magazine {
-	DeepPtr<Ammo> type;
-	int count;
-};
 
 class Ranged : public Weapon {
 
 private:
 
-    dList<DeepPtr<Magazine>> eq_ammo;
 	int recoil;   
     int reload_time;  
+	int magazine;
     
 public:
 
-	Ranged(dList<DeepPtr<Magazine>> a, int rec, int rel);
+	Ranged(int rec, int rel, int m);
 
 	Ranged(std::string imported);
 

@@ -3,7 +3,7 @@
 
 
 template<class T>
-class dList {
+class C {
 private:
 
   class nodo {
@@ -40,15 +40,15 @@ private:
   
 public:
 
-  dList() {
+  C() {
     first = last = nullptr;
   }
   
-  dList(const dList& l) {
+  C(const C& l) {
     deep_copy(l.first,first,last);
   }
 
-  dList& operator=(const dList& l) {
+  C& operator=(const C& l) {
     if(this != &l) {
       destroy(first);
       deep_copy(l.first,first,last);
@@ -56,7 +56,7 @@ public:
     return *this;
   }
     
-  ~dList() { destroy(first); }
+  ~C() { destroy(first); }
 
   void insertFront(const T& t) {
     first = new nodo(t,nullptr,first);
@@ -77,13 +77,13 @@ public:
       first=last=new nodo(t);
   }
   
-  dList(unsigned int k, const T& t): first(nullptr), last(nullptr) {
+  C(unsigned int k, const T& t): first(nullptr), last(nullptr) {
     for(unsigned int j=0; j<k; ++j) insertFront(t);
   }
   
   
   class const_iterator {
-    friend class dList <T>;
+    friend class C <T>;
   private: // const_iterator indefinito IFF ptr==nullptr & past_the_end==false
     const nodo* ptr;
     bool past_the_end;
@@ -149,6 +149,10 @@ public:
     const T* operator->() const {
       return &(ptr->info);
     }
+
+    //const T* operator[](int i) const {
+    //  return &((first+i)->info);
+    //}
   };
 
   const_iterator begin() const {
