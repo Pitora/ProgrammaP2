@@ -5,17 +5,10 @@ Obj::Obj(){}
 Obj::Obj(int i, std::string n) : id(i), name(n) {}
 
 Obj::Obj(std::string imported){
-    size_t pos1 = imported.find("<Id>");
-    size_t pos2 = imported.find("</Id>");
-    std::string s = "<Id>";
-    pos1 += s.length();
-    id = stoi(imported.substr(pos1,pos2-pos1));
 
-    pos1 = imported.find("<Name>");
-    pos2 = imported.find("</Name>");
-    s = "<Name>";
-    pos1 += s.length();
-    name = imported.substr(pos1, pos2-pos1);
+    id = stoi(substring(imported, "<Id>", "</Id>"));
+
+    name = substring(imported, "<Name>", "</Name>");
 }
 
 Obj::~Obj() {}
@@ -29,10 +22,13 @@ std::string Obj::exp() {       //Esempio di export?
     return s;
 }
 
-/*std::string Obj::substring(std::string s, std::string w1, std::string w2)
+std::string Obj::substring(std::string s, std::string w1, std::string w2)
 {
-
-}*/
+    size_t pos1 = s.find(w1);
+    size_t pos2 = s.find(w2);
+    pos1 += w1.length();        //attenzione : legge i bytes che compongono la stringa
+    return s.substr(pos1,pos2-pos1);
+}
 
 
 

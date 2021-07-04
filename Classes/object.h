@@ -33,7 +33,7 @@ public:
 
     virtual std::string exp();
 
-    //static std::string substring (std::string s, std::string w1, std::string w2);
+    static std::string substring (std::string s, std::string w1, std::string w2);
 
 };
 

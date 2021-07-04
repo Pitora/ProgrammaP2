@@ -6,25 +6,11 @@ Ranged::Ranged(int rec, int rel, int m) : recoil(rec), reload_time(rel), magazin
 Ranged::Ranged(std::string imported) : Weapon(imported){       
     if (imported.find("<Ranged>") != -1 && imported.find("</Ranged>") != -1)
     {
-        size_t pos1 = imported.find("<Recoil>");
-        size_t pos2 = imported.find("</Recoil>");
-        std::string l = "<Recoil>";
-        pos1 += l.length();
-        recoil = stoi(imported.substr(pos1, pos2 - pos1));
+        recoil = stoi(substring(imported,"<Recoil>","</Recoil>"));
 
-        pos1 = imported.find("<ReloadT>");
-        pos2 = imported.find("</ReloadT>");
-        l = "<ReloadT>";
-        pos1 += l.length();
-        reload_time = stoi(imported.substr(pos1, pos2 - pos1));
+        reload_time = stoi(substring(imported,"<ReloadT>","</ReloadT>"));
 
-        pos1 = imported.find("<Magazine>");
-        pos2 = imported.find("</Magazine>");
-        l = "<Magazine>";
-        pos1 += l.length();
-        magazine = stoi(imported.substr(pos1, pos2 - pos1));
-
-
+        magazine = stoi(substring(imported,"<Magazine>","</Magazine>"));
 
     }else{
         //throw .....

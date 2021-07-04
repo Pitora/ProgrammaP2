@@ -6,24 +6,11 @@ Buff::Buff(std::string e, unsigned int p, unsigned int d) : effect(e), percentag
 Buff::Buff(std::string imported) : Consumable(imported){       
     if (imported.find("<Buff>") != -1 && imported.find("</Buff>") != -1)
     {
-        size_t pos1 = imported.find("<Effect>");
-        size_t pos2 = imported.find("</Effect>");
-        std::string l = "<Effect>";
-        pos1 += l.length();
-        effect = imported.substr(pos1, pos2 - pos1); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
+        effect = substring(imported, "<Effect>", "</Effect>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 
-        pos1 = imported.find("<Percentage>");
-        pos2 = imported.find("</Percentage>");
-        l = "<Percentage>";
-        pos1 += l.length();
-        percentage = stoi(imported.substr(pos1, pos2 - pos1));
+        percentage = stoi(substring(imported,"<Percentage>", "</Percentage>"));
 
-        pos1 = imported.find("<Duration>");
-        pos2 = imported.find("</Duration>");
-        l = "<Duration>";
-        pos1 += l.length();
-        duration = stoi(imported.substr(pos1, pos2 - pos1));
-
+        duration = stoi(substring(imported, "<Duration>", "</Duration>"));
 
     }else{
         //throw .....
@@ -39,7 +26,7 @@ std::string Buff::exp() {
     s += Consumable::exp();
     s += "<Effect>" + effect + "</Effect>";
     s += "<Percentage>" + std::to_string(percentage) + "</Percentage>";
-    s += "<duration>" + std::to_string(duration) + "</duration>";
+    s += "<Duration>" + std::to_string(duration) + "</Duration>";
     s += "</Buff>";
     return s;
 }

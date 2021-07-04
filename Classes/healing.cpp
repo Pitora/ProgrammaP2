@@ -5,17 +5,9 @@ Healing::Healing(std::string a_v, unsigned int p) : affected_value(a_v), potency
 Healing::Healing(std::string imported) : Consumable(imported){       
     if (imported.find("<Healing>") != -1 && imported.find("</Healing>") != -1)
     {
-        size_t pos1 = imported.find("<AffValue>");
-        size_t pos2 = imported.find("</AffValue>");
-        std::string l = "<AffValue>";
-        pos1 += l.length();
-        affected_value = imported.substr(pos1, pos2 - pos1); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
+        affected_value = substring(imported, "<AffValue>", "</AffValue>" ); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 
-        pos1 = imported.find("<Potency>");
-        pos2 = imported.find("</Potency>");
-        l = "<Potency>";
-        pos1 += l.length();
-        potency = stoi(imported.substr(pos1, pos2 - pos1));
+        potency = stoi(substring(imported, "<Potency>", "</Potency>"));
 
     }else{
         //throw .....
