@@ -51,6 +51,8 @@ bool Collection::checkCopy(DeepPtr<Obj>& o) const{
     }
 }
 
+
+
 bool Collection::importObj(std::string filename){
     std::string file = readFile(filename);
 
@@ -59,31 +61,31 @@ bool Collection::importObj(std::string filename){
     if (file.find("<Melee>") != -1)
     {   
         Melee m(file);
-        DeepPtr<Obj> o2(dynamic_cast<Obj*>(&m));
+        DeepPtr<Obj> o2(&m);
         o = o2;
     }
     else if (file.find("<Ranged>") != -1)
     {
         Ranged r(file);
-        DeepPtr<Obj> o2(dynamic_cast<Obj*>(&r));
+        DeepPtr<Obj> o2(&r);
         o = o2;
     }
     else if (file.find("<Armor>") != -1)
     {
         Armor a(file);
-        DeepPtr<Obj> o2(dynamic_cast<Obj*>(&a));
+        DeepPtr<Obj> o2(&a);
         o = o2;
     }
     else if (file.find("<Healing>") != -1)
     {
         Healing h(file);
-        DeepPtr<Obj> o2(dynamic_cast<Obj*>(&h));
+        DeepPtr<Obj> o2(&h);
         o = o2;
     }
     else if (file.find("<Buff>") != -1)
     {
         Buff b(file);
-        DeepPtr<Obj> o2(dynamic_cast<Obj*>(&b));
+        DeepPtr<Obj> o2(&b);
         o = o2;
     }
     else{

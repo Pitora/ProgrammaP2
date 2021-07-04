@@ -22,6 +22,8 @@ public:
 
     ~Buff();
 
+    virtual Buff* clone() const {return new Buff(*this);}
+
     virtual std::string exp();
 
 

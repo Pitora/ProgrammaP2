@@ -29,6 +29,8 @@ public:
 
     ~Weapon();
 
+    virtual Weapon* clone() const {return new Weapon(*this);}
+
 	//virtual List<string> getInfo() {};
 
     virtual std::string exp();

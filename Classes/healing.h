@@ -20,6 +20,8 @@ public:
 
     ~Healing();
 
+    virtual Healing* clone() const {return new Healing(*this);}
+
     virtual std::string exp();
 
 };

@@ -22,6 +22,8 @@ public:
 
     ~Ranged();
 
+	virtual Ranged* clone() const {return new Ranged(*this);}
+
 	//virtual List<string> getInfo() {};
 
     //virtual int scaling() {};

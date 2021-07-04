@@ -21,7 +21,7 @@ public:
 
     virtual ~Obj() = 0;
 
-    
+    virtual Obj* clone() const = 0;
 
 	//virtual List<string> getInfo() {} = 0;     quasi sicuro che non si possono utilizzare
 
@@ -33,7 +33,7 @@ public:
 
     virtual std::string exp();
 
-    //static string substring (string s, string w1, string w2)
+    //static std::string substring (std::string s, std::string w1, std::string w2);
 
 };
 

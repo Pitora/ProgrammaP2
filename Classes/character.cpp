@@ -1,5 +1,6 @@
 #include "character.h"
 
+Character::Character(){}
 
 Character::Character(std::string n, Weapon *wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv){}
 

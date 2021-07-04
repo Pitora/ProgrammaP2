@@ -19,6 +19,8 @@ public:
 
     ~Consumable();
 
+    virtual Consumable* clone() const {return new Consumable(*this);}
+
 	virtual int useObject ();
 
     virtual std::string exp();

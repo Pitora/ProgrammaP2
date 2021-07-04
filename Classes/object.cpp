@@ -29,6 +29,11 @@ std::string Obj::exp() {       //Esempio di export?
     return s;
 }
 
+/*std::string Obj::substring(std::string s, std::string w1, std::string w2)
+{
+
+}*/
+
 
 
 

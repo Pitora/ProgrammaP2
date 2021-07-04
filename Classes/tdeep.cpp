@@ -8,8 +8,8 @@ private:
     T* ptr;
 public:
     DeepPtr(){}
-    DeepPtr(const T* x) : ptr(x ? new T(*x) : 0) {}
-    DeepPtr(const DeepPtr& x) : ptr(x.ptr ? new T(*(x.ptr)) : 0) {}
+    DeepPtr(const T* x) : ptr(x ? (*x).clone() : 0) {}
+    DeepPtr(const DeepPtr& x) : ptr(x.ptr ? (*(x.ptr)).clone() : 0) {}
     ~DeepPtr() {delete ptr;}
 
     DeepPtr& operator= (const DeepPtr& x)
@@ -17,7 +17,7 @@ public:
         if (this != &x)
         {
             delete ptr;
-            ptr = x.ptr ? new T(*(x.ptr)) : 0;
+            ptr = x.ptr ? (*(x.ptr)).clone() : 0;
         }
         return *this;
     }  
@@ -25,7 +25,7 @@ public:
     bool operator== (const DeepPtr& x) const {return ptr == x.ptr;}
     T& operator* () const {return *ptr;}
 
-    T* operator->() const {return &(ptr);}
+    T* operator->() const {return &(*ptr);}
 };
 
 #endif 

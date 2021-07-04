@@ -21,6 +21,8 @@ public:
 
     ~Armor();
 
+    virtual Armor* clone() const {return new Armor(*this);}
+
     int damageCalculation (int attack_value);
 
     virtual std::string exp();

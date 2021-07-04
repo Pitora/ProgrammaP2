@@ -23,6 +23,8 @@ public:
 
     ~Melee();
 
+    virtual Melee* clone() const {return new Melee(*this);}
+
 	//virtual List<string> getInfo() {};
 
     //virtual int scaling() {};
