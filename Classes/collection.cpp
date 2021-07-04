@@ -1,7 +1,43 @@
 #include "collection.h"
 
 Collection::Collection(){
-
+    std::string s = readFile("data.xml");
+    int i = 0;
+    while(s.find("<Item" + std::to_string(i) + '>'))
+    {
+        std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
+        if (item.find("<Melee>") != -1)
+        {   
+            Melee m(item);
+            DeepPtr<Obj> o2(&m);
+            list.insertBack(o2);
+        }
+        else if (item.find("<Ranged>") != -1)
+        {
+            Ranged r(item);
+            DeepPtr<Obj> o2(&r);
+            list.insertBack(o2);
+        }
+        else if (item.find("<Armor>") != -1)
+        {
+            Armor a(item);
+            DeepPtr<Obj> o2(&a);
+            list.insertBack(o2);
+        }
+        else if (item.find("<Healing>") != -1)
+        {
+            Healing h(item);
+            DeepPtr<Obj> o2(&h);
+            list.insertBack(o2);
+        }
+        else if (item.find("<Buff>") != -1)
+        {
+            Buff b(item);
+            DeepPtr<Obj> o2(&b);
+            list.insertBack(o2);
+        }
+        i++;
+    }
 }
 
 void Collection::initialize(){
@@ -9,7 +45,22 @@ void Collection::initialize(){
 }
 
 void Collection::save(){
-    //salvare su un file esterno tutte le informazioni su list
+    
+    std::string s = "<Data>";
+    int i = 0;
+    for (C<DeepPtr<Obj>>::const_iterator iter = list.begin(); iter != list.end(); ++iter )
+    {
+        s += "<Item" + std::to_string(i) + '>';
+        s += (*iter)->exp();
+        s += "</Item" + std::to_string(i) + '>';
+    }
+    s += "</Data>";
+    std::ofstream out("data.xml");
+    if(out)
+    {
+        out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<s;
+        out.close();
+    }
 }
 
 void Collection::update(){
@@ -20,8 +71,8 @@ void Collection::add(){
 
 }
 
-void Collection::remove(int i){
-
+void Collection::remove(int id){
+    // creato metodo remove in tc.cpp (template di c) per la rimozione remove(DeepPtr....)
 }
 
 std::string Collection::readFile(std::string filename)          //ritorna tutto il file sottoforma di stringa
@@ -54,6 +105,7 @@ bool Collection::checkCopy(DeepPtr<Obj>& o) const{
 
 
 bool Collection::importObj(std::string filename){
+    
     std::string file = readFile(filename);
 
     DeepPtr<Obj> o;

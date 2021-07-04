@@ -76,6 +76,45 @@ public:
     else // lista vuota
       first=last=new nodo(t);
   }
+
+  void remove(const T& t){
+    nodo* n = first;
+    bool found = false;
+    while(!found && n != nullptr)
+    {
+        if (n->info == t)
+        {
+          found = true;
+        }else{
+          n = n->next;
+        }
+    }
+    if (found)
+    {
+      if (n == first && n == last)
+      {
+        first = last = nullptr;
+      }
+      if (n == first)
+      {
+        n->next->prev == nullptr;
+        first = n->next;
+      }
+      else if (n == last)
+      {
+        n->prev->next == nullptr;
+        last = n->prev;
+      }else{
+        n->prev->next = n->next;
+        n->next->prev = n->prev;
+      }
+      delete n;     
+    }
+  }
+
+    
+
+  
   
   C(unsigned int k, const T& t): first(nullptr), last(nullptr) {
     for(unsigned int j=0; j<k; ++j) insertFront(t);

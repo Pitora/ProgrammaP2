@@ -15,10 +15,10 @@ Obj::~Obj() {}
 
 
 std::string Obj::exp() {       //Esempio di export?
-    std::string s = "<Object>";
+    std::string s = "<Obj>";
     s += "<Id>" + std::to_string(id) + "</Id>";
     s += "<Name>" + name + "</Name>";
-    s += "</Object>";
+    s += "</Obj>";
     return s;
 }
 

@@ -28,6 +28,8 @@ public:
     Character();
 
 	Character(std::string n, Weapon *wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv); 
+
+    Character(std::string imported);
     ~Character();
 
     //metodi input/output build, se non implementati su collection.
