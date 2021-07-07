@@ -18,10 +18,10 @@ private:
     C<DeepPtr<Armor>> eq_armor;
     C<DeepPtr<Consumable>> inventory;
     //Nomi temporanei
-    int statA; 
-    int statB;
-    int statC;
-    int statD;
+    int vit; 
+    int str;
+    int dex;
+    int aim; //brutto nome
     
 public:
 
