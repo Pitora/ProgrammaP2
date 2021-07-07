@@ -22,6 +22,8 @@ public:
 
     virtual Healing* clone() const {return new Healing(*this);}
 
+    virtual void print(std::ostream& os);
+
     virtual std::string exp();
 
 };

@@ -21,6 +21,13 @@ Buff::~Buff(){
     std::cout<<"Cancellato un buff"<<std::endl;
 }
 
+void Buff::print(std::ostream& os){
+    Consumable::print(os);
+    os<<"Effect : "<<effect<<std::endl;
+    os<<"Percentage : "<<percentage<<std::endl;
+    os<<"Duration : "<<duration<<std::endl;
+}
+
 std::string Buff::exp() {       
     std::string s = "<Buff>";
     s += Consumable::exp();

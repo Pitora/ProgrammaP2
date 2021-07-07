@@ -21,6 +21,13 @@ Armor::~Armor() {
     std::cout<<"Distrutta armatura"<<std::endl;
 }
 
+void Armor::print(std::ostream& os){
+    Obj::print(os);
+    os<<"Armor type : "<<armor_type<<std::endl;
+    os<<"Defense value : "<<defense_value<<std::endl;
+    os<<"Durability : "<<durability<<std::endl;
+}
+
 int Armor::damageCalculation (int attack_value) {} //Serve una formula decente (potrebbe essere necessaria l'aggiunta di qualche altro valore)
 
 std::string Armor::exp() {     

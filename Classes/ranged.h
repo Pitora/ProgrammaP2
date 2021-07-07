@@ -24,6 +24,8 @@ public:
 
 	virtual Ranged* clone() const {return new Ranged(*this);}
 
+	void print(std::ostream& os);
+
 	//virtual List<string> getInfo() {};
 
     //virtual int scaling() {};

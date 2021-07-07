@@ -24,6 +24,8 @@ public:
 
     virtual Buff* clone() const {return new Buff(*this);}
 
+    virtual void print(std::ostream& os);
+
     virtual std::string exp();
 
 

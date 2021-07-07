@@ -33,9 +33,14 @@ public:
 
     virtual std::string exp();
 
+    friend std::ostream& operator<<(std::ostream& s, const Obj& base);
+
+    virtual void print(std::ostream& os) const {os<<"Id : "<<(*this).id<<" Nome : "<<(*this).name<<std::endl;}
+
     static std::string substring (std::string s, std::string w1, std::string w2);
 
 };
+
 
 #endif
 

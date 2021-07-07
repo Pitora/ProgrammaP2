@@ -21,6 +21,13 @@ Ranged::~Ranged(){
     std::cout<<"Cancellata Ranged"<<std::endl;
 }
 
+void Ranged::print(std::ostream& os){
+    Weapon::print(os);
+    os<<"Recoil : "<<recoil<<std::endl;
+    os<<"Reload time : "<<reload_time<<std::endl;
+    os<<"Magazine : "<<magazine<<std::endl;
+}
+
 std::string Ranged::exp() {       
     std::string s = "<Ranged>";
     s += Weapon::exp();

@@ -12,7 +12,6 @@ private:
 
     std::string attack_type;  
     unsigned int durability;
-    unsigned int precision;
 
     
 public:
@@ -24,6 +23,8 @@ public:
     ~Melee();
 
     virtual Melee* clone() const {return new Melee(*this);}
+
+    void print(std::ostream& os);
 
 	//virtual List<string> getInfo() {};
 

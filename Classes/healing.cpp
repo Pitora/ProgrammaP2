@@ -18,6 +18,12 @@ Healing::~Healing() {
     std::cout<<"Cura cancellata"<<std::endl;
 }
 
+void Healing::print(std::ostream& os){
+    Consumable::print(os);
+    os<<"affected value : "<<affected_value<<std::endl;
+    os<<"Potency : "<<potency<<std::endl;
+}
+
 
 std::string Healing::exp() {       
     std::string s = "<Healing>";

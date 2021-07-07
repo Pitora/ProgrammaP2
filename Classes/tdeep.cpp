@@ -1,6 +1,8 @@
 #ifndef TDEEP_H
 #define TDEEP_H
 
+#include<iostream>
+
 
 template<class T>
 class DeepPtr {
@@ -23,6 +25,12 @@ public:
     }  
 
     bool operator== (const DeepPtr& x) const {return ptr == x.ptr;}
+
+    friend std::ostream& operator<<(std::ostream& s, const DeepPtr& o) {
+        s<<*(o.T)<<std::endl;
+        return s;
+}
+
     T& operator* () const {return *ptr;}
 
     T* operator->() const {return &(*ptr);}

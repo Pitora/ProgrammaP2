@@ -29,6 +29,16 @@ Weapon::~Weapon(){
     std::cout<<"Cancellata arma"<<std::endl;
 }
 
+void Weapon::print(std::ostream& os){
+    Obj::print(os);
+    os<<"Weight : "<<weight<<std::endl;
+    os<<"Cost : "<<cost<<std::endl;
+    os<<"Rarity : "<<rarity<<std::endl;
+    os<<"Raw attack : "<<raw_attack_value<<std::endl;
+    os<<"Da sostituire : "<<elem_attack_value<<std::endl;
+    os<<"Critical chance : "<<critical_chance<<std::endl;
+}
+
 std::string Weapon::exp() {     
     std::string s = "<Weapon>";
     s += Obj::exp();

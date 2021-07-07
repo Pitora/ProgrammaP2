@@ -31,5 +31,11 @@ std::string Obj::substring(std::string s, std::string w1, std::string w2)
 }
 
 
+std::ostream& operator<<(std::ostream& s, const Obj& o) {
+        o.print(s);
+        return s;
+}
+
+
 
 
