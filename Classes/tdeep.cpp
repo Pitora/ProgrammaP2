@@ -27,9 +27,9 @@ public:
     bool operator== (const DeepPtr& x) const {return ptr == x.ptr;}
 
     friend std::ostream& operator<<(std::ostream& s, const DeepPtr& o) {
-        s<<*(o.T)<<std::endl;
+        s<<*(o.ptr)<<std::endl;
         return s;
-}
+    }
 
     T& operator* () const {return *ptr;}
 
