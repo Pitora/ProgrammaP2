@@ -17,6 +17,8 @@ Armor::Armor(std::string imported) : Obj(imported){
 
 } 
 
+int Armor::getDefense() const {return defense_value;}
+
 Armor::~Armor() {
     std::cout<<"Distrutta armatura"<<std::endl;
 }

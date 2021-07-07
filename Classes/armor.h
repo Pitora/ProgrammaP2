@@ -29,6 +29,8 @@ public:
 
     virtual std::string exp();
 
+    int getDefense() const;
+
 };
 
 #endif

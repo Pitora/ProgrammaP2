@@ -9,17 +9,18 @@ Character::~Character(){
 }
 
 
-int Character::scaling(){
-    if (true)
-    {
-        return 1; // Calcolo 
-    }else{
-        //return calcolo 2
-    }
+int Character::damage() const{
+    int atk = eq_weap->getAttack();
+    int scaleSum = (str*eq_weap->getScalingStr()/100)+(dex*eq_weap->getScalingDex()/100)+(aim*eq_weap->getScalingAim()/100);
+    return (atk+scaleSum);
 }
 
-int Character::scalingElem(){
-//Stessa cosa di scaling
+int Character::defense() const{
+    int def;
+    for (auto i = eq_armor.begin(); i != eq_armor.end(); i++){
+        def += (*i)->getDefense();
+    }
+    return def;
 }
 
 std::string Character::exp() {       

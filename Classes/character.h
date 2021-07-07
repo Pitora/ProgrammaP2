@@ -34,9 +34,9 @@ public:
 
     virtual Character* clone() const {return new Character(*this);}
 
-    int scaling();
+    int damage() const;
 
-    int scalingElem();
+    int defense() const;
 
     std::string exp();
 

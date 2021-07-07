@@ -40,6 +40,11 @@ public:
 
     virtual std::string exp();
 
+    int getAttack() const;
+    int getScalingStr() const;
+    int getScalingDex() const;
+    int getScalingAim() const;
+
 };
 
 #endif
