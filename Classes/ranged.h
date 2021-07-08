@@ -18,6 +18,8 @@ public:
 
 	Ranged(int rec, int rel, int m);
 
+	Ranged(int i, std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m);
+
 	Ranged(std::string imported);
 
     ~Ranged();

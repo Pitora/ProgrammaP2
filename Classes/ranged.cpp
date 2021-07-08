@@ -3,6 +3,8 @@
 
 Ranged::Ranged(int rec, int rel, int m) : recoil(rec), reload_time(rel), magazine(m) {}
 
+Ranged::Ranged(int i, std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m) : Weapon(i,n,w,c,r,rav,cc,s_str,s_dex,s_aim), recoil(rec), reload_time(rel), magazine(m) {}
+
 Ranged::Ranged(std::string imported) : Weapon(imported){       
     if (imported.find("<Ranged>") != -1 && imported.find("</Ranged>") != -1)
     {

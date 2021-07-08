@@ -15,6 +15,8 @@ public:
 
     Consumable();
 
+    Consumable(int i, std::string n);
+
 	Consumable(std::string imported);
 
     ~Consumable();

@@ -16,6 +16,8 @@ public:
 
 	Healing(std::string a_v, unsigned int p);
 
+    Healing(int i, std::string n, std::string a_v, unsigned int p);
+
     Healing(std::string imported);
 
     ~Healing();

@@ -18,6 +18,8 @@ public:
 
 	Buff(std::string e, unsigned int p, unsigned int d);
 
+    Buff(int i, std::string n, std::string e, unsigned int p, unsigned int d);
+
     Buff(std::string imported);
 
     ~Buff();

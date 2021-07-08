@@ -67,8 +67,24 @@ void Collection::update(){
 
 }
 
-void Collection::add(){
+void Collection::add(std::string n, std::string a_t, std::string r, int d_v, int d){
+    list.insertBack(DeepPtr<Obj>(new Armor(0, n, a_t, r, d_v, d)));
+}
 
+void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d){
+    list.insertBack(DeepPtr<Obj>(new Melee(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d)));
+}
+
+void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m){
+    list.insertBack(DeepPtr<Obj>(new Ranged(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m)));
+}
+
+void Collection::add(std::string n, std::string e, int p, int d){
+    list.insertBack(DeepPtr<Obj>(new Buff(0,n,e,p,d)));
+}
+
+void Collection::add(std::string n, std::string a_v, int p){
+    list.insertBack(DeepPtr<Obj>(new Healing(0,n,a_v,p)));
 }
 
 void Collection::remove(int id){

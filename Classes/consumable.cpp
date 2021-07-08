@@ -2,6 +2,8 @@
 
 Consumable::Consumable() {}
 
+Consumable::Consumable(int i, std::string n) : Obj(i,n) {}
+
 Consumable::Consumable(std::string imported) : Obj(imported) {}
 
 Consumable::~Consumable() {
