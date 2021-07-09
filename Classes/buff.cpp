@@ -23,7 +23,7 @@ Buff::~Buff(){
     std::cout<<"Cancellato un buff"<<std::endl;
 }
 
-void Buff::print(std::ostream& os){
+void Buff::print(std::ostream& os) const{
     Consumable::print(os);
     os<<"Effect : "<<effect<<std::endl;
     os<<"Percentage : "<<percentage<<std::endl;

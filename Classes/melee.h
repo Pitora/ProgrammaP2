@@ -28,7 +28,7 @@ public:
 
     virtual Melee* clone() const {return new Melee(*this);}
 
-    void print(std::ostream& os);
+    void print(std::ostream& os) const;
 
 	//virtual List<string> getInfo() {};
 

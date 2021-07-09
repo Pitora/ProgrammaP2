@@ -26,7 +26,7 @@ public:
 
     virtual Armor* clone() const {return new Armor(*this);}
 
-    virtual void print(std::ostream& os);
+    virtual void print(std::ostream& os) const;
 
     int damageCalculation (int attack_value);
 

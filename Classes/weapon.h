@@ -35,7 +35,7 @@ public:
 
     virtual Weapon* clone() const {return new Weapon(*this);}
 
-    virtual void print(std::ostream& os);
+    virtual void print(std::ostream& os) const;
 
 	//virtual List<string> getInfo() {};
 

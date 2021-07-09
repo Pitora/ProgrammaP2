@@ -23,7 +23,7 @@ Ranged::~Ranged(){
     std::cout<<"Cancellata Ranged"<<std::endl;
 }
 
-void Ranged::print(std::ostream& os){
+void Ranged::print(std::ostream& os) const{
     Weapon::print(os);
     os<<"Recoil : "<<recoil<<std::endl;
     os<<"Reload time : "<<reload_time<<std::endl;

@@ -9,7 +9,7 @@ class DeepPtr {
 private:
     T* ptr;
 public:
-    DeepPtr(){}
+    DeepPtr() : ptr(0){}
     DeepPtr(const T* x) : ptr(x ? (*x).clone() : 0) {}
     DeepPtr(const DeepPtr& x) : ptr(x.ptr ? (*(x.ptr)).clone() : 0) {}
     ~DeepPtr() {if (ptr != nullptr)delete ptr;}

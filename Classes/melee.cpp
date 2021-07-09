@@ -9,7 +9,7 @@ Melee::Melee(std::string imported) : Weapon(imported){
     {
         attack_type = substring(imported,"<AttackType>","</AttackType>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 
-        added_effect = stoi(substring(imported,"<AddEff>","</AddEff>"));
+        added_effect = substring(imported,"<AddEff>","</AddEff>");
 
         durability = stoi(substring(imported,"<Durability>","</Durability>"));
 
@@ -25,7 +25,7 @@ Melee::~Melee(){
 }
 
 
-void Melee::print(std::ostream& os){
+void Melee::print(std::ostream& os) const{
     Weapon::print(os);
     os<<"Attack type : "<<attack_type<<std::endl;
     os<<"Added effect :"<<added_effect<<std::endl;

@@ -23,7 +23,7 @@ public:
 
     virtual Consumable* clone() const {return new Consumable(*this);}
 
-    void print(std::ostream& os) { Obj::print(os);}
+    void print(std::ostream& os) const { Obj::print(os);}
 
 	virtual int useObject ();
 

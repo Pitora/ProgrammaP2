@@ -11,7 +11,9 @@ Obj::Obj(std::string imported){
     name = substring(imported, "<Name>", "</Name>");
 }
 
-Obj::~Obj() {}
+Obj::~Obj() {
+    std::cout<<"Distruttore virtuale puro chiamato"<<std::endl;
+}
 
 
 std::string Obj::exp() const{       //Esempio di export?

@@ -22,11 +22,9 @@ public:
 
 Collection();
 
-void initialize();
+~Collection();
 
 void save();
-
-void update();
 
 void add(std::string n, std::string a_t, std::string r, int d_v, int d);   //Armor
 
@@ -40,14 +38,14 @@ void add(std::string n, std::string a_v, int p);   //Healing
 
 
 
-void remove(int i);
+bool remove(int i);
 
 
 //getinfo
 
 std::string readFile(std::string filename);
 
-bool checkCopy(const DeepPtr<Obj>& o) const;
+bool checkId(const int id) const;
 
 bool importObj(std::string filename);
 
@@ -56,6 +54,10 @@ void exportObj(int i, std::string filename);
 void importChara();
 
 void exportChara();
+
+void show(int id);
+
+int generateId();
 
 
 

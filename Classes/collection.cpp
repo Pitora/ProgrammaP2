@@ -1,52 +1,44 @@
 #include "collection.h"
 
-Collection::Collection(){
+Collection::Collection() : list(){
     std::string s = readFile("data.xml");
     if (s != ""){
         std::cout<<"Sto leggendo"<<std::endl;
         int i = 0;
-        while(s.find("<Item" + std::to_string(i) + '>'))
+        while(s.find("<Item" + std::to_string(i) + '>') != -1)
         {
             std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
             if (item.find("<Melee>") != -1)
             {   
-                Melee m(item);
-                DeepPtr<Obj> o2(&m);
-                list.insertBack(o2);
+                list.insertBack(DeepPtr<Obj>(new Melee(item)));
             }
             else if (item.find("<Ranged>") != -1)
             {
-                Ranged r(item);
-                DeepPtr<Obj> o2(&r);
-                list.insertBack(o2);
+                list.insertBack(DeepPtr<Obj>(new Ranged(item)));
             }
             else if (item.find("<Armor>") != -1)
             {
-                Armor a(item);
-                DeepPtr<Obj> o2(&a);
-                list.insertBack(o2);
+                list.insertBack(DeepPtr<Obj>(new Armor(item)));
             }
             else if (item.find("<Healing>") != -1)
             {
-                Healing h(item);
-                DeepPtr<Obj> o2(&h);
-                list.insertBack(o2);
+                list.insertBack(DeepPtr<Obj>(new Healing(item)));
             }
             else if (item.find("<Buff>") != -1)
             {
-                Buff b(item);
-                DeepPtr<Obj> o2(&b);
-                list.insertBack(o2);
+                list.insertBack(DeepPtr<Obj>(new Buff(item)));
             }
             i++;
         }
+        std::cout<<"Database letto"<<std::endl;
     }else{
         std::cout<<"Database non presente"<<std::endl;
     }
 }
 
-void Collection::initialize(){
-    //caricare da un file esterno tutte le informazioni su list
+Collection::~Collection(){
+    std::cout<<"Cancellazione collection"<<std::endl;
+    save();
 }
 
 void Collection::save(){
@@ -59,6 +51,7 @@ void Collection::save(){
         s += "<Item" + std::to_string(i) + '>';
         s += (*iter)->exp();
         s += "</Item" + std::to_string(i) + '>';
+        i++;
     }
     s += "</Data>";
     std::ofstream out("data.xml");
@@ -72,35 +65,71 @@ void Collection::save(){
     }
 }
 
-void Collection::update(){
-
+int Collection::generateId(){
+    int max = -1;
+    for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
+    {
+        if ((*i)->getId()>max)
+        {
+            max = (*i)->getId();
+        }
+        
+    }
+    return max+1;
 }
 
 void Collection::add(std::string n, std::string a_t, std::string r, int d_v, int d){
-    Armor* a = new Armor(0, n, a_t, r, d_v, d);
-    std::cout<<"Creata armatura"<<std::endl;
-    list.insertBack(a);
-    std::cout<<"Inserita armatura"<<std::endl;
+    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Armor(0, n, a_t, r, d_v, d));
+    //std::cout<<"Creata armatura"<<std::endl;
+    int id = generateId();
+    list.insertBack(DeepPtr<Obj>(new Armor(id, n, a_t, r, d_v, d)));
+    //std::cout<<"Inserita armatura"<<std::endl;
+    //delete x;
 }
 
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d){
-    list.insertBack(DeepPtr<Obj>(new Melee(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d)));
+    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Melee(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d));
+    int id = generateId();
+    list.insertBack(DeepPtr<Obj>(new Melee(id,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d)));
 }
 
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m){
-    list.insertBack(DeepPtr<Obj>(new Ranged(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m)));
+    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Ranged(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m));
+    int id = generateId();
+    list.insertBack(DeepPtr<Obj>(new Ranged(id,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m)));
 }
 
 void Collection::add(std::string n, std::string e, int p, int d){
-    list.insertBack(DeepPtr<Obj>(new Buff(0,n,e,p,d)));
+    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Buff(0,n,e,p,d));
+    int id = generateId();
+    list.insertBack(DeepPtr<Obj>(new Buff(id,n,e,p,d)));
 }
 
 void Collection::add(std::string n, std::string a_v, int p){
-    list.insertBack(DeepPtr<Obj>(new Healing(0,n,a_v,p)));
+    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Healing(0,n,a_v,p));
+    int id = generateId();
+    list.insertBack(DeepPtr<Obj>(new Healing(id,n,a_v,p)));
 }
 
-void Collection::remove(int id){
-    // creato metodo remove in tc.cpp (template di c) per la rimozione remove(DeepPtr....)
+bool Collection::remove(int id){
+    C<DeepPtr<Obj>>::const_iterator i = list.begin();
+    bool found = false;
+    while(i != list.end() && !found)
+    {
+        if ((*i)->getId() == id)
+        {
+            found = true;
+        }else{
+            i++;
+        }
+    }
+
+    if (found)
+    {
+        list.remove(*i);
+    }
+
+    return found;
 }
 
 std::string Collection::readFile(std::string filename)          //ritorna tutto il file sottoforma di stringa
@@ -119,15 +148,15 @@ std::string Collection::readFile(std::string filename)          //ritorna tutto 
     //else throw...
 }
 
-bool Collection::checkCopy(const DeepPtr<Obj>& o) const{
+bool Collection::checkId(const int id) const{
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i )
     {
-        if (*(*i) == *o)
+        if ((*i)->getId() == id)
         {   
             return true;
         }
-        return false;
     }
+    return false;
 }
 
 
@@ -135,50 +164,45 @@ bool Collection::checkCopy(const DeepPtr<Obj>& o) const{
 bool Collection::importObj(std::string filename){
     
     std::string file = readFile(filename);
+    if(file.find("<Id>") != -1)
+    {
+        int probId = stoi(Obj::substring(file, "<Id>", "</Id>"));
+        //std::cout<<probId<<std::endl;
+        if(!checkId(probId)){
 
-    DeepPtr<Obj> o;
-
-    if (file.find("<Melee>") != -1)
-    {   
-        Melee m(file);
-        DeepPtr<Obj> o2(&m);
-        o = o2;
-    }
-    else if (file.find("<Ranged>") != -1)
-    {
-        Ranged r(file);
-        DeepPtr<Obj> o2(&r);
-        o = o2;
-    }
-    else if (file.find("<Armor>") != -1)
-    {
-        Armor a(file);
-        DeepPtr<Obj> o2(&a);
-        o = o2;
-    }
-    else if (file.find("<Healing>") != -1)
-    {
-        Healing h(file);
-        DeepPtr<Obj> o2(&h);
-        o = o2;
-    }
-    else if (file.find("<Buff>") != -1)
-    {
-        Buff b(file);
-        DeepPtr<Obj> o2(&b);
-        o = o2;
-    }
-    else{
+            if (file.find("<Melee>") != -1)
+            {   
+                list.insertBack(DeepPtr<Obj>(new Melee(file)));
+            }
+            else if (file.find("<Ranged>") != -1)
+            {
+                list.insertBack(DeepPtr<Obj>(new Ranged(file)));
+            }
+            else if (file.find("<Armor>") != -1)
+            {
+                list.insertBack(DeepPtr<Obj>(new Armor(file)));
+            }
+            else if (file.find("<Healing>") != -1)
+            {
+                list.insertBack(DeepPtr<Obj>(new Healing(file)));
+            }
+            else if (file.find("<Buff>") != -1)
+            {
+                list.insertBack(DeepPtr<Obj>(new Buff(file)));
+            }
+            else{
+                return false;
+            }
+            return true;
+            
+        }else{
+            std::cout<<"Oggetto con lo stesso Id già esistente"<<std::endl;
+            return false;
+        }
+    }else{
+        std::cout<<"File non idoneo"<<std::endl;
         return false;
     }
-
-    if(!(checkCopy(o)))   
-    {
-        list.insertBack(o);
-        return true;
-    }
-
-    return true;
 
 }
 
@@ -220,4 +244,26 @@ void Collection::importChara(){
 
 void Collection::exportChara(){
 
+}
+
+void Collection::show(int id){
+    C<DeepPtr<Obj>>::const_iterator i = list.begin();
+    bool found = false;
+    while(i != list.end() && !found)
+    {
+        if ((*i)->getId() == id)
+        {
+            found = true;
+        }else{
+            i++;
+        }
+    }
+
+    if (found)
+    {
+        std::cout<<*i<<std::endl;
+    }
+    else{
+        std::cout<<"Oggetto non trovato"<<std::endl;
+    }
 }

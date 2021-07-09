@@ -42,7 +42,7 @@ Weapon::~Weapon(){
     std::cout<<"Cancellata arma"<<std::endl;
 }
 
-void Weapon::print(std::ostream& os){
+void Weapon::print(std::ostream& os) const{
     Obj::print(os);
     os<<"Weight : "<<weight<<std::endl;
     os<<"Cost : "<<cost<<std::endl;

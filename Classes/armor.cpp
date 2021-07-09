@@ -27,7 +27,7 @@ Armor::~Armor() {
     std::cout<<"Distrutta armatura"<<std::endl;
 }
 
-void Armor::print(std::ostream& os){
+void Armor::print(std::ostream& os) const{
     Obj::print(os);
     os<<"Armor type : "<<armor_type<<std::endl;
     os<<"Resistance : "<<resistance<<std::endl;
@@ -41,7 +41,7 @@ std::string Armor::exp() const{
     std::string s = "<Armor>";
     s += Obj::exp();
     s += "<ArmorType>" + armor_type + "</ArmorType>";
-    s += "<Res>" + armor_type + "</Res>";
+    s += "<Res>" + resistance + "</Res>";
     s += "<DefValue>" + std::to_string(defense_value) + "</DefValue>";
     s += "<Durability>" + std::to_string(durability) + "</Durability>";
     s += "</Armor>";
