@@ -27,7 +27,7 @@ void Healing::print(std::ostream& os){
 }
 
 
-std::string Healing::exp() {       
+std::string Healing::exp() const{       
     std::string s = "<Healing>";
     s += Consumable::exp();
     s += "<AffValue>" + affected_value + "</AffValue>";

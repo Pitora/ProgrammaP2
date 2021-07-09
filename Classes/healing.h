@@ -26,7 +26,7 @@ public:
 
     virtual void print(std::ostream& os);
 
-    virtual std::string exp();
+    virtual std::string exp() const;
 
 };
 

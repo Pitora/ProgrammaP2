@@ -1,6 +1,7 @@
 #ifndef TC_H
 #define TC_H
 
+#include <iostream>
 
 template<class T>
 class C {
@@ -75,6 +76,7 @@ public:
     }
     else // lista vuota
       first=last=new nodo(t);
+      std::cout<<"Appena inserito nodo"<<std::endl;
   }
 
   void remove(const T& t){

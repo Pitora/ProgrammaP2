@@ -2,41 +2,46 @@
 
 Collection::Collection(){
     std::string s = readFile("data.xml");
-    int i = 0;
-    while(s.find("<Item" + std::to_string(i) + '>'))
-    {
-        std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
-        if (item.find("<Melee>") != -1)
-        {   
-            Melee m(item);
-            DeepPtr<Obj> o2(&m);
-            list.insertBack(o2);
-        }
-        else if (item.find("<Ranged>") != -1)
+    if (s != ""){
+        std::cout<<"Sto leggendo"<<std::endl;
+        int i = 0;
+        while(s.find("<Item" + std::to_string(i) + '>'))
         {
-            Ranged r(item);
-            DeepPtr<Obj> o2(&r);
-            list.insertBack(o2);
+            std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
+            if (item.find("<Melee>") != -1)
+            {   
+                Melee m(item);
+                DeepPtr<Obj> o2(&m);
+                list.insertBack(o2);
+            }
+            else if (item.find("<Ranged>") != -1)
+            {
+                Ranged r(item);
+                DeepPtr<Obj> o2(&r);
+                list.insertBack(o2);
+            }
+            else if (item.find("<Armor>") != -1)
+            {
+                Armor a(item);
+                DeepPtr<Obj> o2(&a);
+                list.insertBack(o2);
+            }
+            else if (item.find("<Healing>") != -1)
+            {
+                Healing h(item);
+                DeepPtr<Obj> o2(&h);
+                list.insertBack(o2);
+            }
+            else if (item.find("<Buff>") != -1)
+            {
+                Buff b(item);
+                DeepPtr<Obj> o2(&b);
+                list.insertBack(o2);
+            }
+            i++;
         }
-        else if (item.find("<Armor>") != -1)
-        {
-            Armor a(item);
-            DeepPtr<Obj> o2(&a);
-            list.insertBack(o2);
-        }
-        else if (item.find("<Healing>") != -1)
-        {
-            Healing h(item);
-            DeepPtr<Obj> o2(&h);
-            list.insertBack(o2);
-        }
-        else if (item.find("<Buff>") != -1)
-        {
-            Buff b(item);
-            DeepPtr<Obj> o2(&b);
-            list.insertBack(o2);
-        }
-        i++;
+    }else{
+        std::cout<<"Database non presente"<<std::endl;
     }
 }
 
@@ -46,6 +51,7 @@ void Collection::initialize(){
 
 void Collection::save(){
     
+    std::cout<<"Sto salvando...";
     std::string s = "<Data>";
     int i = 0;
     for (C<DeepPtr<Obj>>::const_iterator iter = list.begin(); iter != list.end(); ++iter )
@@ -60,6 +66,9 @@ void Collection::save(){
     {
         out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<s;
         out.close();
+        std::cout<<"Salvato!"<<std::endl;
+    }else{
+        std::cout<<"salvataggio non effettuato"<<std::endl;
     }
 }
 
@@ -68,7 +77,10 @@ void Collection::update(){
 }
 
 void Collection::add(std::string n, std::string a_t, std::string r, int d_v, int d){
-    list.insertBack(DeepPtr<Obj>(new Armor(0, n, a_t, r, d_v, d)));
+    Armor* a = new Armor(0, n, a_t, r, d_v, d);
+    std::cout<<"Creata armatura"<<std::endl;
+    list.insertBack(a);
+    std::cout<<"Inserita armatura"<<std::endl;
 }
 
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d){
@@ -107,7 +119,7 @@ std::string Collection::readFile(std::string filename)          //ritorna tutto 
     //else throw...
 }
 
-bool Collection::checkCopy(DeepPtr<Obj>& o) const{
+bool Collection::checkCopy(const DeepPtr<Obj>& o) const{
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i )
     {
         if (*(*i) == *o)
@@ -173,12 +185,16 @@ bool Collection::importObj(std::string filename){
 void Collection::exportObj(int id, std::string filename){
     C<DeepPtr<Obj>>::const_iterator i = list.begin();
     bool found = false;
+
+    std::cout<<"Tentativo di esportazione"<<std::endl;
+
     while(i!= list.end() && !found)
     {
-        ++i;
         if ((*i)->getId() == id)
         {
             found = true;
+        }else{
+            i++;
         }
     }
 
@@ -192,6 +208,8 @@ void Collection::exportObj(int id, std::string filename){
             out.close();
         }
         //else throw...
+    }else{
+        std::cout<<"Oggetto inesistente"<<std::endl;
     }
     //else throw...    
 }

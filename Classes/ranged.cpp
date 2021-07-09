@@ -30,7 +30,7 @@ void Ranged::print(std::ostream& os){
     os<<"Magazine : "<<magazine<<std::endl;
 }
 
-std::string Ranged::exp() {       
+std::string Ranged::exp() const{       
     std::string s = "<Ranged>";
     s += Weapon::exp();
     s += "<Recoil>" + std::to_string(recoil) + "</Recoil>";

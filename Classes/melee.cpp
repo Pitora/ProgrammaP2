@@ -32,7 +32,7 @@ void Melee::print(std::ostream& os){
     os<<"Durability : "<<durability<<std::endl;   
 }
 
-std::string Melee::exp() {       
+std::string Melee::exp() const{       
     std::string s = "<Melee>";
     s += Weapon::exp();
     s += "<AttackType>" + attack_type + "</AttackType>";

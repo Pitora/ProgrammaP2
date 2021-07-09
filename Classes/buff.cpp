@@ -30,7 +30,7 @@ void Buff::print(std::ostream& os){
     os<<"Duration : "<<duration<<std::endl;
 }
 
-std::string Buff::exp() {       
+std::string Buff::exp() const{       
     std::string s = "<Buff>";
     s += Consumable::exp();
     s += "<Effect>" + effect + "</Effect>";

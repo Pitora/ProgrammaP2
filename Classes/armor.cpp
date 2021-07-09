@@ -37,7 +37,7 @@ void Armor::print(std::ostream& os){
 
 int Armor::damageCalculation (int attack_value) {} //Serve una formula decente (potrebbe essere necessaria l'aggiunta di qualche altro valore)
 
-std::string Armor::exp() {     
+std::string Armor::exp() const{     
     std::string s = "<Armor>";
     s += Obj::exp();
     s += "<ArmorType>" + armor_type + "</ArmorType>";

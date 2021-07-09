@@ -47,7 +47,7 @@ void remove(int i);
 
 std::string readFile(std::string filename);
 
-bool checkCopy(DeepPtr<Obj>& o) const;
+bool checkCopy(const DeepPtr<Obj>& o) const;
 
 bool importObj(std::string filename);
 

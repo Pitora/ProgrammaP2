@@ -27,7 +27,7 @@ public:
 
 	virtual int useObject ();
 
-    virtual std::string exp();
+    virtual std::string exp() const;
  
 
 

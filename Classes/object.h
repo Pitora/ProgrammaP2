@@ -25,13 +25,13 @@ public:
 
 	//virtual List<string> getInfo() {} = 0;     quasi sicuro che non si possono utilizzare
 
-    int getId() {return id;}
+    int getId() const {return id;}
 
     std::string getName() {return name;}
 
     bool operator== (const Obj& x) const {return id == x.id;}
 
-    virtual std::string exp();
+    virtual std::string exp() const;
 
     friend std::ostream& operator<<(std::ostream& s, const Obj& base);
 

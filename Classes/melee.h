@@ -34,7 +34,7 @@ public:
 
     //virtual int scaling() {};
 
-    virtual std::string exp();
+    virtual std::string exp() const;
 
 };
 

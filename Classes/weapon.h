@@ -39,7 +39,7 @@ public:
 
 	//virtual List<string> getInfo() {};
 
-    virtual std::string exp();
+    virtual std::string exp() const;
 
     int getAttack() const;
     int getScalingStr() const;

@@ -30,7 +30,7 @@ public:
 
     int damageCalculation (int attack_value);
 
-    virtual std::string exp();
+    virtual std::string exp() const;
 
     int getDefense() const;
 

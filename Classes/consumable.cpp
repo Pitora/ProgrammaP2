@@ -12,4 +12,4 @@ Consumable::~Consumable() {
 
 int Consumable::useObject() {}
 
-std::string Consumable::exp() { return Obj::exp(); }
+std::string Consumable::exp() const { return Obj::exp(); }

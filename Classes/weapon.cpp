@@ -55,7 +55,7 @@ void Weapon::print(std::ostream& os){
     os<<"Scaling Aim : "<<scaling_aim<<std::endl;
 }
 
-std::string Weapon::exp() {     
+std::string Weapon::exp() const{     
     std::string s = "<Weapon>";
     s += Obj::exp();
     s += "<Weight>" + std::to_string(weight) + "</Weight>";

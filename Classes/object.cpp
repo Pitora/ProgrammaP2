@@ -14,7 +14,7 @@ Obj::Obj(std::string imported){
 Obj::~Obj() {}
 
 
-std::string Obj::exp() {       //Esempio di export?
+std::string Obj::exp() const{       //Esempio di export?
     std::string s = "<Obj>";
     s += "<Id>" + std::to_string(id) + "</Id>";
     s += "<Name>" + name + "</Name>";
