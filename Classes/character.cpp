@@ -66,25 +66,25 @@ C<int> Character::getStats() const {
 void Character::setName(std::string s) {
     name_build = s;
 }
-void Character::setWeap(DeepPtr<Weapon> w) {
+void Character::setWeap(const DeepPtr<Weapon>& w) {
     eq_weap = w;
 }
-void Character::addArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing) {
-    if (removing->getId() != -1)
+void Character::moveArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing) {
+    if (removing->getName() != "fake")
     {
         eq_armor.remove(removing);
     }
-    if(adding->getId() != -1)
+    if(adding->getName() != "fake")
     {
         eq_armor.insertBack(DeepPtr<Armor>(adding));
     }
 }
-void Character::addConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing) {
-    if (removing->getId() != -1)
+void Character::moveConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing) {
+    if (removing->getName() != "fake")
     {
         inventory.remove(removing);
     }
-    if(adding->getId() != -1)
+    if(adding->getName() != "fake")
     {
         inventory.insertBack(DeepPtr<Consumable>(adding));
     }

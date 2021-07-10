@@ -7,14 +7,10 @@ Armor::Armor(int i, std::string n, std::string a_t, std::string r, int d_v, int 
 Armor::Armor(std::string imported) : Obj(imported){       
     if (imported.find("<Armor>") != -1 && imported.find("</Armor>") != -1)
     {
-        armor_type = substring(imported, "<ArmorType>", "</ArmorType>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
-
+        armor_type = substring(imported, "<ArmorType>", "</ArmorType>"); 
         resistance = substring(imported, "<Res>", "</Res>");
-
         defense_value = stoi(substring(imported, "<DefValue>", "</DefValue"));
-
         durability = stoi(substring(imported, "<Durability>", "</Durability>"));
-
     }else{
         //throw .....
     }

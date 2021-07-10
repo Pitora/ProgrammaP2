@@ -12,6 +12,8 @@ int main()
 
     Collection c;
 
+    std::cout<<"Ciao"<<std::endl;
+
     //C<DeepPtr<Obj>> c;
 
     //DeepPtr<Weapon> w;

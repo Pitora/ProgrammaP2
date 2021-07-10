@@ -59,6 +59,12 @@ void show(int id);
 
 int generateId();
 
+void modifyCharName(std::string s);
+
+void modifyCharEq(int id1, int id2);
+
+C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
+
 
 
 

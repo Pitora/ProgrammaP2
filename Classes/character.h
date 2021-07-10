@@ -48,9 +48,9 @@ public:
     C<int> getStats() const;
 
     void setName(std::string s);
-    void setWeap(DeepPtr<Weapon> w);
-    void addArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing);
-    void addConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing);
+    void setWeap(const DeepPtr<Weapon>& w);
+    void moveArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing);
+    void moveConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing);
     void setVit(int x);
     void setStr(int x);
     void setDex(int x);
