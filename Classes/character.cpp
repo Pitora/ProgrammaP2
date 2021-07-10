@@ -36,6 +36,68 @@ Character::~Character(){
     std::cout<<"Cancellazione personaggio"<<std::endl;
 }
 
+Character::Character(const Character& x) : name_build(x.name_build), eq_weap(x.eq_weap), eq_armor(x.eq_armor), inventory(x.inventory) {}
+
+std::string Character::getName() const {
+    return name_build;
+}
+
+DeepPtr<Weapon> Character::getEqWeap() const {
+    return eq_weap;
+}
+
+C<DeepPtr<Armor>> Character::getEqArmor() const{
+    return eq_armor;
+}
+
+C<DeepPtr<Consumable>> Character::getInv() const{
+    return inventory;
+}
+
+C<int> Character::getStats() const {
+    C<int> l;
+    l.insertBack(vit);
+    l.insertBack(str);
+    l.insertBack(dex);
+    l.insertBack(aim);
+    return l;
+}
+
+void Character::setName(std::string s) {
+    name_build = s;
+}
+void Character::setWeap(DeepPtr<Weapon> w) {
+    eq_weap = w;
+}
+void Character::addArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing) {
+    if (removing->getId() != -1)
+    {
+        eq_armor.remove(removing);
+    }
+    if(adding->getId() != -1)
+    {
+        eq_armor.insertBack(DeepPtr<Armor>(adding));
+    }
+}
+void Character::addConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing) {
+    if (removing->getId() != -1)
+    {
+        inventory.remove(removing);
+    }
+    if(adding->getId() != -1)
+    {
+        inventory.insertBack(DeepPtr<Consumable>(adding));
+    }
+}
+
+void Character::setVit(int x){vit = x;}
+
+void Character::setStr(int x){str = x;}
+
+void Character::setDex(int x){dex = x;}
+
+void Character::setAim(int x){aim = x;}
+
 
 int Character::damage() const{
     int atk = eq_weap->getAttack();
@@ -51,19 +113,9 @@ int Character::defense() const{
     return def;
 }
 
-DeepPtr<Weapon> Character::getEqWeap() const {
-    return eq_weap;
-}
 
-C<DeepPtr<Armor>> Character::getEqArmor() const{
-    return eq_armor;
-}
 
-C<DeepPtr<Consumable>> Character::getInv() const{
-    return inventory;
-}
-
-std::string Character::exp() {       
+std::string Character::exp() const{       
     std::string s = "<Character>";
     s += "<NameBuild>" + name_build + "</NameBuild>";
     s += "<EqWeap>" + (*eq_weap).exp() + "</EqWeap>";

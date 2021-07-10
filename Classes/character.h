@@ -30,13 +30,14 @@ public:
 	Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a); 
 
     Character(std::string imported);
+
     ~Character();
+
+    Character(const Character& x);
 
     virtual Character* clone() const {return new Character(*this);}
 
-    int damage() const;
-
-    int defense() const;
+    std::string getName() const;
 
     DeepPtr<Weapon> getEqWeap() const;
 
@@ -44,7 +45,22 @@ public:
 
     C<DeepPtr<Consumable>> getInv() const;
 
-    std::string exp();
+    C<int> getStats() const;
+
+    void setName(std::string s);
+    void setWeap(DeepPtr<Weapon> w);
+    void addArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing);
+    void addConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing);
+    void setVit(int x);
+    void setStr(int x);
+    void setDex(int x);
+    void setAim(int x);
+
+    int damage() const;
+
+    int defense() const;
+
+    std::string exp() const;
 
     //void import(string imported);
 

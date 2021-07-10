@@ -242,6 +242,24 @@ void Collection::importChara(std::string filename){
     }
 
     //stessa cosa per armor e inventory
+
+    C<DeepPtr<Armor>> a = chara.getEqArmor();
+    for (C<DeepPtr<Armor>>::const_iterator i = a.begin(); i != a.end(); ++i)
+    {
+        if(!checkId((*i)->getId()))
+        {
+            list.insertBack(DeepPtr<Obj>((*i)->clone()));
+        }
+    }
+
+    C<DeepPtr<Consumable>> c = chara.getInv();
+    for (C<DeepPtr<Consumable>>::const_iterator i = c.begin(); i != c.end(); ++i)
+    {
+        if(!checkId((*i)->getId()))
+        {
+            list.insertBack(DeepPtr<Obj>((*i)->clone()));
+        }
+    }
     
 }
 
