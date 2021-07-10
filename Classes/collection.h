@@ -51,9 +51,9 @@ bool importObj(std::string filename);
 
 void exportObj(int i, std::string filename);
 
-void importChara();
+void importChara(std::string filename);
 
-void exportChara();
+void exportChara(std::string filename);
 
 void show(int id);
 

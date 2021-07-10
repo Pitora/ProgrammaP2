@@ -27,7 +27,7 @@ public:
 
     Character();
 
-	Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv); 
+	Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a); 
 
     Character(std::string imported);
     ~Character();
@@ -37,6 +37,12 @@ public:
     int damage() const;
 
     int defense() const;
+
+    DeepPtr<Weapon> getEqWeap() const;
+
+    C<DeepPtr<Armor>> getEqArmor() const;
+
+    C<DeepPtr<Consumable>> getInv() const;
 
     std::string exp();
 

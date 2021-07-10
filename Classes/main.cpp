@@ -38,15 +38,15 @@ int main()
 
     // c.exportObj(100000, "Ciao.xml");
 
-    c.importObj("Armor.xml");
+    //c.importObj("Armor.xml");
 
-    c.importObj("Weapon.xml");
+    //c.importObj("Weapon.xml");
 
-    c.importObj("Ranged.xml");
+    //c.importObj("Ranged.xml");
 
-    c.importObj("Buff.xml");
+    //c.importObj("Buff.xml");
 
-    c.importObj("Healing.xml");
+    //c.importObj("Healing.xml");
 
     //cout<<"Hello World"<<std::endl;
 

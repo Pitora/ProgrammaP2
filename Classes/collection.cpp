@@ -79,34 +79,26 @@ int Collection::generateId(){
 }
 
 void Collection::add(std::string n, std::string a_t, std::string r, int d_v, int d){
-    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Armor(0, n, a_t, r, d_v, d));
-    //std::cout<<"Creata armatura"<<std::endl;
     int id = generateId();
     list.insertBack(DeepPtr<Obj>(new Armor(id, n, a_t, r, d_v, d)));
-    //std::cout<<"Inserita armatura"<<std::endl;
-    //delete x;
 }
 
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d){
-    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Melee(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d));
     int id = generateId();
     list.insertBack(DeepPtr<Obj>(new Melee(id,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d)));
 }
 
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m){
-    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Ranged(0,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m));
     int id = generateId();
     list.insertBack(DeepPtr<Obj>(new Ranged(id,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m)));
 }
 
 void Collection::add(std::string n, std::string e, int p, int d){
-    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Buff(0,n,e,p,d));
     int id = generateId();
     list.insertBack(DeepPtr<Obj>(new Buff(id,n,e,p,d)));
 }
 
 void Collection::add(std::string n, std::string a_v, int p){
-    //DeepPtr<Obj>* x = new DeepPtr<Obj>(new Healing(0,n,a_v,p));
     int id = generateId();
     list.insertBack(DeepPtr<Obj>(new Healing(id,n,a_v,p)));
 }
@@ -238,12 +230,30 @@ void Collection::exportObj(int id, std::string filename){
     //else throw...    
 }
 
-void Collection::importChara(){
+void Collection::importChara(std::string filename){
+    std::string file = readFile(filename);
 
+    chara = Character(file);
+
+    DeepPtr<Weapon> w = chara.getEqWeap();
+    if(!checkId(w->getId()))
+    {
+        list.insertBack(DeepPtr<Obj>(w->clone()));
+    }
+
+    //stessa cosa per armor e inventory
+    
 }
 
-void Collection::exportChara(){
-
+void Collection::exportChara(std::string filename){
+    std::string ex = chara.exp();
+    std::ofstream out(filename);
+    if (out)
+    {
+        out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
+        out.close();
+    }
+    //else throw...
 }
 
 void Collection::show(int id){
