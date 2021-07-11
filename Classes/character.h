@@ -6,6 +6,8 @@
 #include "armor.h"
 #include "weapon.h"
 #include "consumable.h"
+#include "healing.h"
+#include "buff.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
 
@@ -48,9 +50,10 @@ public:
     C<int> getStats() const;
 
     void setName(std::string s);
-    void setWeap(const DeepPtr<Weapon>& w);
-    void moveArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing);
-    void moveConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing);
+    void setWeap(const DeepPtr<Obj>& w);
+    void disequip(const DeepPtr<Obj>& r);
+    void addArmor(const DeepPtr<Obj>& a);
+    void addConsum(const DeepPtr<Obj>& c);
     void setVit(int x);
     void setStr(int x);
     void setDex(int x);

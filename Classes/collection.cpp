@@ -272,19 +272,9 @@ void Collection::exportChara(std::string filename){
 }
 
 void Collection::show(int id){
-    C<DeepPtr<Obj>>::const_iterator i = list.begin();
-    bool found = false;
-    while(i != list.end() && !found)
-    {
-        if ((*i)->getId() == id)
-        {
-            found = true;
-        }else{
-            i++;
-        }
-    }
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
 
-    if (found)
+    if (i != list.end())
     {
         std::cout<<*i<<std::endl;
     }
@@ -295,48 +285,40 @@ void Collection::show(int id){
 
 void Collection::modifyCharName(std::string s){ chara.setName(s);}
 
-void Collection::modifyCharEq(int id1, int id2){
-    C<DeepPtr<Obj>>::const_iterator i1 = getIter(id1);
-    C<DeepPtr<Obj>>::const_iterator i2 = getIter(id2);
-    
-    if (i1 != list.end()){
-        if (Weapon* w = dynamic_cast<Weapon*>(&(*(*i1))))
-        {
-            chara.setWeap(DeepPtr<Weapon>(new Weapon(*w)));
-        }
-        else if (Armor* a = dynamic_cast<Armor*>(&(*(*i1))))
-        {
-            if(i2 != list.end())
-            {
-                Armor* a2 = dynamic_cast<Armor*>(&(*(*i2)));
-                chara.moveArmor(DeepPtr<Armor>(new Armor(*a)), DeepPtr<Armor>(new Armor(*a2)));
-            }else{
-                chara.moveArmor(DeepPtr<Armor>(new Armor(*a)), DeepPtr<Armor>(new Armor(0, "fake", "","",0,0)));
-            }
-        }
-        else if (Consumable* c = dynamic_cast<Consumable*>(&(*(*i1))))
-        {
-            if(i2 != list.end())
-            {
-                Consumable* c2 = dynamic_cast<Consumable*>(&(*(*i2)));
-                chara.moveConsum(DeepPtr<Consumable>(new Consumable(*c)), DeepPtr<Consumable>(new Consumable(*c2)));
-            }else{
-                chara.moveConsum(DeepPtr<Consumable>(new Consumable(*c)), DeepPtr<Consumable>(new Consumable(0, "fake")));
-            }
-        }    
-    }else if(i2 != list.end()){
-        if (Armor* a = dynamic_cast<Armor*>(&(*(*i2))))
-        {
-            chara.moveArmor(DeepPtr<Armor>(new Armor(0, "fake", "","",0,0)), DeepPtr<Armor>(new Armor(*a)));
-        }
-        else if (Consumable* a = dynamic_cast<Consumable*>(&(*(*i2))))
-        {
-            chara.moveConsum(DeepPtr<Consumable>(new Consumable(0, "fake")), DeepPtr<Consumable>(new Consumable(*a)));
-        }
-    }else{
-        //throw...
-    }
-    
+void Collection::modifyCharWeap(int id){
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    chara.setWeap(*i);
 }
+
+void Collection::addCharArmor(int id1, int id2){
+    if (id2 != -1)
+    {
+        removeCharEq(id2);
+    }
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
+    chara.addArmor(*i);
+}
+
+void Collection::addCharInv(int id1, int id2){
+    if (id2 != -1)
+    {
+        removeCharEq(id2);
+    }
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
+    chara.addConsum(*i);
+}
+
+void Collection::removeCharEq(int id){
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    std::cout<<"Id : "<<(*i)->getId()<<std::endl;
+    if ((i != list.end()) && (dynamic_cast<Healing*>(&(*(*i)))  ||  dynamic_cast<Buff*>(&(*(*i))) || dynamic_cast<Armor*>(&(*(*i)))))
+    {
+        chara.disequip(*i);
+    }
+}
+
+
+
+
 
 

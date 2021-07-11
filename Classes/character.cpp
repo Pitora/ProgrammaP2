@@ -24,7 +24,14 @@ Character::Character(std::string imported){
         i = 0;
         while (s.find("<Consum" + std::to_string(i) + '>') != -1 && s.find("</Consum" + std::to_string(i) + '>') != -1 )
         {   
-            c = new Consumable(Obj::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+            if (s.find("<Healing>") != -1 && s.find("</Healing>") != -1)
+            {
+                c = new Healing(Obj::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+            }
+            else if (s.find("<Buff>") != -1 && s.find("</Buff>") != -1)
+            {
+                c = new Buff(Obj::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+            }
             inventory.insertBack(DeepPtr<Consumable>(c));
             i++;
         }
@@ -66,27 +73,61 @@ C<int> Character::getStats() const {
 void Character::setName(std::string s) {
     name_build = s;
 }
-void Character::setWeap(const DeepPtr<Weapon>& w) {
-    eq_weap = w;
+void Character::setWeap(const DeepPtr<Obj>& w) {
+    eq_weap = DeepPtr<Weapon>(dynamic_cast<Weapon*>(w->clone()));
 }
-void Character::moveArmor(DeepPtr<Armor> adding, DeepPtr<Armor> removing) {
-    if (removing->getName() != "fake")
+
+void Character::disequip(const DeepPtr<Obj>& r){
+    if(dynamic_cast<Armor*>(&(*r)))
     {
-        eq_armor.remove(removing);
+        C<DeepPtr<Armor>>::const_iterator i = eq_armor.begin();
+        bool found = false;
+        while(i != eq_armor.end() && !found)
+        {
+            if((*i)->getId() == r->getId())
+            {
+                found = true;
+            }
+            else{
+                i++;
+            }
+        } 
+        if (found)
+        {
+            eq_armor.remove(*i);
+        }
     }
-    if(adding->getName() != "fake")
+    else if (dynamic_cast<Consumable*>(&(*r)))
     {
-        eq_armor.insertBack(DeepPtr<Armor>(adding));
+        C<DeepPtr<Consumable>>::const_iterator i = inventory.begin();
+        bool found = false;
+        while(i != inventory.end() && !found)
+        {   
+            if((*i)->getId() == r->getId())
+            {
+                found = true;
+            }else{
+                i++;
+            }
+        } 
+        if (found)
+        {
+            inventory.remove(*i);
+        }
     }
 }
-void Character::moveConsum(DeepPtr<Consumable> adding, DeepPtr<Consumable> removing) {
-    if (removing->getName() != "fake")
+void Character::addArmor(const DeepPtr<Obj>& a) {
+    eq_armor.insertBack(DeepPtr<Armor>(dynamic_cast<Armor*>(a->clone())));
+}
+
+void Character::addConsum(const DeepPtr<Obj>& c) {
+    if (Buff* b = dynamic_cast<Buff*>(&(*c)))
     {
-        inventory.remove(removing);
+        inventory.insertBack(DeepPtr<Consumable>(b->clone()));  
     }
-    if(adding->getName() != "fake")
+    else if (Healing* h = dynamic_cast<Healing*>(&(*c)))
     {
-        inventory.insertBack(DeepPtr<Consumable>(adding));
+        inventory.insertBack(DeepPtr<Consumable>(h->clone()));
     }
 }
 
@@ -140,6 +181,7 @@ std::string Character::exp() const{
     }
     s += "</Inventory>";
     s += "</Character>";
+    return s;
 }
 
 //void Character::import(string imported){       

@@ -60,8 +60,12 @@ void show(int id);
 int generateId();
 
 void modifyCharName(std::string s);
+void modifyCharWeap(int id);
+void addCharArmor(int id1, int id2);
+void addCharInv(int id1, int id2);
+void removeCharEq(int id);
 
-void modifyCharEq(int id1, int id2);
+
 
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
 

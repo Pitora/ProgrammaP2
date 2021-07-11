@@ -83,7 +83,6 @@ public:
     }
     else // lista vuota
       first=last=new nodo(t);
-      std::cout<<"Appena inserito nodo"<<std::endl;
   }
 
   void remove(const T& t){
@@ -104,7 +103,7 @@ public:
       {
         first = last = nullptr;
       }
-      if (n == first)
+      else if (n == first)
       {
         n->next->prev == nullptr;
         first = n->next;
