@@ -5,8 +5,12 @@ Obj::Obj(){}
 Obj::Obj(int i, std::string n) : id(i), name(n) {}
 
 Obj::Obj(std::string imported){
-    id = stoi(substring(imported, "<Id>", "</Id>"));
-    name = substring(imported, "<Name>", "</Name>");
+    if (imported.find("<Obj>") != -1 && imported.find("</Obj>") != -1)
+    {
+        id = stoi(substring(imported, "<Id>", "</Id>"));
+        name = substring(imported, "<Name>", "</Name>");
+    }
+    else throw err_import();
 }
 
 Obj::~Obj() {
@@ -31,7 +35,7 @@ std::string Obj::substring(std::string s, std::string w1, std::string w2)
     {
         return s.substr(pos1,pos2-pos1);
     }
-    //else
+    else throw err_sub();
     
 }
 

@@ -12,6 +12,7 @@
 #include "buff.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
+#include "exceptions.cpp"
 
 class Character {
 
@@ -32,7 +33,7 @@ public:
 
 	Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a); 
 
-    Character(std::string imported);
+    Character(std::string imported);        //import
 
     ~Character();
 
@@ -40,16 +41,14 @@ public:
 
     virtual Character* clone() const {return new Character(*this);}
 
+    //get
     std::string getName() const;
-
     DeepPtr<Weapon> getEqWeap() const;
-
     C<DeepPtr<Armor>> getEqArmor() const;
-
     C<DeepPtr<Consumable>> getInv() const;
-
     C<int> getStats() const;
-
+    
+    //set
     void setName(std::string s);
     void setWeap(const DeepPtr<Obj>& w);
     void disequip(const DeepPtr<Obj>& r);
@@ -66,7 +65,6 @@ public:
 
     std::string exp() const;
 
-    //void import(string imported);
 
 };
 

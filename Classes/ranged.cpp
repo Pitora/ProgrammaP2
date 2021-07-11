@@ -15,7 +15,7 @@ Ranged::Ranged(std::string imported) : Weapon(imported){
         magazine = stoi(substring(imported,"<Magazine>","</Magazine>"));
 
     }else{
-        //throw .....
+        throw err_import();
     }
 } 
 

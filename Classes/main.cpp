@@ -14,15 +14,15 @@ int main()
 
     std::cout<<"Ciao"<<std::endl;
 
-    C<DeepPtr<Obj>> esempio = c.getObjType("Consumable", "");
+    // C<DeepPtr<Obj>> esempio = c.getObjType("Consumable", "");
 
-    std::cout<<"Filtro riuscito"<<std::endl;
+    // std::cout<<"Filtro riuscito"<<std::endl;
 
 
-    for (C<DeepPtr<Obj>>::const_iterator i = esempio.begin(); i != esempio.end(); ++i)
-    {
-        std::cout<<*i<<std::endl;
-    }
+    // for (C<DeepPtr<Obj>>::const_iterator i = esempio.begin(); i != esempio.end(); ++i)
+    // {
+    //     std::cout<<*i<<std::endl;
+    // }
 
     //C<DeepPtr<Obj>> c;
 
@@ -78,11 +78,11 @@ int main()
     // c.setCharStr(15);
     // c.setCharDex(16);
     // c.setCharAim(17); 
-    // c.importChara("Chara.xml");
+    c.importChara("Chara.xml");
 
+    c.modifyCharWeap(10);
 
-
-    // c.exportChara("Chara2.xml");
+    c.exportChara("Chara2.xml");
 
     // std::cout<<"FATTO EXPORT"<<std::endl;
 

@@ -1,44 +1,54 @@
 #include "collection.h"
 
 Collection::Collection() : list(){
-    std::string s = readFile("data.xml");
-    if (s != ""){
-        std::cout<<"Sto leggendo"<<std::endl;
-        int i = 0;
-        while(s.find("<Item" + std::to_string(i) + '>') != -1)
-        {
-            std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
-            if (item.find("<Melee>") != -1)
-            {   
-                list.insertBack(DeepPtr<Obj>(new Melee(item)));
-            }
-            else if (item.find("<Ranged>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Ranged(item)));
-            }
-            else if (item.find("<Armor>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Armor(item)));
-            }
-            else if (item.find("<Healing>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Healing(item)));
-            }
-            else if (item.find("<Buff>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Buff(item)));
-            }
-            i++;
-        }
-        std::cout<<"Database letto"<<std::endl;
-    }else{
-        std::cout<<"Database non presente"<<std::endl;
+    try {
+        std::string s = readFile("data.xml");
+        if (s != ""){
+            if (s.find("<Ranged>") != -1 && s.find("</Ranged>") != -1){
+                std::cout<<"Sto leggendo"<<std::endl;
+                int i = 0;
+                while(s.find("<Item" + std::to_string(i) + '>') != -1)
+                {
+                    std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
+                    if (item.find("<Melee>") != -1 && item.find("</Melee>") != -1)
+                    {   
+                        list.insertBack(DeepPtr<Obj>(new Melee(item)));
+                    }
+                    else if (item.find("<Ranged>") != -1 && item.find("</Ranged>") != -1)
+                    {
+                        list.insertBack(DeepPtr<Obj>(new Ranged(item)));
+                    }
+                    else if (item.find("<Armor>") != -1 && item.find("</Armor>") != -1)
+                    {
+                        list.insertBack(DeepPtr<Obj>(new Armor(item)));
+                    }
+                    else if (item.find("<Healing>") != -1 && item.find("</Healing>") != -1)
+                    {
+                        list.insertBack(DeepPtr<Obj>(new Healing(item)));
+                    }
+                    else if (item.find("<Buff>") != -1 && item.find("</Buff>") != -1)
+                    {
+                        list.insertBack(DeepPtr<Obj>(new Buff(item)));
+                    }
+                    i++;
+                }
+                std::cout<<"Database letto"<<std::endl;
+            }else throw err_file();
+        }else throw err_fileNotReadable();
     }
+    catch(err_file){std::cout<<"Il database non è corretto"<<std::endl;}
+    catch(err_fileNotReadable) {std::cout<<"Il database non esiste"<<std::endl;}
+    catch(err_import){std::cout<<"L'importazione non è andata a buon fine"<<std::endl; abort();}
+    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
+    
 }
 
 Collection::~Collection(){
     std::cout<<"Cancellazione collection"<<std::endl;
-    save();
+    try{
+        save();
+    }
+    catch(err_fileNotCreated){std::cout<<"Non è stato possibile salvare il database"<<std::endl;}
 }
 
 void Collection::save(){
@@ -60,9 +70,7 @@ void Collection::save(){
         out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<s;
         out.close();
         std::cout<<"Salvato!"<<std::endl;
-    }else{
-        std::cout<<"salvataggio non effettuato"<<std::endl;
-    }
+    }else throw err_fileNotCreated();
 }
 
 int Collection::generateId(){
@@ -128,7 +136,7 @@ std::string Collection::readFile(std::string filename)          //ritorna tutto 
         in.close();
         return file;
     }
-    //else throw...
+    else throw err_fileNotReadable();
 }
 
 bool Collection::checkId(const int id) const{
@@ -161,164 +169,196 @@ C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
 
 
 bool Collection::importObj(std::string filename){
-    
-    std::string file = readFile(filename);
-    if(file.find("<Id>") != -1)
-    {
-        int probId = stoi(Obj::substring(file, "<Id>", "</Id>"));
-        //std::cout<<probId<<std::endl;
-        if(!checkId(probId)){
+    try{
+        std::string file = readFile(filename);
+        if(file.find("<Id>") != -1 && file.find("</Id>") != -1)
+        {
+            int probId = stoi(Obj::substring(file, "<Id>", "</Id>"));
+            //std::cout<<probId<<std::endl;
+            if(!checkId(probId)){
 
-            if (file.find("<Melee>") != -1)
-            {   
-                list.insertBack(DeepPtr<Obj>(new Melee(file)));
-            }
-            else if (file.find("<Ranged>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Ranged(file)));
-            }
-            else if (file.find("<Armor>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Armor(file)));
-            }
-            else if (file.find("<Healing>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Healing(file)));
-            }
-            else if (file.find("<Buff>") != -1)
-            {
-                list.insertBack(DeepPtr<Obj>(new Buff(file)));
-            }
-            else{
+                if (file.find("<Melee>") != -1 && file.find("</Melee>") != -1)
+                {   
+                    list.insertBack(DeepPtr<Obj>(new Melee(file)));
+                }
+                else if (file.find("<Ranged>") != -1 && file.find("</Ranged>") != -1)
+                {
+                    list.insertBack(DeepPtr<Obj>(new Ranged(file)));
+                }
+                else if (file.find("<Armor>") != -1 && file.find("</Armor>") != -1)
+                {
+                    list.insertBack(DeepPtr<Obj>(new Armor(file)));
+                }
+                else if (file.find("<Healing>") != -1 && file.find("</Healing>") != -1)
+                {
+                    list.insertBack(DeepPtr<Obj>(new Healing(file)));
+                }
+                else if (file.find("<Buff>") != -1 && file.find("</Buff>") != -1)
+                {
+                    list.insertBack(DeepPtr<Obj>(new Buff(file)));
+                }
+                else{
+                    throw err_file();
+                    return false;
+                }
+                return true;
+                
+            }else{
+                throw err_notNew();
                 return false;
             }
-            return true;
-            
         }else{
-            std::cout<<"Oggetto con lo stesso Id già esistente"<<std::endl;
+            throw err_file();
             return false;
         }
-    }else{
-        std::cout<<"File non idoneo"<<std::endl;
-        return false;
     }
+    catch(err_file){std::cout<<"Il file non è corretto"<<std::endl; return false;}
+    catch(err_fileNotReadable){std::cout<<"Il file non esiste"<<std::endl;}
+    catch(err_import){std::cout<<"Il file non esiste"<<std::endl;}
+    catch(err_notNew){std::cout<<"L'oggetto è già presente"<<std::endl; return false;}
+    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
+
 
 }
 
 void Collection::exportObj(int id, std::string filename){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     
-
-    std::cout<<"Tentativo di esportazione"<<std::endl;
-
-    if (i != list.end())
-    {
-        std::string ex = (*i)->exp();
-        std::ofstream out(filename);
-        if(out)
+    try {
+        if (i != list.end())
         {
-            out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
-            out.close();
-        }
-        //else throw...
-    }else{
-        std::cout<<"Oggetto inesistente"<<std::endl;
-    }
-    //else throw...    
+            std::string ex = (*i)->exp();
+            std::ofstream out(filename);
+            if(out)
+            {
+                out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
+                out.close();
+            }
+            else throw err_fileNotCreated();
+        }else throw err_notFound();  
+    } 
+    catch(err_fileNotCreated){std::cout<<"Il file non è stato creato"<<std::endl;} 
+    catch(err_notFound){std::cout<<"L'oggetto da esportare non esiste"<<std::endl;}
+
 }
 
 void Collection::importChara(std::string filename){
-    std::string file = readFile(filename);
+    try{
+        std::string file = readFile(filename);
 
-    chara = Character(file);
+        chara = Character(file);
 
-    DeepPtr<Weapon> w = chara.getEqWeap();
-    if(!checkId(w->getId()))
-    {
-        
-        if (Melee* m = dynamic_cast<Melee*>(&(*w)))
+        DeepPtr<Weapon> w = chara.getEqWeap();
+        if(!checkId(w->getId()))
         {
-            list.insertBack(DeepPtr<Obj>(new Melee(*m)));
-        }
-        else if (Ranged* b = dynamic_cast<Ranged*>(&(*w)))
-        {
-            list.insertBack(DeepPtr<Obj>(new Ranged(*b)));
-        }
-    }
-
-    C<DeepPtr<Armor>> a = chara.getEqArmor();
-    for (C<DeepPtr<Armor>>::const_iterator i = a.begin(); i != a.end(); ++i)
-    {
-        if(!checkId((*i)->getId()))
-        {
-            list.insertBack(DeepPtr<Obj>(new Armor(*(*i))));
-        }
-    }
-
-    C<DeepPtr<Consumable>> c = chara.getInv();
-    for (C<DeepPtr<Consumable>>::const_iterator i = c.begin(); i != c.end(); ++i)
-    {
-        if(!checkId((*i)->getId()))
-        {
-            if (Healing* h = dynamic_cast<Healing*>(&(*(*i))))
+            
+            if (Melee* m = dynamic_cast<Melee*>(&(*w)))
             {
-                list.insertBack(DeepPtr<Obj>(new Healing(*h)));
+                list.insertBack(DeepPtr<Obj>(new Melee(*m)));
             }
-            else if (Buff* b = dynamic_cast<Buff*>(&(*(*i))))
+            else if (Ranged* b = dynamic_cast<Ranged*>(&(*w)))
             {
-                list.insertBack(DeepPtr<Obj>(new Buff(*b)));
+                list.insertBack(DeepPtr<Obj>(new Ranged(*b)));
             }
         }
+
+        C<DeepPtr<Armor>> a = chara.getEqArmor();
+        for (C<DeepPtr<Armor>>::const_iterator i = a.begin(); i != a.end(); ++i)
+        {
+            if(!checkId((*i)->getId()))
+            {
+                list.insertBack(DeepPtr<Obj>(new Armor(*(*i))));
+            }
+        }
+
+        C<DeepPtr<Consumable>> c = chara.getInv();
+        for (C<DeepPtr<Consumable>>::const_iterator i = c.begin(); i != c.end(); ++i)
+        {
+            if(!checkId((*i)->getId()))
+            {
+                if (Healing* h = dynamic_cast<Healing*>(&(*(*i))))
+                {
+                    list.insertBack(DeepPtr<Obj>(new Healing(*h)));
+                }
+                else if (Buff* b = dynamic_cast<Buff*>(&(*(*i))))
+                {
+                    list.insertBack(DeepPtr<Obj>(new Buff(*b)));
+                }
+            }
+        }
     }
+    catch(err_fileNotReadable){std::cout<<"Il file non esiste"<<std::endl; abort();}
+    catch(err_import){std::cout<<"L'importazione non è andata a buon fine"<<std::endl; abort();}
+    catch(err_sub) {std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
     
 }
 
 void Collection::exportChara(std::string filename){
     std::string ex = chara.exp();
-    std::ofstream out(filename);
-    if (out)
-    {
-        out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
-        out.close();
+
+    try{
+        std::ofstream out(filename);
+        if (out)
+        {
+            out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
+            out.close();
+        }
+        else throw err_fileNotCreated();
     }
-    //else throw...
+    catch(err_fileNotCreated){std::cout<<"Il file non è stato creato"<<std::endl;}
 }
 
 void Collection::show(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    try{
+        if (i != list.end())
+        {
+            std::cout<<*i<<std::endl;
+        }
+        else{
+            throw err_notFound();
+        }
+    }
+    catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
 
-    if (i != list.end())
-    {
-        std::cout<<*i<<std::endl;
-    }
-    else{
-        std::cout<<"Oggetto non trovato"<<std::endl;
-    }
 }
 
 void Collection::modifyCharName(std::string s){ chara.setName(s);}
 
 void Collection::modifyCharWeap(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-    chara.setWeap(*i);
+    try {
+        chara.setWeap(*i);
+    }
+    catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
 }
 
 void Collection::addCharArmor(int id1, int id2){
-    if (id2 != -1)
-    {
-        removeCharEq(id2);
+    try{
+        if (id2 != -1)
+        {
+            removeCharEq(id2);
+        }
+        C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
+        chara.addArmor(*i);
     }
-    C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-    chara.addArmor(*i);
+    catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
+    catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
+    catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso"<<std::endl;}
 }
 
 void Collection::addCharInv(int id1, int id2){
-    if (id2 != -1)
-    {
-        removeCharEq(id2);
+    try{
+        if (id2 != -1)
+        {
+            removeCharEq(id2);
+        }
+        C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
+        chara.addConsum(*i);
     }
-    C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-    chara.addConsum(*i);
+    catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
+    catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
+    catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso"<<std::endl;}
 }
 
 void Collection::removeCharEq(int id){
@@ -326,7 +366,7 @@ void Collection::removeCharEq(int id){
     if ((i != list.end()) && (dynamic_cast<Healing*>(&(*(*i)))  ||  dynamic_cast<Buff*>(&(*(*i))) || dynamic_cast<Armor*>(&(*(*i)))))
     {
         chara.disequip(*i);
-    }
+    }else throw err_wrongType();
 }
 
 void Collection::setCharVit(int x){chara.setVit(x);}

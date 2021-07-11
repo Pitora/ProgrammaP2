@@ -2,6 +2,7 @@
 #define TC_H
 
 #include <iostream>
+#include "exceptions.cpp"
 
 template<class T>
 class C {
@@ -17,12 +18,9 @@ private:
   nodo *first, *last; 
 
   static void destroy(nodo* n) {
-    std::cout<<"Distruzione nodo in corso....."<<std::endl;
     if (n != nullptr) {
-      //std::cout<<n->info->getId()<<std::endl;
       destroy(n->next);
       delete n;
-      std::cout<<"Distrutto nodo"<<std::endl;
     }
   }
   
@@ -46,7 +44,6 @@ public:
 
   C() {
     first = last = nullptr;
-    std::cout<<"Creata lista"<<std::endl;
   }
   
   C(const C& l) {
@@ -62,7 +59,6 @@ public:
   }
     
   ~C() { 
-    std::cout<<"Distruzione nodi"<<std::endl; 
     destroy(first); 
   }
 
@@ -117,7 +113,7 @@ public:
         n->next->prev = n->prev;
       }
       delete n;     
-    }
+    }else throw err_nodeNotFound();
   }
 
     

@@ -4,6 +4,7 @@
 #include<iostream>
 #include <string>
 #include "consumable.h"
+#include "exceptions.cpp"
 
 
 class Buff : public Consumable {

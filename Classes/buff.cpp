@@ -14,9 +14,7 @@ Buff::Buff(std::string imported) : Consumable(imported){
 
         duration = stoi(substring(imported, "<Duration>", "</Duration>"));
 
-    }else{
-        //throw .....
-    }
+    }else throw err_import();
 } 
 
 Buff::~Buff(){

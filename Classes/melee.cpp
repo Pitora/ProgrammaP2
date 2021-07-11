@@ -14,7 +14,7 @@ Melee::Melee(std::string imported) : Weapon(imported){
         //precision = stoi(substring(imported,"<Precision>","</Precision>"));
 
     }else{
-        //throw .....
+        throw err_import();
     }
 } 
 

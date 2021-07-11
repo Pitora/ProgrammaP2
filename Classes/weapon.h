@@ -4,6 +4,7 @@
 #include<iostream>
 #include <string>
 #include "object.h"
+#include "exceptions.cpp"
 
 
 class Weapon : public Obj{

@@ -29,7 +29,7 @@ Weapon::Weapon(std::string imported) : Obj(imported){
 
 
     }else{
-        //throw .....
+        throw err_import();
     }
 } 
 

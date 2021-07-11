@@ -9,6 +9,7 @@
 #include "character.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
+#include "exceptions.cpp"
 
 
 class Collection {

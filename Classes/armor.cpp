@@ -11,9 +11,7 @@ Armor::Armor(std::string imported) : Obj(imported){
         resistance = substring(imported, "<Res>", "</Res>");
         defense_value = stoi(substring(imported, "<DefValue>", "</DefValue"));
         durability = stoi(substring(imported, "<Durability>", "</Durability>"));
-    }else{
-        //throw .....
-    }
+    }else throw err_import();
 
 } 
 

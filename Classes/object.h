@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include <string>
+#include "exceptions.cpp"
 
 class Obj {
 

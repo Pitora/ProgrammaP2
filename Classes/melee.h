@@ -4,6 +4,7 @@
 #include<iostream>
 #include <string>
 #include "weapon.h"
+#include "exceptions.cpp"
 
 
 class Melee : public Weapon {

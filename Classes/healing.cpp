@@ -11,9 +11,7 @@ Healing::Healing(std::string imported) : Consumable(imported){
 
         potency = stoi(substring(imported, "<Potency>", "</Potency>"));
 
-    }else{
-        //throw .....
-    }
+    }else throw err_import();
 } 
 
 Healing::~Healing() {

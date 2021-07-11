@@ -7,7 +7,10 @@ Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor,
 Character::Character(std::string imported){
     if (imported.find("<Character>") != -1 && imported.find("</Character>") != -1)
     {
-        name_build = Obj::substring(imported, "<NameBuild>", "</NameBuild>"); 
+        if (imported.find("<NameBuild>") != -1 && imported.find("</NameBuild>") != -1)
+        {
+            name_build = Obj::substring(imported, "<NameBuild>", "</NameBuild>"); 
+        }else throw err_import();
         if (imported.find("<EqWeap>") != -1 && imported.find("</EqWeap>") != -1)
         {
             if (imported.find("<Melee>") != -1 && imported.find("</Melee>") != -1)
@@ -18,7 +21,7 @@ Character::Character(std::string imported){
             {
                 eq_weap = DeepPtr<Weapon>(new Ranged(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
-        }       
+        }else throw err_import();       
         
         std::string s = Obj::substring(imported, "<EqArmor>", "</EqArmor>");
         Armor* a; 
@@ -54,9 +57,8 @@ Character::Character(std::string imported){
             str = stoi(Obj::substring(imported,"<Str>","</Str>"));
             dex = stoi(Obj::substring(imported,"<Dex>","</Dex>"));
             aim = stoi(Obj::substring(imported,"<Aim>","</Aim>"));
-        }
-
-    }
+        }else throw err_import();
+    }else throw err_import();
 }
 
 Character::~Character(){
@@ -94,7 +96,10 @@ void Character::setName(std::string s) {
     name_build = s;
 }
 void Character::setWeap(const DeepPtr<Obj>& w) {
-    eq_weap = DeepPtr<Weapon>(dynamic_cast<Weapon*>(w->clone()));
+    if (dynamic_cast<Weapon*>(&(*w)))
+    {
+        eq_weap = DeepPtr<Weapon>(dynamic_cast<Weapon*>(w->clone()));
+    }else throw err_wrongType();
 }
 
 void Character::disequip(const DeepPtr<Obj>& r){
@@ -115,7 +120,7 @@ void Character::disequip(const DeepPtr<Obj>& r){
         if (found)
         {
             eq_armor.remove(*i);
-        }
+        }else throw err_notFound();
     }
     else if (dynamic_cast<Consumable*>(&(*r)))
     {
@@ -133,11 +138,14 @@ void Character::disequip(const DeepPtr<Obj>& r){
         if (found)
         {
             inventory.remove(*i);
-        }
-    }
+        }else throw err_notFound();
+    }else throw err_disequip();
 }
 void Character::addArmor(const DeepPtr<Obj>& a) {
-    eq_armor.insertBack(DeepPtr<Armor>(dynamic_cast<Armor*>(a->clone())));
+    if (dynamic_cast<Armor*>(&(*a)))
+    {
+        eq_armor.insertBack(DeepPtr<Armor>(dynamic_cast<Armor*>(a->clone())));
+    }else throw err_wrongType();
 }
 
 void Character::addConsum(const DeepPtr<Obj>& c) {
@@ -148,7 +156,7 @@ void Character::addConsum(const DeepPtr<Obj>& c) {
     else if (Healing* h = dynamic_cast<Healing*>(&(*c)))
     {
         inventory.insertBack(DeepPtr<Consumable>(new Healing(*h)));
-    }
+    }else throw err_wrongType();
 }
 
 void Character::setVit(int x){vit = x;}
