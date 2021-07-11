@@ -33,6 +33,7 @@ public:
     virtual std::string exp() const;
 
     int getDefense() const;
+    std::string getArmorType() const;
 
 };
 

@@ -323,7 +323,6 @@ void Collection::addCharInv(int id1, int id2){
 
 void Collection::removeCharEq(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-    std::cout<<"Id : "<<(*i)->getId()<<std::endl;
     if ((i != list.end()) && (dynamic_cast<Healing*>(&(*(*i)))  ||  dynamic_cast<Buff*>(&(*(*i))) || dynamic_cast<Armor*>(&(*(*i)))))
     {
         chara.disequip(*i);
@@ -336,7 +335,31 @@ void Collection::setCharDex(int x){chara.setDex(x);}
 void Collection::setCharAim(int x){chara.setAim(x);}
 
 
-
+const C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2) const{
+    C<DeepPtr<Obj>> l;
+    for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
+    {
+        if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))    //Ampliabile
+        {
+            l.insertBack(*i);
+        }
+        else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))   //Ampliabile
+        {
+            l.insertBack(*i);
+        }
+        else if (type == "Armor")
+        {
+            if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))          
+            {
+                if (a->getArmorType() == type2)
+                {
+                    l.insertBack(*i);
+                }
+            }
+        }
+    }
+    return l;
+}
 
 
 

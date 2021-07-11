@@ -71,6 +71,8 @@ void setCharAim(int x);
 
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
 
+const C<DeepPtr<Obj>> getObjType(std::string type, std::string type2) const;
+
 
 
 

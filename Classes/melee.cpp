@@ -7,11 +7,8 @@ Melee::Melee(int i, std::string n, int w, int c, int r, int rav, int cc, int s_s
 Melee::Melee(std::string imported) : Weapon(imported){       
     if (imported.find("<Melee>") != -1 && imported.find("</Melee>") != -1)
     {
-        std::cout<<substring(imported,"<AttackType>","</AttackType>")<<std::endl;
         attack_type = substring(imported,"<AttackType>","</AttackType>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
-        std::cout<<substring(imported,"<AddEff>","</AddEff>")<<std::endl;
         added_effect = substring(imported,"<AddEff>","</AddEff>");
-
         durability = stoi(substring(imported,"<Durability>","</Durability>"));
 
         //precision = stoi(substring(imported,"<Precision>","</Precision>"));

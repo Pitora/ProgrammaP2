@@ -17,10 +17,14 @@ Armor::Armor(std::string imported) : Obj(imported){
 
 } 
 
-int Armor::getDefense() const {return defense_value;}
-
 Armor::~Armor() {
     std::cout<<"Distrutta armatura"<<std::endl;
+}
+
+int Armor::getDefense() const {return defense_value;}
+
+std::string Armor::getArmorType() const{
+    return armor_type;
 }
 
 void Armor::print(std::ostream& os) const{
@@ -31,7 +35,6 @@ void Armor::print(std::ostream& os) const{
     os<<"Durability : "<<durability<<std::endl;
 }
 
-int Armor::damageCalculation (int attack_value) {} //Serve una formula decente (potrebbe essere necessaria l'aggiunta di qualche altro valore)
 
 std::string Armor::exp() const{     
     std::string s = "<Armor>";
