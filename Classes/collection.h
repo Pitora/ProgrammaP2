@@ -64,8 +64,10 @@ void modifyCharWeap(int id);
 void addCharArmor(int id1, int id2);
 void addCharInv(int id1, int id2);
 void removeCharEq(int id);
-
-
+void setCharVit(int x);
+void setCharStr(int x);
+void setCharDex(int x);
+void setCharAim(int x);
 
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
 

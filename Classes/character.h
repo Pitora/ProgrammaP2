@@ -5,6 +5,8 @@
 #include<string>
 #include "armor.h"
 #include "weapon.h"
+#include "melee.h"
+#include "ranged.h"
 #include "consumable.h"
 #include "healing.h"
 #include "buff.h"
@@ -19,11 +21,10 @@ private:
     DeepPtr<Weapon> eq_weap;
     C<DeepPtr<Armor>> eq_armor;
     C<DeepPtr<Consumable>> inventory;
-    //Nomi temporanei
     int vit; 
     int str;
     int dex;
-    int aim; //brutto nome
+    int aim; 
     
 public:
 

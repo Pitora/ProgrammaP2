@@ -7,8 +7,19 @@ Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor,
 Character::Character(std::string imported){
     if (imported.find("<Character>") != -1 && imported.find("</Character>") != -1)
     {
-        name_build = Obj::substring(imported, "<NameBuild>", "</NameBuild>");        
-        eq_weap = DeepPtr<Weapon>(new Weapon(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
+        name_build = Obj::substring(imported, "<NameBuild>", "</NameBuild>"); 
+        if (imported.find("<EqWeap>") != -1 && imported.find("</EqWeap>") != -1)
+        {
+            if (imported.find("<Melee>") != -1 && imported.find("</Melee>") != -1)
+            {
+                eq_weap = DeepPtr<Weapon>(new Melee(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
+            }
+            else if (imported.find("<Ranged>") != -1 && imported.find("</Ranged>") != -1)
+            {
+                eq_weap = DeepPtr<Weapon>(new Ranged(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
+            }
+        }       
+        
         std::string s = Obj::substring(imported, "<EqArmor>", "</EqArmor>");
         Armor* a; 
         int i = 0;
@@ -36,6 +47,15 @@ Character::Character(std::string imported){
             i++;
         }
         delete c;
+
+        if(imported.find("<Stats>") != -1 && imported.find("</Stats>") != -1)
+        {
+            vit = stoi(Obj::substring(imported,"<Vit>","</Vit>"));
+            str = stoi(Obj::substring(imported,"<Str>","</Str>"));
+            dex = stoi(Obj::substring(imported,"<Dex>","</Dex>"));
+            aim = stoi(Obj::substring(imported,"<Aim>","</Aim>"));
+        }
+
     }
 }
 
@@ -123,11 +143,11 @@ void Character::addArmor(const DeepPtr<Obj>& a) {
 void Character::addConsum(const DeepPtr<Obj>& c) {
     if (Buff* b = dynamic_cast<Buff*>(&(*c)))
     {
-        inventory.insertBack(DeepPtr<Consumable>(b->clone()));  
+        inventory.insertBack(DeepPtr<Consumable>(new Buff(*b)));  
     }
     else if (Healing* h = dynamic_cast<Healing*>(&(*c)))
     {
-        inventory.insertBack(DeepPtr<Consumable>(h->clone()));
+        inventory.insertBack(DeepPtr<Consumable>(new Healing(*h)));
     }
 }
 
@@ -180,6 +200,12 @@ std::string Character::exp() const{
         c++;
     }
     s += "</Inventory>";
+    s += "<Stats>";
+    s += "<Vit>" + std::to_string(vit) + "</Vit>";
+    s += "<Str>" + std::to_string(str) + "</Str>";
+    s += "<Dex>" + std::to_string(dex) + "</Dex>";
+    s += "<Aim>" + std::to_string(aim) + "</Aim>";
+    s += "</Stats>";
     s += "</Character>";
     return s;
 }

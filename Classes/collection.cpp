@@ -235,17 +235,23 @@ void Collection::importChara(std::string filename){
     DeepPtr<Weapon> w = chara.getEqWeap();
     if(!checkId(w->getId()))
     {
-        list.insertBack(DeepPtr<Obj>(w->clone()));
+        
+        if (Melee* m = dynamic_cast<Melee*>(&(*w)))
+        {
+            list.insertBack(DeepPtr<Obj>(new Melee(*m)));
+        }
+        else if (Ranged* b = dynamic_cast<Ranged*>(&(*w)))
+        {
+            list.insertBack(DeepPtr<Obj>(new Ranged(*b)));
+        }
     }
-
-    //stessa cosa per armor e inventory
 
     C<DeepPtr<Armor>> a = chara.getEqArmor();
     for (C<DeepPtr<Armor>>::const_iterator i = a.begin(); i != a.end(); ++i)
     {
         if(!checkId((*i)->getId()))
         {
-            list.insertBack(DeepPtr<Obj>((*i)->clone()));
+            list.insertBack(DeepPtr<Obj>(new Armor(*(*i))));
         }
     }
 
@@ -254,7 +260,14 @@ void Collection::importChara(std::string filename){
     {
         if(!checkId((*i)->getId()))
         {
-            list.insertBack(DeepPtr<Obj>((*i)->clone()));
+            if (Healing* h = dynamic_cast<Healing*>(&(*(*i))))
+            {
+                list.insertBack(DeepPtr<Obj>(new Healing(*h)));
+            }
+            else if (Buff* b = dynamic_cast<Buff*>(&(*(*i))))
+            {
+                list.insertBack(DeepPtr<Obj>(new Buff(*b)));
+            }
         }
     }
     
@@ -316,6 +329,13 @@ void Collection::removeCharEq(int id){
         chara.disequip(*i);
     }
 }
+
+void Collection::setCharVit(int x){chara.setVit(x);}
+void Collection::setCharStr(int x){chara.setStr(x);}
+void Collection::setCharDex(int x){chara.setDex(x);}
+void Collection::setCharAim(int x){chara.setAim(x);}
+
+
 
 
 
