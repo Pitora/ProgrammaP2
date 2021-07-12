@@ -69,6 +69,7 @@ public slots:
     void enableBox() const;
     void changeItem();
     void saveItem() ;
+
 };
 
 #endif // ADDITEM_H

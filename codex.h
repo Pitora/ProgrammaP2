@@ -5,31 +5,32 @@
 #include "window.h"
 
 #include <QWidget>
-#include <QLabel>
-#include <QComboBox>
-#include <QTabWidget>
 #include <QPushButton>
 #include <QHBoxLayout>
-#include <QLineEdit>
 #include <QVBoxLayout>
-#include <QFormLayout>
-#include <QSpacerItem>
+#include <QScrollArea>
+#include <QTextEdit>
 #include <utility>
 
 class Controller;
 
-class Codex : public QWidget
+class Codex : public QDialog
 {
     Q_OBJECT
 private:
     Controller* c;
+    QScrollArea* container;
+    QTextEdit* details;
 
 public:
     explicit Codex(QWidget *parent = nullptr);
 
+    void addScrollArea();
+
 signals:
 
 public slots:
+    void showDetails();
 };
 
 #endif // CODEX_H
