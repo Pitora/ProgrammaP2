@@ -101,12 +101,12 @@ public:
       }
       else if (n == first)
       {
-        n->next->prev == nullptr;
+        n->next->prev = nullptr;
         first = n->next;
       }
       else if (n == last)
       {
-        n->prev->next == nullptr;
+        n->prev->next = nullptr;
         last = n->prev;
       }else{
         n->prev->next = n->next;

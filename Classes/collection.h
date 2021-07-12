@@ -1,3 +1,6 @@
+#ifndef COLLECTION_H
+#define COLLECTION_H
+
 #include<iostream>
 #include<string>
 #include<fstream>
@@ -10,7 +13,6 @@
 #include "tc.cpp"
 #include "tdeep.cpp"
 #include "exceptions.cpp"
-
 
 class Collection {
 
@@ -71,10 +73,8 @@ void setCharDex(int x);
 void setCharAim(int x);
 
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
-
-const C<DeepPtr<Obj>> getObjType(std::string type, std::string type2) const;
-
-
-
+C<DeepPtr<Obj>> getObjType(std::string type, std::string type2) const;
 
 };
+
+#endif

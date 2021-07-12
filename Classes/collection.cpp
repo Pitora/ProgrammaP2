@@ -4,7 +4,7 @@ Collection::Collection() : list(){
     try {
         std::string s = readFile("data.xml");
         if (s != ""){
-            if (s.find("<Ranged>") != -1 && s.find("</Ranged>") != -1){
+            if (s.find("<Data>") != -1 && s.find("</Data>") != -1){
                 std::cout<<"Sto leggendo"<<std::endl;
                 int i = 0;
                 while(s.find("<Item" + std::to_string(i) + '>') != -1)
@@ -375,10 +375,11 @@ void Collection::setCharDex(int x){chara.setDex(x);}
 void Collection::setCharAim(int x){chara.setAim(x);}
 
 
-const C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2) const{
+ C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2 ) const{
     C<DeepPtr<Obj>> l;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
     {
+        std::cout<< "nel for" << std::endl;
         if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))    //Ampliabile
         {
             l.insertBack(*i);
