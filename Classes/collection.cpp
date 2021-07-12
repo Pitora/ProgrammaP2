@@ -34,12 +34,15 @@ Collection::Collection() : list(){
                 }
                 std::cout<<"Database letto"<<std::endl;
             }else throw err_file();
-        }else throw err_fileNotReadable();
+        }else{
+            initialize();
+            throw err_fileNotReadable();
+        }
     }
-    catch(err_file){std::cout<<"Il database non è corretto"<<std::endl;}
-    catch(err_fileNotReadable) {std::cout<<"Il database non esiste"<<std::endl;}
-    catch(err_import){std::cout<<"L'importazione non è andata a buon fine"<<std::endl; abort();}
-    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
+    catch(err_file){std::cout<<"Il database non è corretto."<<std::endl;}
+    catch(err_fileNotReadable) {std::cout<<"Il database non esiste. Sono stati generati gli oggetti di default."<<std::endl;}
+    catch(err_import){std::cout<<"L'importazione non è andata a buon fine."<<std::endl; abort();}
+    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti."<<std::endl; abort();}
     
 }
 
@@ -49,6 +52,26 @@ Collection::~Collection(){
         save();
     }
     catch(err_fileNotCreated){std::cout<<"Non è stato possibile salvare il database"<<std::endl;}
+}
+
+void Collection::initialize(){
+    add("Broken Helm", "HELM", "NO EFFECT", 5, 50);
+    add("Broken chest", "CHEST", "NO EFFECT", 10, 50);
+    add("Broken gloves", "GLOVES", "NO EFFECT", 4, 50);
+    add("Broken boots", "BOOTS", "NO EFFECT", 7, 50);
+    add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "slash", "no effect", 500);
+    add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
+    add("Bad apple", "ALL STATS UP", 1, 50);
+    add("Broken glass of water", "HP", 1);
+    modifyCharName("Default build");
+    modifyCharWeap(5);
+    modifyCharArmor(0,-1);
+    modifyCharArmor(1,-1);
+    modifyCharArmor(2,-1);
+    modifyCharArmor(3,-1);
+    modifyCharInv(8,-1);
+    modifyCharInv(8,-1);
+    modifyCharInv(8,-1);
 }
 
 void Collection::save(){
@@ -218,7 +241,6 @@ bool Collection::importObj(std::string filename){
     catch(err_notNew){std::cout<<"L'oggetto è già presente"<<std::endl; return false;}
     catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
 
-
 }
 
 void Collection::exportObj(int id, std::string filename){
@@ -333,7 +355,7 @@ void Collection::modifyCharWeap(int id){
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
 }
 
-void Collection::addCharArmor(int id1, int id2){
+void Collection::modifyCharArmor(int id1, int id2){
     try{
         if (id2 != -1)
         {
@@ -347,7 +369,7 @@ void Collection::addCharArmor(int id1, int id2){
     catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso"<<std::endl;}
 }
 
-void Collection::addCharInv(int id1, int id2){
+void Collection::modifyCharInv(int id1, int id2){
     try{
         if (id2 != -1)
         {
@@ -373,6 +395,8 @@ void Collection::setCharVit(int x){chara.setVit(x);}
 void Collection::setCharStr(int x){chara.setStr(x);}
 void Collection::setCharDex(int x){chara.setDex(x);}
 void Collection::setCharAim(int x){chara.setAim(x);}
+
+const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(new Character(chara));}
 
 
  C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2 ) const{

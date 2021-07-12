@@ -177,9 +177,9 @@ void Window::setController(Controller *c){
     connect(import,SIGNAL(clicked()),controller,SLOT(importChar()));
     connect(calculate,SIGNAL(clicked()),controller,SLOT(calc()));
 
-    connect(create->actions()[0],SIGNAL(triggered()),controller,SLOT(createWeapon()));
-    connect(create->actions()[1],SIGNAL(triggered()),controller,SLOT(createArmor()));
-    connect(create->actions()[2],SIGNAL(triggered()),controller,SLOT(createConsumable()));
+    connect(create->actions()[0],SIGNAL(triggered()),controller,SLOT(createWeaponDialog()));
+    connect(create->actions()[1],SIGNAL(triggered()),controller,SLOT(createArmorDialog()));
+    connect(create->actions()[2],SIGNAL(triggered()),controller,SLOT(createConsumableDialog()));
     connect(create->actions()[3],SIGNAL(triggered()),controller,SLOT(showCodex()));
 
 }

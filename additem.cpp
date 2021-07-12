@@ -113,7 +113,7 @@ void addItem::addControlsArmor(QFormLayout *layout)
 
     type->addItem("HELM");
     type->addItem("CHEST");
-    type->addItem("GLOVE");
+    type->addItem("GLOVES");
     type->addItem("BOOTS");
 
     resistance->addItem("NO EFFECT");

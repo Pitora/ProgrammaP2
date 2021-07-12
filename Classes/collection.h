@@ -27,6 +27,8 @@ Collection();
 
 ~Collection();
 
+void initialize();
+
 void save();
 
 void add(std::string n, std::string a_t, std::string r, int d_v, int d);   //Armor
@@ -64,13 +66,14 @@ int generateId();
 
 void modifyCharName(std::string s);
 void modifyCharWeap(int id);
-void addCharArmor(int id1, int id2);
-void addCharInv(int id1, int id2);
+void modifyCharArmor(int id1, int id2);
+void modifyCharInv(int id1, int id2);
 void removeCharEq(int id);
 void setCharVit(int x);
 void setCharStr(int x);
 void setCharDex(int x);
 void setCharAim(int x);
+const DeepPtr<Character> getChar() const;
 
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
 C<DeepPtr<Obj>> getObjType(std::string type, std::string type2) const;
