@@ -40,7 +40,7 @@ private:
     QComboBox* item2_box;
     QComboBox* item3_box;
 
-    QLabel* stats_lbl;
+    QLineEdit* build_name;
     QLabel* atk_lbl;
     QLabel* def_lbl;
 

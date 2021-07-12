@@ -22,12 +22,10 @@ void Window::addMenu(QVBoxLayout *layout){
 void Window::addCommand(QVBoxLayout *layout){
 
     QHBoxLayout* hLayout = new QHBoxLayout;
-   // QVBoxLayout* infoLayout = new QVBoxLayout;
     QFormLayout* form = new QFormLayout;
 
     layout->addLayout(hLayout);
     hLayout->addLayout(form);
-   // hLayout->addLayout(infoLayout);
 
     form->setRowWrapPolicy(QFormLayout::WrapAllRows);
     form->setVerticalSpacing(10);
@@ -76,7 +74,7 @@ void Window::addLabel(QHBoxLayout* layout){
     layout->addLayout(rightLayout);
     midLayout->setSpacing(30);
 
-    stats_lbl = new QLabel();
+    build_name = new QLineEdit();
     atk_lbl = new QLabel();
     def_lbl = new QLabel();
     vit_lbl = new QLabel();
@@ -89,7 +87,11 @@ void Window::addLabel(QHBoxLayout* layout){
     dex_text = new QLineEdit();
     aim_text = new QLineEdit();
 
-    stats_lbl->setText("MAX POWER");
+    build_name->setPlaceholderText("Build Name");
+    QPalette pal = build_name->palette();
+    pal.setColor(QPalette::Base,pal.color(QPalette::Window));
+    build_name->setPalette(pal);
+    build_name->setFrame(QFrame::NoFrame);
     atk_lbl->setText("ATK : 500");
     def_lbl->setText("DEF : 500");
 
@@ -118,7 +120,7 @@ void Window::addLabel(QHBoxLayout* layout){
     dex_text->setFrame(false);
     aim_text->setFrame(false);
 
-    midLayout->addWidget(stats_lbl);
+    midLayout->addWidget(build_name);
     midLayout->addRow("VIT : ", vit_text);
     midLayout->addRow("STR : ", str_text);
     midLayout->addRow("DEX : ", dex_text);
