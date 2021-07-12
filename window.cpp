@@ -93,7 +93,6 @@ void Window::addLabel(QHBoxLayout* layout){
     atk_lbl->setText("ATK : 500");
     def_lbl->setText("DEF : 500");
 
-   // stats_lbl->setAlignment(Qt::AlignHCenter);
     vit_text->setMaximumWidth(70);
     str_text->setMaximumWidth(70);
     dex_text->setMaximumWidth(70);
@@ -127,10 +126,10 @@ void Window::addLabel(QHBoxLayout* layout){
     midLayout->addWidget(atk_lbl);
     midLayout->addWidget(def_lbl);
 
-    vit_lbl->setText("Influenza la difesa");
-    str_lbl->setText("Influenza l'ATK con armi pesanti");
-    dex_lbl->setText("Influenza l'ATK con armi leggere");
-    aim_lbl->setText("Influenza l'ATK con armi a distanza");
+    vit_lbl->setText("Affect the DEF");
+    str_lbl->setText("Affect the ATK with heavy weapons");
+    dex_lbl->setText("Affect the ATK with light weapons");
+    aim_lbl->setText("Affect the ATK with ranged weapons");
 
 
     QSpacerItem* space = new QSpacerItem(17,20);
@@ -149,9 +148,9 @@ void Window::addButton(QVBoxLayout *layout){
     QHBoxLayout* hLayout = new QHBoxLayout;
     layout->addLayout(hLayout);
 
-    calculate = new QPushButton("Calcola");
-    import = new QPushButton("Importa");
-    save = new QPushButton("Salva");
+    calculate = new QPushButton("Calculate");
+    import = new QPushButton("Import");
+    save = new QPushButton("Save");
 
     hLayout->addWidget(calculate);
     hLayout->addWidget(import);
