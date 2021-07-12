@@ -22,18 +22,22 @@ void Codex::addScrollArea()
     QVBoxLayout* layout = new QVBoxLayout();
     widget->setLayout(layout);
 
+    QSignalMapper* q = new QSignalMapper();
+
     for(int i = 0; i < 50; i++){
         QPushButton* item = new QPushButton(QString::number(i));
         item->setFlat(true);
         item->setFixedSize(160,30);
         layout->addWidget(item);
-        connect(item,SIGNAL(clicked()),this,SLOT(showDetails()));
+        connect(item,SIGNAL(clicked()),q,SLOT(map()));
+        q->setMapping(item,i);
     }
+
+    connect(q,SIGNAL(mapped(int)),this,SLOT(showDetails(int)));
 
     details = new QTextEdit(this);
     details->setGeometry(250,20,220,550);
     details->setReadOnly(true);
-    details->setText("ASDASDASDASDASDASDASDAS\n asdadsasdads\nasdasdasdasdasdsasd");
 
     QPalette pal = details->palette();
     pal.setColor(QPalette::Base,pal.color(QPalette::Window));
@@ -42,11 +46,9 @@ void Codex::addScrollArea()
     details->setReadOnly(true);
     details->setFrameShape(QFrame::NoFrame);
 
-
-
 }
 
-void Codex::showDetails()
+void Codex::showDetails(int i)
 {
-    details->setText("bravo\nsamu\nperò\nvilla\nè\ngay\n");
+    details->setText("bravo\nsamu\nperò\nvilla\nè\ngay\n"+QString::number(i));
 }

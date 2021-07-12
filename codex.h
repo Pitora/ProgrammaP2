@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QTextEdit>
+#include <QSignalMapper>
 #include <utility>
 
 class Controller;
@@ -30,7 +31,8 @@ public:
 signals:
 
 public slots:
-    void showDetails();
+    void showDetails(int i);
+
 };
 
 #endif // CODEX_H
