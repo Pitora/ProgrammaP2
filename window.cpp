@@ -41,14 +41,14 @@ void Window::addCommand(QVBoxLayout *layout){
     item3_box = new QComboBox();
 
 
-    weapon_box->setMaximumWidth(250);
-    helm_box->setMaximumWidth(250);
-    chest_box->setMaximumWidth(250);
-    gloves_box->setMaximumWidth(250);
-    boots_box->setMaximumWidth(250);
-    item1_box->setMaximumWidth(250);
-    item2_box->setMaximumWidth(250);
-    item3_box->setMaximumWidth(250);
+    weapon_box->setFixedWidth(250);
+    helm_box->setFixedWidth(250);
+    chest_box->setFixedWidth(250);
+    gloves_box->setFixedWidth(250);
+    boots_box->setFixedWidth(250);
+    item1_box->setFixedWidth(250);
+    item2_box->setFixedWidth(250);
+    item3_box->setFixedWidth(250);
 
     form->addRow("Weapon",weapon_box);
     form->addRow("Helm",helm_box);
@@ -92,6 +92,7 @@ void Window::addLabel(QHBoxLayout* layout){
     pal.setColor(QPalette::Base,pal.color(QPalette::Window));
     build_name->setPalette(pal);
     build_name->setFrame(QFrame::NoFrame);
+    build_name->setFixedWidth(200);
     atk_lbl->setText("ATK : 500");
     def_lbl->setText("DEF : 500");
 
