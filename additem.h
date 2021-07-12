@@ -18,7 +18,7 @@
 
 class Controller;
 
-class addItem : public QDialog
+class AddItem : public QDialog
 {
     Q_OBJECT
 private:
@@ -61,7 +61,7 @@ private:
     void addControlsConsumable(QFormLayout* layout);
 
 public:
-    explicit addItem(int i,Controller* cont,QWidget *parent = nullptr);
+    explicit AddItem(int i,Controller* cont,QWidget *parent = nullptr);
 
 signals:
 

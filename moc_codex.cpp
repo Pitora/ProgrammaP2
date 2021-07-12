@@ -34,10 +34,10 @@ static const qt_meta_stringdata_Codex_t qt_meta_stringdata_Codex = {
 QT_MOC_LITERAL(0, 0, 5), // "Codex"
 QT_MOC_LITERAL(1, 6, 11), // "showDetails"
 QT_MOC_LITERAL(2, 18, 0), // ""
-QT_MOC_LITERAL(3, 19, 1) // "i"
+QT_MOC_LITERAL(3, 19, 1) // "s"
 
     },
-    "Codex\0showDetails\0\0i"
+    "Codex\0showDetails\0\0s"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +58,7 @@ static const uint qt_meta_data_Codex[] = {
        1,    1,   19,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::QString,    3,
 
        0        // eod
 };
@@ -69,7 +69,7 @@ void Codex::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         Codex *_t = static_cast<Codex *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->showDetails((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->showDetails((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     }

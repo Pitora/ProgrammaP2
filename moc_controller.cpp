@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Controller_t {
-    QByteArrayData data[51];
-    char stringdata0[395];
+    QByteArrayData data[54];
+    char stringdata0[428];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -77,11 +77,14 @@ QT_MOC_LITERAL(42, 312, 11), // "changeArmor"
 QT_MOC_LITERAL(43, 324, 3), // "id1"
 QT_MOC_LITERAL(44, 328, 3), // "id2"
 QT_MOC_LITERAL(45, 332, 10), // "changeItem"
-QT_MOC_LITERAL(46, 343, 9), // "showCodex"
-QT_MOC_LITERAL(47, 353, 10), // "importChar"
-QT_MOC_LITERAL(48, 364, 9), // "importObj"
-QT_MOC_LITERAL(49, 374, 10), // "exportChar"
-QT_MOC_LITERAL(50, 385, 9) // "exportObj"
+QT_MOC_LITERAL(46, 343, 10), // "getInfoObj"
+QT_MOC_LITERAL(47, 354, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(48, 371, 4), // "item"
+QT_MOC_LITERAL(49, 376, 9), // "showCodex"
+QT_MOC_LITERAL(50, 386, 10), // "importChar"
+QT_MOC_LITERAL(51, 397, 9), // "importObj"
+QT_MOC_LITERAL(52, 407, 10), // "exportChar"
+QT_MOC_LITERAL(53, 418, 9) // "exportObj"
 
     },
     "Controller\0calc\0\0getBoxItems\0"
@@ -93,8 +96,10 @@ QT_MOC_LITERAL(50, 385, 9) // "exportObj"
     "eliminateObj\0id\0setChar\0setVitality\0"
     "x\0setStrenght\0setDexterity\0setAim\0"
     "changeName\0s\0changeWeapon\0changeArmor\0"
-    "id1\0id2\0changeItem\0showCodex\0importChar\0"
-    "importObj\0exportChar\0exportObj"
+    "id1\0id2\0changeItem\0getInfoObj\0"
+    "QListWidgetItem*\0item\0showCodex\0"
+    "importChar\0importObj\0exportChar\0"
+    "exportObj"
 };
 #undef QT_MOC_LITERAL
 
@@ -104,7 +109,7 @@ static const uint qt_meta_data_Controller[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      26,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -112,31 +117,32 @@ static const uint qt_meta_data_Controller[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  139,    2, 0x0a /* Public */,
-       3,    0,  140,    2, 0x0a /* Public */,
-       4,    0,  141,    2, 0x0a /* Public */,
-       5,    0,  142,    2, 0x0a /* Public */,
-       6,    0,  143,    2, 0x0a /* Public */,
-       7,   12,  144,    2, 0x0a /* Public */,
-      20,   12,  169,    2, 0x0a /* Public */,
-      24,    5,  194,    2, 0x0a /* Public */,
-      26,    3,  205,    2, 0x0a /* Public */,
-      29,    4,  212,    2, 0x0a /* Public */,
-      31,    1,  221,    2, 0x0a /* Public */,
-      33,    0,  224,    2, 0x0a /* Public */,
-      34,    1,  225,    2, 0x0a /* Public */,
-      36,    1,  228,    2, 0x0a /* Public */,
-      37,    1,  231,    2, 0x0a /* Public */,
-      38,    1,  234,    2, 0x0a /* Public */,
-      39,    1,  237,    2, 0x0a /* Public */,
-      41,    1,  240,    2, 0x0a /* Public */,
-      42,    2,  243,    2, 0x0a /* Public */,
-      45,    2,  248,    2, 0x0a /* Public */,
-      46,    0,  253,    2, 0x0a /* Public */,
-      47,    0,  254,    2, 0x0a /* Public */,
-      48,    0,  255,    2, 0x0a /* Public */,
-      49,    0,  256,    2, 0x0a /* Public */,
-      50,    0,  257,    2, 0x0a /* Public */,
+       1,    0,  144,    2, 0x0a /* Public */,
+       3,    0,  145,    2, 0x0a /* Public */,
+       4,    0,  146,    2, 0x0a /* Public */,
+       5,    0,  147,    2, 0x0a /* Public */,
+       6,    0,  148,    2, 0x0a /* Public */,
+       7,   12,  149,    2, 0x0a /* Public */,
+      20,   12,  174,    2, 0x0a /* Public */,
+      24,    5,  199,    2, 0x0a /* Public */,
+      26,    3,  210,    2, 0x0a /* Public */,
+      29,    4,  217,    2, 0x0a /* Public */,
+      31,    1,  226,    2, 0x0a /* Public */,
+      33,    0,  229,    2, 0x0a /* Public */,
+      34,    1,  230,    2, 0x0a /* Public */,
+      36,    1,  233,    2, 0x0a /* Public */,
+      37,    1,  236,    2, 0x0a /* Public */,
+      38,    1,  239,    2, 0x0a /* Public */,
+      39,    1,  242,    2, 0x0a /* Public */,
+      41,    1,  245,    2, 0x0a /* Public */,
+      42,    2,  248,    2, 0x0a /* Public */,
+      45,    2,  253,    2, 0x0a /* Public */,
+      46,    1,  258,    2, 0x0a /* Public */,
+      49,    0,  261,    2, 0x0a /* Public */,
+      50,    0,  262,    2, 0x0a /* Public */,
+      51,    0,  263,    2, 0x0a /* Public */,
+      52,    0,  264,    2, 0x0a /* Public */,
+      53,    0,  265,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -159,6 +165,7 @@ static const uint qt_meta_data_Controller[] = {
     QMetaType::Void, QMetaType::Int,   32,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   44,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   44,
+    QMetaType::Void, 0x80000000 | 47,   48,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -194,11 +201,12 @@ void Controller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 17: _t->changeWeapon((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 18: _t->changeArmor((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 19: _t->changeItem((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 20: _t->showCodex(); break;
-        case 21: _t->importChar(); break;
-        case 22: _t->importObj(); break;
-        case 23: _t->exportChar(); break;
-        case 24: _t->exportObj(); break;
+        case 20: _t->getInfoObj((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 21: _t->showCodex(); break;
+        case 22: _t->importChar(); break;
+        case 23: _t->importObj(); break;
+        case 24: _t->exportChar(); break;
+        case 25: _t->exportObj(); break;
         default: ;
         }
     }
@@ -229,13 +237,13 @@ int Controller::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 26)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 26;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 25)
+        if (_id < 26)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 25;
+        _id -= 26;
     }
     return _id;
 }

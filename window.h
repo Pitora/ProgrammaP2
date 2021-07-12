@@ -66,7 +66,7 @@ public:
 
     Window(QWidget *parent = 0);
     void setController(Controller *c);
-    void calcDmgDef();
+    void calcDmgDef(int a, int d);
     void loadBox(QList<QString> n, int i);
     QString importFileDialog();
     ~Window();

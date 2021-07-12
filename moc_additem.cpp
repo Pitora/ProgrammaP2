@@ -20,29 +20,29 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_addItem_t {
+struct qt_meta_stringdata_AddItem_t {
     QByteArrayData data[5];
     char stringdata0[39];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_addItem_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_AddItem_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_addItem_t qt_meta_stringdata_addItem = {
+static const qt_meta_stringdata_AddItem_t qt_meta_stringdata_AddItem = {
     {
-QT_MOC_LITERAL(0, 0, 7), // "addItem"
+QT_MOC_LITERAL(0, 0, 7), // "AddItem"
 QT_MOC_LITERAL(1, 8, 9), // "enableBox"
 QT_MOC_LITERAL(2, 18, 0), // ""
 QT_MOC_LITERAL(3, 19, 10), // "changeItem"
 QT_MOC_LITERAL(4, 30, 8) // "saveItem"
 
     },
-    "addItem\0enableBox\0\0changeItem\0saveItem"
+    "AddItem\0enableBox\0\0changeItem\0saveItem"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_addItem[] = {
+static const uint qt_meta_data_AddItem[] = {
 
  // content:
        7,       // revision
@@ -68,10 +68,10 @@ static const uint qt_meta_data_addItem[] = {
        0        // eod
 };
 
-void addItem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void AddItem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        addItem *_t = static_cast<addItem *>(_o);
+        AddItem *_t = static_cast<AddItem *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->enableBox(); break;
@@ -83,26 +83,26 @@ void addItem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     Q_UNUSED(_a);
 }
 
-const QMetaObject addItem::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_addItem.data,
-      qt_meta_data_addItem,  qt_static_metacall, nullptr, nullptr}
+const QMetaObject AddItem::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_AddItem.data,
+      qt_meta_data_AddItem,  qt_static_metacall, nullptr, nullptr}
 };
 
 
-const QMetaObject *addItem::metaObject() const
+const QMetaObject *AddItem::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *addItem::qt_metacast(const char *_clname)
+void *AddItem::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_addItem.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_AddItem.stringdata0))
         return static_cast<void*>(this);
     return QDialog::qt_metacast(_clname);
 }
 
-int addItem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int AddItem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)

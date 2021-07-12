@@ -186,9 +186,9 @@ void Window::setController(Controller *c){
 
 }
 
-void Window::calcDmgDef(){
-    atk_lbl->setText("ATK : " );
-    def_lbl->setText("DEF : " );
+void Window::calcDmgDef(int a,int d){
+    atk_lbl->setText("ATK : " + QString::number(a) );
+    def_lbl->setText("DEF : " + QString::number(d));
 }
 
 void Window::loadBox(QList<QString> n,int i)

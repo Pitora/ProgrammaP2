@@ -1,7 +1,7 @@
 #include "additem.h"
 
 
-void addItem::addControls(QFormLayout *layout)
+void AddItem::addControls(QFormLayout *layout)
 {
      type = new QComboBox;
      effect = new QComboBox;
@@ -101,7 +101,7 @@ void addItem::addControls(QFormLayout *layout)
      connect(save,SIGNAL(clicked()),this,SLOT(saveItem()));
 }
 
-void addItem::addControlsArmor(QFormLayout *layout)
+void AddItem::addControlsArmor(QFormLayout *layout)
 {
     defense = new QLineEdit;
     name = new QLineEdit;
@@ -143,7 +143,7 @@ void addItem::addControlsArmor(QFormLayout *layout)
 
 }
 
-void addItem::addControlsConsumable(QFormLayout *layout)
+void AddItem::addControlsConsumable(QFormLayout *layout)
 {
     name = new QLineEdit;
     potency = new QLineEdit;
@@ -183,7 +183,7 @@ void addItem::addControlsConsumable(QFormLayout *layout)
     connect(save,SIGNAL(clicked()),this,SLOT(saveItem()));
 }
 
-addItem::addItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
+AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
 
     c = cont;
 
@@ -205,7 +205,7 @@ addItem::addItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
     }
 }
 
-void addItem::enableBox() const
+void AddItem::enableBox() const
 {
     if(type->currentIndex() == 0){
         recoil->setEnabled(false);
@@ -228,12 +228,12 @@ void addItem::enableBox() const
     magazine->clear();
 }
 
-void addItem::saveItem()
+void AddItem::saveItem()
 {
    close();
 }
 
-void addItem::changeItem(){
+void AddItem::changeItem(){
     if(type->currentIndex() == 0){
         effect->clear();
         effect->addItem("ATK UP");

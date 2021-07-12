@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QListWidget>
 #include "window.h"
 #include "additem.h"
 #include "codex.h"
@@ -10,6 +11,9 @@
 #include "Classes/tc.cpp"
 #include "Classes/tdeep.cpp"
 #include "Classes/object.h"
+
+class AddItem;
+class Codex;
 
 class Controller : public QObject
 {
@@ -19,11 +23,15 @@ private:
 
     Window* window;
     Collection* col;
+    Codex* codex;
+    AddItem* add;
 
 public:
     explicit Controller(QObject *parent = nullptr);
     void setWindow(Window* w);
     void setCollection(Collection* c);
+    void setCodex(Codex* co);
+    void setAddItem(AddItem *a);
 signals:
 
 public slots:
@@ -49,7 +57,7 @@ public slots:
     void changeArmor(int id1, int id2);
     void changeItem(int id1, int id2);
 
-
+    void getInfoObj(QListWidgetItem *item);
 
     void showCodex();
 

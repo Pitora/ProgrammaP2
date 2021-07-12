@@ -10,13 +10,16 @@ void Controller::setWindow(Window* w){ window = w;
 
 void Controller::setCollection(Collection* c){ col = c;}
 
+void Controller::setCodex(Codex* co){codex = co;}
+
+void Controller::setAddItem(AddItem* a){ add = a;}
+
 void Controller::calc() const{
     DeepPtr<Character> c = col->getChar();
     int atk = c->damage();
     int def = c->defense();
 
-
-    window->calcDmgDef();
+    window->calcDmgDef(atk,def);
 }
 
 void Controller::getBoxItems()
@@ -67,17 +70,20 @@ void Controller::getBoxItems()
 }
 
 void Controller::createWeaponDialog() {
-    addItem* add = new addItem(1,this);
+    add = new AddItem(1,this);
+    //setAddItem(add);
     add->exec();
 }
 
 void Controller::createArmorDialog() {
-    addItem* add = new addItem(2,this);
+    add = new AddItem(2,this);
+    //setAddItem(add);
     add->exec();
 }
 
 void Controller::createConsumableDialog(){
-    addItem* add = new addItem(3,this);
+    add = new AddItem(3,this);
+    //setAddItem(add);
     add->exec();
 }
 
@@ -137,10 +143,16 @@ void Controller::changeItem(int id1, int id2){
     col->modifyCharInv(id1,id2);
 }
 
+void Controller::getInfoObj(QListWidgetItem *item)
+{
+    codex->showDetails(item->text());
+}
+
 void Controller::showCodex()
 {
-    Codex* cod = new Codex();
-    cod->show();
+    codex = new Codex(this);
+    //setCodex(codex);
+    codex->exec();
 }
 
 

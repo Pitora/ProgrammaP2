@@ -1,46 +1,33 @@
 #include "codex.h"
 
-Codex::Codex(QWidget *parent) : QDialog(parent)
+Codex::Codex(Controller *cont, QWidget *parent) : QDialog(parent)
 {
+    c = cont;
     setWindowTitle("Codex");
     setFixedSize(500,600);
     addScrollArea();
+    addControls();
 
 }
 
 void Codex::addScrollArea()
 {
-    container = new QScrollArea(this);
-    container->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    container->setWidgetResizable(true);
-    container->setGeometry(20,20,200,550);
-    container->setFrameShape(QFrame::NoFrame);
+    cont = new QListWidget(this);
+    cont->setGeometry(20,20,200,550);
+    cont->setFrameShape(QFrame::NoFrame);
+    QPalette pal = cont->palette();
+    pal.setColor(QPalette::Base,pal.color(QPalette::Window));
+    cont->setPalette(pal);
 
-    QWidget* widget = new QWidget();
-    container->setWidget(widget);
+    for(int i = 0; i < 100; i++){
+         cont->addItem(QString::number(i));
+     }
 
-    QVBoxLayout* layout = new QVBoxLayout();
-    widget->setLayout(layout);
-
-    QSignalMapper* q = new QSignalMapper();
-
-    for(int i = 0; i < 50; i++){
-        QPushButton* item = new QPushButton(QString::number(i));
-        item->setFlat(true);
-        item->setFixedSize(160,30);
-        layout->addWidget(item);
-        connect(item,SIGNAL(clicked()),q,SLOT(map()));
-        q->setMapping(item,i);
-    }
-
-    connect(q,SIGNAL(mapped(int)),this,SLOT(showDetails(int)));
+    connect(cont,SIGNAL(itemClicked(QListWidgetItem*)),c,SLOT(getInfoObj(QListWidgetItem*)));
 
     details = new QTextEdit(this);
-    details->setGeometry(250,20,220,550);
+    details->setGeometry(250,20,220,500);
     details->setReadOnly(true);
-
-    QPalette pal = details->palette();
-    pal.setColor(QPalette::Base,pal.color(QPalette::Window));
     details->setPalette(pal);
 
     details->setReadOnly(true);
@@ -48,7 +35,23 @@ void Codex::addScrollArea()
 
 }
 
-void Codex::showDetails(int i)
+void Codex::addControls()
 {
-    details->setText("bravo\nsamu\nperò\nvilla\nè\ngay\n"+QString::number(i));
+    remove_item = new QPushButton("Remove",this);
+    import_item = new QPushButton("Import",this);
+    export_item = new QPushButton("Export",this);
+
+    remove_item->setGeometry(240,520,60,30);
+    import_item->setGeometry(310,520,60,30);
+    export_item->setGeometry(380,520,60,30);
+
+    connect(remove_item,SIGNAL(clicked()),c,SLOT(eliminateObj(int)));
+    connect(import_item,SIGNAL(clicked()),c,SLOT(importObj()));
+    connect(export_item,SIGNAL(clicked()),c,SLOT(exportObj()));
+
+}
+
+void Codex::showDetails(QString s)
+{
+    details->setText(s);
 }

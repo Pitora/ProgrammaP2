@@ -10,6 +10,8 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QTextEdit>
+#include <QList>
+#include <QListWidget>
 #include <QSignalMapper>
 #include <utility>
 
@@ -21,17 +23,22 @@ class Codex : public QDialog
 private:
     Controller* c;
     QScrollArea* container;
+    QListWidget* cont;
     QTextEdit* details;
+    QPushButton* remove_item;
+    QPushButton* import_item;
+    QPushButton* export_item;
 
 public:
-    explicit Codex(QWidget *parent = nullptr);
+    explicit Codex(Controller* cont,QWidget *parent = nullptr);
 
     void addScrollArea();
+    void addControls();
 
 signals:
 
 public slots:
-    void showDetails(int i);
+    void showDetails(QString s);
 
 };
 
