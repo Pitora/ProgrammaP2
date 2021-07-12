@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Melee><Weapon><Obj><Id>1</Id><Name>Spada del sole</Name></Obj><Weight>15</Weight><Cost>20000</Cost><Rarity>12</Rarity><RawAttack>380</RawAttack><CritChance>50</CritChance><ScStr>40</ScStr><ScDex>40</ScDex><ScAim>40</ScAim></Weapon><AttackType>slash</AttackType><AddEff>no effect</AddEff><Durability>400</Durability></Melee>
