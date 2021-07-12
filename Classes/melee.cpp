@@ -36,8 +36,15 @@ std::string Melee::exp() const{
     s += "<AttackType>" + attack_type + "</AttackType>";
     s += "<AddEff>" + added_effect + "</AddEff>";
     s += "<Durability>" + std::to_string(durability) + "</Durability>";
-    //s += "<Precision>" + std::to_string(precision) + "</Precision>";
     s += "</Melee>";
+    return s;
+}
+
+std::string Melee::getInfo() const{
+    std::string s = Weapon::getInfo();
+    s += "Attack type : " + attack_type + "\n";
+    s += "Added effect : " + added_effect + "\n";
+    s += "Durability : " + std::to_string(durability) + "\n";
     return s;
 }
 

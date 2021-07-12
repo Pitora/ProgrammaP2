@@ -17,8 +17,6 @@ Weapon::Weapon(std::string imported) : Obj(imported){
 
         raw_attack_value = stoi(substring(imported, "<RawAttack>", "</RawAttack>"));
 
-        //elem_attack_value = stoi(substring(imported, "<ElemAttack>", "</ElemAttack>"));
-
         critical_chance = stoi(substring(imported, "<CritChance>", "</CritChance>"));
 
         scaling_str = stoi(substring(imported, "<ScStr>", "</ScStr>"));
@@ -48,7 +46,6 @@ void Weapon::print(std::ostream& os) const{
     os<<"Cost : "<<cost<<std::endl;
     os<<"Rarity : "<<rarity<<std::endl;
     os<<"Raw attack : "<<raw_attack_value<<std::endl;
-    //os<<"Da sostituire : "<<elem_attack_value<<std::endl;
     os<<"Critical chance : "<<critical_chance<<std::endl;
     os<<"Scaling Strength : "<<scaling_str<<std::endl;
     os<<"Scaling Dex : "<<scaling_dex<<std::endl;
@@ -62,13 +59,26 @@ std::string Weapon::exp() const{
     s += "<Cost>" + std::to_string(cost) + "</Cost>";
     s += "<Rarity>" + std::to_string(rarity) + "</Rarity>";
     s += "<RawAttack>" + std::to_string(raw_attack_value) + "</RawAttack>";
-    //s += "<ElemAttack>" + std::to_string(elem_attack_value) + "</ElemAttack>";
     s += "<CritChance>" + std::to_string(critical_chance) + "</CritChance>";
     s += "<ScStr>" + std::to_string(scaling_str) + "</ScStr>";
     s += "<ScDex>" + std::to_string(scaling_dex) + "</ScDex>";
     s += "<ScAim>" + std::to_string(scaling_aim) + "</ScAim>";
     s += "</Weapon>";
     return s;
+}
+
+std::string Weapon::getInfo() const{
+    std::string s = Obj::getInfo();
+    s += "Weight : " + std::to_string(weight) + "\n";
+    s += "Cost : " + std::to_string(cost) + "\n";
+    s += "Rarity : " + std::to_string(rarity) + "<\n";
+    s += "Raw Attack : " + std::to_string(raw_attack_value) + "\n";
+    s += "Critical chance : " + std::to_string(critical_chance) + "\n";
+    s += "Scaling Str : " + std::to_string(scaling_str) + "\n";
+    s += "Scaling Dex : " + std::to_string(scaling_dex) + "\n";
+    s += "Scaling Aim : " + std::to_string(scaling_aim) + "\n";
+    return s;
+
 }
 
 

@@ -26,9 +26,9 @@ public:
 
     void print(std::ostream& os) const { Obj::print(os);}
 
-	virtual int useObject ();
-
     virtual std::string exp() const;
+
+    virtual std::string getInfo() const;
  
 
 

@@ -35,14 +35,13 @@ Collection::Collection() : list(){
                 std::cout<<"Database letto"<<std::endl;
             }else throw err_file();
         }else{
-            initialize();
             throw err_fileNotReadable();
         }
     }
-    catch(err_file){std::cout<<"Il database non è corretto."<<std::endl;}
-    catch(err_fileNotReadable) {std::cout<<"Il database non esiste. Sono stati generati gli oggetti di default."<<std::endl;}
-    catch(err_import){std::cout<<"L'importazione non è andata a buon fine."<<std::endl; abort();}
-    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti."<<std::endl; abort();}
+    catch(err_file){std::cout<<"Il database non è corretto."<<std::endl;initialize();}
+    catch(err_fileNotReadable) {std::cout<<"Il database non esiste."<<std::endl;initialize();}
+    catch(err_import){std::cout<<"L'importazione non è andata a buon fine."<<std::endl; initialize();}
+    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti."<<std::endl; initialize();}
     
 }
 
@@ -55,15 +54,18 @@ Collection::~Collection(){
 }
 
 void Collection::initialize(){
-    add("Broken Helm", "HELM", "NO EFFECT", 5, 50);
-    add("Broken chest", "CHEST", "NO EFFECT", 10, 50);
-    add("Broken gloves", "GLOVES", "NO EFFECT", 4, 50);
-    add("Broken boots", "BOOTS", "NO EFFECT", 7, 50);
-    add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "slash", "no effect", 500);
-    add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
-    add("Bad apple", "ALL STATS UP", 1, 50);
-    add("Broken glass of water", "HP", 1);
-    modifyCharName("Default build");
+    std::cout<<"Sono stati generati i valori default"<<std::endl;
+    if (!checkId(0)){
+        add("Broken Helm", "HELM", "NO EFFECT", 5, 50);
+        add("Broken chest", "CHEST", "NO EFFECT", 10, 50);
+        add("Broken gloves", "GLOVES", "NO EFFECT", 4, 50);
+        add("Broken boots", "BOOTS", "NO EFFECT", 7, 50);
+        add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "slash", "no effect", 500);
+        add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
+        add("Bad apple", "ALL STATS UP", 1, 50);
+        add("Broken glass of water", "HP", 1);
+        modifyCharName("Default build");
+    }
     modifyCharWeap(5);
     modifyCharArmor(0,-1);
     modifyCharArmor(1,-1);
@@ -137,7 +139,7 @@ void Collection::add(std::string n, std::string a_v, int p){
 bool Collection::remove(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
 
-    if (i != list.end())
+    if (i != list.end() && id > 7)          //7 oggetti di default intoccabili
     {
         list.remove(*i);
         return true;
@@ -357,7 +359,7 @@ void Collection::modifyCharWeap(int id){
 
 void Collection::modifyCharArmor(int id1, int id2){
     try{
-        if (id2 != -1)
+        if (id2 > 7)
         {
             removeCharEq(id2);
         }
@@ -371,7 +373,7 @@ void Collection::modifyCharArmor(int id1, int id2){
 
 void Collection::modifyCharInv(int id1, int id2){
     try{
-        if (id2 != -1)
+        if (id2 > 7)        //7 oggetti di default
         {
             removeCharEq(id2);
         }
@@ -425,6 +427,22 @@ const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(
     }
     return l;
 }
+
+const C<DeepPtr<Obj>> Collection::getAllObj() const{
+    return list;
+}
+
+const std::string Collection::getInfoObj(int id) const {
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    if (i != list.end())
+    {
+        return (*i)->getInfo();
+    }
+    return "Placeholder : se sei qui, bravo.";
+}
+
+
+
 
 
 

@@ -113,6 +113,7 @@ void Controller::setChar(){
     DeepPtr<Character> c = col->getChar();
     //cose
 }
+
 void Controller::setVitality(int x) {
     col->setCharVit(x);
     calc();

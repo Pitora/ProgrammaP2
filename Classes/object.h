@@ -24,19 +24,22 @@ public:
 
     virtual Obj* clone() const = 0;
 
-	//virtual List<string> getInfo() {} = 0;     quasi sicuro che non si possono utilizzare
+    bool operator== (const Obj& x) const {return id == x.id;}
+
 
     int getId() const {return id;}
 
     std::string getName() {return name;}
 
-    bool operator== (const Obj& x) const {return id == x.id;}
+
 
     virtual std::string exp() const;
 
     friend std::ostream& operator<<(std::ostream& s, const Obj& base);
 
     virtual void print(std::ostream& os) const {os<<"Id : "<<(*this).id<<" Nome : "<<(*this).name<<std::endl;}
+
+    virtual std::string getInfo() const;
 
     static std::string substring (std::string s, std::string w1, std::string w2);
 

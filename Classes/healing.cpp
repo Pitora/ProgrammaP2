@@ -35,5 +35,13 @@ std::string Healing::exp() const{
 }
 
 
+std::string Healing::getInfo() const{
+    std::string s = Consumable::getInfo();
+    s += "Affected value : " + affected_value + "\n";
+    s += "Potency : " + std::to_string(potency) + "\n";
+    return s;
+}
+
+
 
 

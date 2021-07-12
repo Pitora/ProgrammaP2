@@ -45,6 +45,15 @@ std::string Armor::exp() const{
     return s;
 }
 
+std::string Armor::getInfo() const{
+    std::string s = Obj::getInfo();
+    s += "Armor type : " + armor_type + "\n";
+    s += "Resistance : " + resistance + "\n";
+    s += "Defense value : " + std::to_string(defense_value) + "\n";
+    s += "Durability : " + std::to_string(durability) + "\n";
+    return s;
+}
+
 
 
 

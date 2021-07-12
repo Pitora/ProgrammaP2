@@ -27,13 +27,11 @@ public:
 
 	virtual Ranged* clone() const {return new Ranged(*this);}
 
-	void print(std::ostream& os) const;
-
-	//virtual List<string> getInfo() {};
-
-    //virtual int scaling() {};
+    void print(std::ostream& os) const;
 
 	virtual std::string exp() const;
+
+    virtual std::string getInfo() const;
 
 };
 

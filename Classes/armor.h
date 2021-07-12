@@ -29,11 +29,12 @@ public:
 
     virtual void print(std::ostream& os) const;
 
-    int damageCalculation (int attack_value);
-
     virtual std::string exp() const;
 
+    virtual std::string getInfo() const;
+
     int getDefense() const;
+
     std::string getArmorType() const;
 
 };

@@ -10,6 +10,7 @@ Consumable::~Consumable() {
     std::cout<<"Consumabile cancellato"<<std::endl;
 }
 
-int Consumable::useObject() {}
 
 std::string Consumable::exp() const { return Obj::exp(); }
+
+std::string Consumable::getInfo() const {return Obj::getInfo(); }

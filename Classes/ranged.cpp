@@ -40,6 +40,14 @@ std::string Ranged::exp() const{
     return s;
 }
 
+std::string Ranged::getInfo() const{
+    std::string s = Weapon::getInfo();
+    s += "Recoil : " + std::to_string(recoil) + "\n";
+    s += "Reload time : " + std::to_string(reload_time) + "\n";
+    s += "Magazine : " + std::to_string(magazine) + "\n";
+    return s;
+}
+
 
 
 

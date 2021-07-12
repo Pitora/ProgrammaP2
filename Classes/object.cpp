@@ -26,6 +26,10 @@ std::string Obj::exp() const{       //Esempio di export?
     return s;
 }
 
+std::string Obj::getInfo() const{
+    return "Id : " + std::to_string(id) + "\n" + "Nome : " + name + "\n";
+}
+
 std::string Obj::substring(std::string s, std::string w1, std::string w2)
 {
     size_t pos1 = s.find(w1);
@@ -38,6 +42,8 @@ std::string Obj::substring(std::string s, std::string w1, std::string w2)
     else throw err_sub();
     
 }
+
+
 
 
 std::ostream& operator<<(std::ostream& s, const Obj& o) {

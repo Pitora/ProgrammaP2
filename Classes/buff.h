@@ -31,6 +31,7 @@ public:
 
     virtual std::string exp() const;
 
+    virtual std::string getInfo() const;
 
 };
 
