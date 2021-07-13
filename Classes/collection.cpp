@@ -64,16 +64,16 @@ void Collection::initialize(){
         add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
-        modifyCharName("Default build");
     }
+    modifyCharName("Default build");
     modifyCharWeap(5);
     modifyCharArmor(0,-1);
     modifyCharArmor(1,-1);
     modifyCharArmor(2,-1);
     modifyCharArmor(3,-1);
-    modifyCharInv(8,-1);
-    modifyCharInv(8,-1);
-    modifyCharInv(8,-1);
+    modifyCharInv(7,-1);
+    modifyCharInv(7,-1);
+    modifyCharInv(7,-1);
 }
 
 void Collection::save(){
@@ -252,7 +252,7 @@ void Collection::exportObj(int id, std::string filename){
         if (i != list.end())
         {
             std::string ex = (*i)->exp();
-            std::ofstream out(filename);
+            std::ofstream out(filename+".xml");
             if(out)
             {
                 out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
@@ -431,8 +431,7 @@ const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(
 const C<DeepPtr<Obj>> Collection::getAllObj() const{
     return list;
 }
-
-const std::string Collection::getInfoObj(int id) const {
+ std::string Collection::getInfoObj(int id) const {
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     if (i != list.end())
     {

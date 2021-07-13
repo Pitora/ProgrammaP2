@@ -29,7 +29,6 @@ private:
     QComboBox* effect;          //usato su weapon,armor e consumable
     QComboBox* atk_type;
 
-    QComboBox* resistance;
     QComboBox* armor_piece;
 
     QComboBox* percentage;
@@ -56,9 +55,13 @@ private:
 
     QPushButton* save;
 
-    void addControls(QFormLayout* layout);
+    void addControlsWeapon(QFormLayout* layout);
     void addControlsArmor(QFormLayout* layout);
     void addControlsConsumable(QFormLayout* layout);
+
+    void addEffect();
+    void addItemEffect(QString s);
+
 
 public:
     explicit AddItem(int i,Controller* cont,QWidget *parent = nullptr);
@@ -68,8 +71,9 @@ signals:
 public slots:
     void enableBox() const;
     void changeItem();
-    void saveItem() ;
-
+    void getArmorData();
+    void getWeaponData();
+    void getConsumableData();
 };
 
 #endif // ADDITEM_H

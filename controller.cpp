@@ -14,6 +14,17 @@ void Controller::setCodex(Codex* co){codex = co;}
 
 void Controller::setAddItem(AddItem* a){ add = a;}
 
+QList<QString> Controller::getItemsNames()
+{
+   C<DeepPtr<Obj>> a;
+   a = col->getAllObj();
+   QList<QString> names;
+   for(auto i = a.begin(); i != a.end(); ++i){
+       names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+   }
+   return names;
+}
+
 void Controller::calc() const{
     DeepPtr<Character> c = col->getChar();
     int atk = c->damage();
@@ -33,28 +44,28 @@ void Controller::getBoxItems()
     window->loadBox(names,1);
 
     names.clear();
-    a = col->getObjType("Armor","Elmo");
+    a = col->getObjType("Armor","HELM");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,2);
 
     names.clear();
-    a = col->getObjType("Armor","Petto");
+    a = col->getObjType("Armor","CHEST");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,3);
 
     names.clear();
-    a = col->getObjType("Armor","Guanti");
+    a = col->getObjType("Armor","GLOVES");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,4);
 
     names.clear();
-    a = col->getObjType("Armor","Stivali");
+    a = col->getObjType("Armor","BOOTS");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
     }
@@ -71,19 +82,16 @@ void Controller::getBoxItems()
 
 void Controller::createWeaponDialog() {
     add = new AddItem(1,this);
-    //setAddItem(add);
     add->exec();
 }
 
 void Controller::createArmorDialog() {
     add = new AddItem(2,this);
-    //setAddItem(add);
     add->exec();
 }
 
 void Controller::createConsumableDialog(){
     add = new AddItem(3,this);
-    //setAddItem(add);
     add->exec();
 }
 
@@ -105,8 +113,14 @@ void Controller::createBuff(QString n, QString e, int p, int d){
     col->add(n.toStdString(),e.toStdString(),p,d);
 }
 
-void Controller::eliminateObj(int id){
+void Controller::eliminateObj(){
+    QString s = codex->getSelectedItem();
+    if(!s.isNull()){
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
     col->remove(id);
+    codex->refreshCodex(getItemsNames());
+    }
 }
 
 void Controller::setChar(){
@@ -146,13 +160,17 @@ void Controller::changeItem(int id1, int id2){
 
 void Controller::getInfoObj(QListWidgetItem *item)
 {
-    codex->showDetails(item->text());
+    QString s = item->text();
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
+    s = QString::fromStdString(col->getInfoObj(id));
+    codex->showDetails(s);
 }
 
 void Controller::showCodex()
 {
-    codex = new Codex(this);
-    //setCodex(codex);
+
+    codex = new Codex(this,getItemsNames());
     codex->exec();
 }
 
@@ -173,8 +191,9 @@ void Controller::importChar()  //per importare
 void Controller::importObj()  //per importare
 {
     try {
-        QString path = window->importFileDialog();
+        QString path = codex->showImportDialog();
         col->importObj(path.toStdString());
+        codex->refreshCodex(getItemsNames());
         //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //view->showWarning(exc.what());
@@ -196,12 +215,15 @@ void Controller::exportChar()  //per importare
 
 void Controller::exportObj()  //per importare
 {
-//    try {
-//        QString path = window->importFileDialog();
-//        col->importChara(path.toStdString());
-//        //metodo/i che refreshano la finestra
-//    } catch (std::runtime_error exc) {
-//        view->showWarning(exc.what());
-//    }
+    try {
+        QString path = codex->showExpDialog();
+        QString s = codex->getSelectedItem();
+        QString subString = s.mid(0,s.indexOf(')'));
+        int id = subString.toInt();
+        col->exportObj(id,path.toStdString());
+        //metodo/i che refreshano la finestra
+    } catch (std::runtime_error exc) {
+        //view->showWarning(exc.what());
+    }
 
 }

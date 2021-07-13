@@ -40,7 +40,7 @@ std::string Buff::exp() const{
 
 
 std::string Buff::getInfo() const{
-    std::string s = Consumable::exp();
+    std::string s = Consumable::getInfo();
     s += "Effect : " + effect + "\n";
     s += "Percentage : " + std::to_string(percentage) + "\n";
     s += "Duration : " + std::to_string(duration) + "\n";

@@ -153,7 +153,7 @@ void Window::addButton(QVBoxLayout *layout){
 
     calculate = new QPushButton("Calculate");
     import = new QPushButton("Import");
-    save = new QPushButton("Save");
+    save = new QPushButton("Export Build");
 
     hLayout->addWidget(calculate);
     hLayout->addWidget(import);
@@ -175,10 +175,11 @@ Window::Window(QWidget *parent) : QWidget(parent){
 void Window::setController(Controller *c){
     controller = c;
 
-    connect(save,SIGNAL(clicked()),controller,SLOT(close()));
+    connect(save,SIGNAL(clicked()),controller,SLOT(exportChar()));
     connect(import,SIGNAL(clicked()),controller,SLOT(importChar()));
     connect(calculate,SIGNAL(clicked()),controller,SLOT(calc()));
 
+    connect(file->actions()[0],SIGNAL(triggered()),this,SLOT(close()));
     connect(create->actions()[0],SIGNAL(triggered()),controller,SLOT(createWeaponDialog()));
     connect(create->actions()[1],SIGNAL(triggered()),controller,SLOT(createArmorDialog()));
     connect(create->actions()[2],SIGNAL(triggered()),controller,SLOT(createConsumableDialog()));

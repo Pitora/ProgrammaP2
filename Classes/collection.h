@@ -78,7 +78,7 @@ const DeepPtr<Character> getChar() const;
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
 C<DeepPtr<Obj>> getObjType(std::string type, std::string type2) const;
 const C<DeepPtr<Obj>> getAllObj() const;
-const std::string getInfoObj(int id) const;
+std::string getInfoObj(int id) const;
 
 
 };

@@ -71,7 +71,7 @@ std::string Weapon::getInfo() const{
     std::string s = Obj::getInfo();
     s += "Weight : " + std::to_string(weight) + "\n";
     s += "Cost : " + std::to_string(cost) + "\n";
-    s += "Rarity : " + std::to_string(rarity) + "<\n";
+    s += "Rarity : " + std::to_string(rarity) + "\n";
     s += "Raw Attack : " + std::to_string(raw_attack_value) + "\n";
     s += "Critical chance : " + std::to_string(critical_chance) + "\n";
     s += "Scaling Str : " + std::to_string(scaling_str) + "\n";

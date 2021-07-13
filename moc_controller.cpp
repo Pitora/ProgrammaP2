@@ -63,16 +63,16 @@ QT_MOC_LITERAL(28, 201, 1), // "p"
 QT_MOC_LITERAL(29, 203, 10), // "createBuff"
 QT_MOC_LITERAL(30, 214, 1), // "e"
 QT_MOC_LITERAL(31, 216, 12), // "eliminateObj"
-QT_MOC_LITERAL(32, 229, 2), // "id"
-QT_MOC_LITERAL(33, 232, 7), // "setChar"
-QT_MOC_LITERAL(34, 240, 11), // "setVitality"
-QT_MOC_LITERAL(35, 252, 1), // "x"
-QT_MOC_LITERAL(36, 254, 11), // "setStrenght"
-QT_MOC_LITERAL(37, 266, 12), // "setDexterity"
-QT_MOC_LITERAL(38, 279, 6), // "setAim"
-QT_MOC_LITERAL(39, 286, 10), // "changeName"
-QT_MOC_LITERAL(40, 297, 1), // "s"
-QT_MOC_LITERAL(41, 299, 12), // "changeWeapon"
+QT_MOC_LITERAL(32, 229, 7), // "setChar"
+QT_MOC_LITERAL(33, 237, 11), // "setVitality"
+QT_MOC_LITERAL(34, 249, 1), // "x"
+QT_MOC_LITERAL(35, 251, 11), // "setStrenght"
+QT_MOC_LITERAL(36, 263, 12), // "setDexterity"
+QT_MOC_LITERAL(37, 276, 6), // "setAim"
+QT_MOC_LITERAL(38, 283, 10), // "changeName"
+QT_MOC_LITERAL(39, 294, 1), // "s"
+QT_MOC_LITERAL(40, 296, 12), // "changeWeapon"
+QT_MOC_LITERAL(41, 309, 2), // "id"
 QT_MOC_LITERAL(42, 312, 11), // "changeArmor"
 QT_MOC_LITERAL(43, 324, 3), // "id1"
 QT_MOC_LITERAL(44, 328, 3), // "id2"
@@ -93,9 +93,9 @@ QT_MOC_LITERAL(53, 418, 9) // "exportObj"
     "w\0c\0r\0rav\0cc\0s_str\0s_dex\0s_aim\0a_t\0"
     "a_e\0d\0createRanged\0rec\0rel\0m\0createArmor\0"
     "d_v\0createHealing\0a_v\0p\0createBuff\0e\0"
-    "eliminateObj\0id\0setChar\0setVitality\0"
-    "x\0setStrenght\0setDexterity\0setAim\0"
-    "changeName\0s\0changeWeapon\0changeArmor\0"
+    "eliminateObj\0setChar\0setVitality\0x\0"
+    "setStrenght\0setDexterity\0setAim\0"
+    "changeName\0s\0changeWeapon\0id\0changeArmor\0"
     "id1\0id2\0changeItem\0getInfoObj\0"
     "QListWidgetItem*\0item\0showCodex\0"
     "importChar\0importObj\0exportChar\0"
@@ -127,22 +127,22 @@ static const uint qt_meta_data_Controller[] = {
       24,    5,  199,    2, 0x0a /* Public */,
       26,    3,  210,    2, 0x0a /* Public */,
       29,    4,  217,    2, 0x0a /* Public */,
-      31,    1,  226,    2, 0x0a /* Public */,
-      33,    0,  229,    2, 0x0a /* Public */,
-      34,    1,  230,    2, 0x0a /* Public */,
-      36,    1,  233,    2, 0x0a /* Public */,
-      37,    1,  236,    2, 0x0a /* Public */,
-      38,    1,  239,    2, 0x0a /* Public */,
-      39,    1,  242,    2, 0x0a /* Public */,
-      41,    1,  245,    2, 0x0a /* Public */,
-      42,    2,  248,    2, 0x0a /* Public */,
-      45,    2,  253,    2, 0x0a /* Public */,
-      46,    1,  258,    2, 0x0a /* Public */,
-      49,    0,  261,    2, 0x0a /* Public */,
-      50,    0,  262,    2, 0x0a /* Public */,
-      51,    0,  263,    2, 0x0a /* Public */,
-      52,    0,  264,    2, 0x0a /* Public */,
-      53,    0,  265,    2, 0x0a /* Public */,
+      31,    0,  226,    2, 0x0a /* Public */,
+      32,    0,  227,    2, 0x0a /* Public */,
+      33,    1,  228,    2, 0x0a /* Public */,
+      35,    1,  231,    2, 0x0a /* Public */,
+      36,    1,  234,    2, 0x0a /* Public */,
+      37,    1,  237,    2, 0x0a /* Public */,
+      38,    1,  240,    2, 0x0a /* Public */,
+      40,    1,  243,    2, 0x0a /* Public */,
+      42,    2,  246,    2, 0x0a /* Public */,
+      45,    2,  251,    2, 0x0a /* Public */,
+      46,    1,  256,    2, 0x0a /* Public */,
+      49,    0,  259,    2, 0x0a /* Public */,
+      50,    0,  260,    2, 0x0a /* Public */,
+      51,    0,  261,    2, 0x0a /* Public */,
+      52,    0,  262,    2, 0x0a /* Public */,
+      53,    0,  263,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -155,14 +155,14 @@ static const uint qt_meta_data_Controller[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::Int, QMetaType::Int,    8,   17,   11,   25,   19,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    8,   27,   28,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int, QMetaType::Int,    8,   30,   28,   19,
-    QMetaType::Void, QMetaType::Int,   32,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   35,
-    QMetaType::Void, QMetaType::Int,   35,
-    QMetaType::Void, QMetaType::Int,   35,
-    QMetaType::Void, QMetaType::Int,   35,
-    QMetaType::Void, QMetaType::QString,   40,
-    QMetaType::Void, QMetaType::Int,   32,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   34,
+    QMetaType::Void, QMetaType::Int,   34,
+    QMetaType::Void, QMetaType::Int,   34,
+    QMetaType::Void, QMetaType::Int,   34,
+    QMetaType::Void, QMetaType::QString,   39,
+    QMetaType::Void, QMetaType::Int,   41,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   44,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   43,   44,
     QMetaType::Void, 0x80000000 | 47,   48,
@@ -191,7 +191,7 @@ void Controller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->createArmor((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5]))); break;
         case 8: _t->createHealing((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 9: _t->createBuff((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
-        case 10: _t->eliminateObj((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->eliminateObj(); break;
         case 11: _t->setChar(); break;
         case 12: _t->setVitality((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 13: _t->setStrenght((*reinterpret_cast< int(*)>(_a[1]))); break;

@@ -1,7 +1,7 @@
 #include "additem.h"
 
 
-void AddItem::addControls(QFormLayout *layout)
+void AddItem::addControlsWeapon(QFormLayout *layout)
 {
      type = new QComboBox;
      effect = new QComboBox;
@@ -27,15 +27,7 @@ void AddItem::addControls(QFormLayout *layout)
 
      save = new QPushButton("Save");
 
-     effect->addItem("NO EFFECT");
-     effect->addItem("BLEED");
-     effect->addItem("FIRE");
-     effect->addItem("POISON");
-     effect->addItem("SLOW");
-     effect->addItem("STONE");
-     effect->addItem("THUNDER");
-     effect->addItem("WATER");
-     effect->addItem("WIND");
+     addEffect();
 
      atk_type->addItem("SLASH");
      atk_type->addItem("PIERCE");
@@ -98,7 +90,7 @@ void AddItem::addControls(QFormLayout *layout)
      enableBox();
 
      connect(type,SIGNAL(currentIndexChanged(QString)),this,SLOT(enableBox()));
-     connect(save,SIGNAL(clicked()),this,SLOT(saveItem()));
+     connect(save,SIGNAL(clicked()),this,SLOT(getWeaponData()));
 }
 
 void AddItem::addControlsArmor(QFormLayout *layout)
@@ -106,7 +98,7 @@ void AddItem::addControlsArmor(QFormLayout *layout)
     defense = new QLineEdit;
     name = new QLineEdit;
     durability = new QLineEdit;
-    resistance = new QComboBox;
+    effect = new QComboBox;
     type = new QComboBox;
 
     save = new QPushButton("Save");
@@ -116,15 +108,7 @@ void AddItem::addControlsArmor(QFormLayout *layout)
     type->addItem("GLOVES");
     type->addItem("BOOTS");
 
-    resistance->addItem("NO EFFECT");
-    resistance->addItem("BLEED");
-    resistance->addItem("FIRE");
-    resistance->addItem("POISON");
-    resistance->addItem("SLOW");
-    resistance->addItem("STONE");
-    resistance->addItem("THUNDER");
-    resistance->addItem("WATER");
-    resistance->addItem("WIND");
+    addEffect();
 
     defense->setValidator(new QIntValidator(0,9999,this));
     defense->setPlaceholderText("Values between 0-9999");
@@ -136,10 +120,10 @@ void AddItem::addControlsArmor(QFormLayout *layout)
     layout->addRow("Name",name);
     layout->addRow("Defense",defense);
     layout->addRow("Durability",durability);
-    layout->addRow("Resistance",resistance);
+    layout->addRow("Resistance",effect);
     layout->addWidget(save);
 
-    connect(save,SIGNAL(clicked()),this,SLOT(saveItem()));
+    connect(save,SIGNAL(clicked()),this,SLOT(getArmorData()));
 
 }
 
@@ -173,6 +157,7 @@ void AddItem::addControlsConsumable(QFormLayout *layout)
     changeItem();
 
     layout->addRow("Type",type);
+    layout->addRow("Name",name);
     layout->addRow("Effect",effect);
     layout->addRow("Potency",potency);
     layout->addRow("Percentage",percentage);
@@ -180,7 +165,45 @@ void AddItem::addControlsConsumable(QFormLayout *layout)
     layout->addWidget(save);
 
     connect(type,SIGNAL(currentIndexChanged(QString)),this,SLOT(changeItem()));
-    connect(save,SIGNAL(clicked()),this,SLOT(saveItem()));
+    connect(save,SIGNAL(clicked()),this,SLOT(getConsumableData()));
+}
+
+void AddItem::addEffect()
+{
+    effect->addItem("NO EFFECT");
+    effect->addItem("BLEED");
+    effect->addItem("FIRE");
+    effect->addItem("POISON");
+    effect->addItem("SLOW");
+    effect->addItem("STONE");
+    effect->addItem("THUNDER");
+    effect->addItem("WATER");
+    effect->addItem("WIND");
+}
+
+void AddItem::addItemEffect(QString s)
+{
+    if (s == "BUFF"){
+        effect->addItem("ATK UP");
+        effect->addItem("DEF UP");
+        effect->addItem("HP UP");
+        effect->addItem("MP UP");
+        effect->addItem("FIRE ATK UP");
+        effect->addItem("THUNDER ATK UP");
+        effect->addItem("WATER ATK UP");
+        effect->addItem("WIND ATK UP");
+        effect->addItem("FIRE RES UP");
+        effect->addItem("THUNDER RES UP");
+        effect->addItem("WATER RES UP");
+        effect->addItem("WIND RES UP");
+        effect->addItem("ALL STATS UP");
+        effect->addItem("POISON RES UP");
+        effect->addItem("BLEED RES UP");
+    }else if(s == "HEALING"){
+        effect->addItem("HP");
+        effect->addItem("MP");
+        effect->addItem("STA");
+    }
 }
 
 AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
@@ -192,7 +215,7 @@ AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
 
     if (i == 1){
         setWindowTitle("Create Weapon");
-        addControls(main);
+        addControlsWeapon(main);
         setFixedSize(300,500);
     }else if (i == 2){
         setWindowTitle("Create Armor Piece");
@@ -201,7 +224,7 @@ AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
     }else if (i == 3){
         setWindowTitle("Create Consumable");
         addControlsConsumable(main);
-        setFixedSize(300,200);
+        setFixedSize(300,250);
     }
 }
 
@@ -222,46 +245,84 @@ void AddItem::enableBox() const
         durability->setEnabled(false);
         atk_type->setEnabled(false);
     }
-
+    durability->clear();
     recoil->clear();
     rld_time->clear();
     magazine->clear();
 }
 
-void AddItem::saveItem()
-{
-   close();
-}
-
-void AddItem::changeItem(){
+void AddItem::changeItem() {
     if(type->currentIndex() == 0){
         effect->clear();
-        effect->addItem("ATK UP");
-        effect->addItem("DEF UP");
-        effect->addItem("HP UP");
-        effect->addItem("MP UP");
-        effect->addItem("FIRE ATK UP");
-        effect->addItem("THUNDER ATK UP");
-        effect->addItem("WATER ATK UP");
-        effect->addItem("WIND ATK UP");
-        effect->addItem("FIRE RES UP");
-        effect->addItem("THUNDER RES UP");
-        effect->addItem("WATER RES UP");
-        effect->addItem("WIND RES UP");
-        effect->addItem("ALL STATS UP");
-        effect->addItem("POISON RES UP");
-        effect->addItem("BLEED RES UP");
+        addItemEffect("BUFF");
         potency->setEnabled(false);
         duration->setEnabled(true);
         percentage->setEnabled(true);
 
     }else{
         effect->clear();
-        effect->addItem("RECOVER HP");
-        effect->addItem("RECOVER MP");
-        effect->addItem("RECOVER STA");
+        addItemEffect("HEALING");
         duration->setEnabled(false);
         percentage->setEnabled(false);
         potency->setEnabled(true);
+    }
+}
+
+void AddItem::getArmorData()
+{
+    if(!name->text().isEmpty()){
+        QString armor_type = type->currentText();
+        QString armor_name = name->text();
+        int armor_defense = defense->text().toInt();
+        int armor_durability = durability->text().toInt();
+        QString armor_resistance = effect->currentText();
+        c->createArmor(armor_name,armor_type,armor_resistance,armor_defense,armor_durability);
+        close();
+    }
+}
+
+void AddItem::getWeaponData()
+{
+    if(!name->text().isEmpty()){
+        QString w_name = name->text();
+        int w_weight = weight->text().toInt();
+        int w_cost = cost->text().toInt();
+        int w_rarity = rarity->text().toInt();
+        int w_attack = raw_atk->text().toInt();
+        int w_crit = crit->text().toInt();
+        int w_strScale =scStr->text().toInt();
+        int w_dexScale = scDex->text().toInt();
+        int w_aimScale = scAim->text().toInt();
+        if(type->currentText() == "Melee"){
+            QString w_atkType = atk_type->currentText();
+            QString w_effect = effect->currentText();
+            int w_durability = durability->text().toInt();
+            c->createMelee(w_name,w_weight,w_cost,w_rarity,w_attack,w_crit,w_strScale,w_dexScale,w_aimScale,w_atkType,w_effect,w_durability);
+        }else if (type->currentText() == "Ranged"){
+            int w_recoil = recoil->text().toInt();
+            int w_reload = rld_time->text().toInt();
+            int w_magazine = magazine->text().toInt();
+            c->createRanged(w_name,w_weight,w_cost,w_rarity,w_attack,w_crit,w_strScale,w_dexScale,w_aimScale,w_recoil,w_reload,w_magazine);
+        }
+        close();
+    }
+
+
+}
+
+void AddItem::getConsumableData()
+{
+    if(!name->text().isEmpty()){
+        QString c_name = name->text();
+        QString c_effect = effect->currentText();
+        if(type->currentText() == "BUFF"){
+            int c_perc = percentage->currentText().toInt();
+            int c_duration = duration->text().toInt();
+            c->createBuff(c_name,c_effect,c_perc,c_duration);
+        }else if (type->currentText() == "HEALING"){
+            int c_potency = potency->text().toInt();
+            c->createHealing(c_name,c_effect,c_potency);
+        }
+        close();
     }
 }

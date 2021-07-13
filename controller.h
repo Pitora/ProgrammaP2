@@ -32,6 +32,8 @@ public:
     void setCollection(Collection* c);
     void setCodex(Codex* co);
     void setAddItem(AddItem *a);
+
+    QList<QString> getItemsNames();
 signals:
 
 public slots:
@@ -45,7 +47,7 @@ public slots:
     void createArmor(QString n, QString a_t, QString r, int d_v, int d);
     void createHealing(QString n, QString a_v, int p);
     void createBuff(QString n, QString e, int p, int d);
-    void eliminateObj(int id);
+    void eliminateObj();
 
     void setChar();
     void setVitality(int x);
@@ -60,7 +62,6 @@ public slots:
     void getInfoObj(QListWidgetItem *item);
 
     void showCodex();
-
 
     void importChar();
     void importObj();
