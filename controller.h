@@ -25,7 +25,7 @@ private:
     Collection* col;
     Codex* codex;
     AddItem* add;
-    int prevId;
+    QList<int> prevId;
 
 public:
     explicit Controller(QObject *parent = nullptr);
@@ -33,6 +33,7 @@ public:
     void setCollection(Collection* c);
     void setCodex(Codex* co);
     void setAddItem(AddItem *a);
+    void refreshWindow();
 
     QList<QString> getItemsNames();
 signals:
@@ -57,12 +58,13 @@ public slots:
     void setAim(QString x);
     void changeName(QString s);
     void changeWeapon(QString s);
-    void changeArmor(int id1, int id2);
-    void changeItem(int id1, int id2);
+    void changeArmor(QString s);
+
+    void changeItem1(QString s);
+    void changeItem2(QString s);
+    void changeItem3(QString s);
 
     void getInfoObj(QListWidgetItem *item);
-
-    void getPrevId(QString s);
 
     void showCodex();
 

@@ -277,6 +277,7 @@ void AddItem::getArmorData()
         int armor_durability = durability->text().toInt();
         QString armor_resistance = effect->currentText();
         c->createArmor(armor_name,armor_type,armor_resistance,armor_defense,armor_durability);
+        c->refreshWindow();
         close();
     }
 }
@@ -304,6 +305,7 @@ void AddItem::getWeaponData()
             int w_magazine = magazine->text().toInt();
             c->createRanged(w_name,w_weight,w_cost,w_rarity,w_attack,w_crit,w_strScale,w_dexScale,w_aimScale,w_recoil,w_reload,w_magazine);
         }
+        c->refreshWindow();
         close();
     }
 
@@ -323,6 +325,7 @@ void AddItem::getConsumableData()
             int c_potency = potency->text().toInt();
             c->createHealing(c_name,c_effect,c_potency);
         }
+        c->refreshWindow();
         close();
     }
 }

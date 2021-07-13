@@ -6,13 +6,19 @@ Controller::Controller(QObject *parent) : QObject(parent)
 }
 
 void Controller::setWindow(Window* w){ window = w;
-                                     getBoxItems();}
+                                     refreshWindow();}
 
 void Controller::setCollection(Collection* c){ col = c;}
 
 void Controller::setCodex(Codex* co){codex = co;}
 
 void Controller::setAddItem(AddItem* a){ add = a;}
+
+void Controller::refreshWindow()
+{
+    getBoxItems();
+    setWindowChar();
+}
 
 QList<QString> Controller::getItemsNames()
 {
@@ -25,7 +31,7 @@ QList<QString> Controller::getItemsNames()
    return names;
 }
 
-void Controller::calc() const{
+void Controller::calc() const {
 
     int atk = col->getCharAtk();
     int def = col->getCharDef();
@@ -39,35 +45,35 @@ void Controller::getBoxItems()
     a = col->getObjType("Weapon","");
     QList<QString> names;
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,1);
 
     names.clear();
     a = col->getObjType("Armor","HELM");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,2);
 
     names.clear();
     a = col->getObjType("Armor","CHEST");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,3);
 
     names.clear();
     a = col->getObjType("Armor","GLOVES");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,4);
 
     names.clear();
     a = col->getObjType("Armor","BOOTS");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,5);
 
@@ -123,28 +129,46 @@ void Controller::eliminateObj(){
     }
 }
 
-void Controller::setWindowChar(){       //per reimpostare dopo refresh
-    DeepPtr<Character> chara = col->getChar();
-    QString name = QString::fromStdString(chara->getName());
+void Controller::setWindowChar(){
+    //per reimpostare dopo refresh
+    QString name = QString::fromStdString(col->getCharName());
     //metodo che setta nome sulla view
+    window->setBuildName(name);
 
-    C<int> stats = chara->getStats();
-    QList<int> statsQ;
+    C<int> stats = col->getCharStats();
+    QList<QString> statsQ;
     for (auto i = stats.begin(); i != stats.end(); ++i)
     {
-        statsQ.append(*i);
+        statsQ.append(QString::number(*i));
     }
     //metodo che setta le statistiche
-    calc();
+    window->setStats(statsQ);
 
-    DeepPtr<Weapon> w = chara->getEqWeap();
+    DeepPtr<Weapon> w = col->getCharWeapon();
     //elaborazione e metodo che setta sulla window l'oggetto equipaggiato
+    QString s = (QString::number(w->getId())+ ')' + QString::fromStdString(w->getName()));
+    window->setWeapon(s);
 
-    C<DeepPtr<Armor>> a = chara->getEqArmor();
+    C<DeepPtr<Armor>> a = col->getCharArmor();
+    QList<QString> ls;
+    for (auto i = a.begin(); i != a.end(); ++i)
+    {
+        ls.append((QString::number((*i)->getId())+ ')' + QString::fromStdString((*i)->getName())));
+    }
     //stessa cosa ma più complicato
+    window->setArmor(ls);
 
-    C<DeepPtr<Consumable>> inv = chara->getInv();
-    //stessa cossa ma leggermente più complicato
+    prevId.clear();
+    C<DeepPtr<Consumable>> inv = col->getCharCons();
+    QList<QString> x;
+    for (auto i = inv.begin(); i != inv.end(); ++i)
+    {
+        x.append((QString::number((*i)->getId())+ ')' + QString::fromStdString((*i)->getName())));
+        prevId.append((*i)->getId());
+    }
+    window->setItems(x);
+    calc();
+    //stessa cosa ma leggermente più complicato
 
 
 }
@@ -179,11 +203,35 @@ void Controller::changeWeapon(QString s){
     col->modifyCharWeap(id);
     calc();
 }
-void Controller::changeArmor(int id1, int id2){
-    col->modifyCharArmor(id1,id2);
+void Controller::changeArmor(QString s){
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
+    col->modifyCharArmorAlt(id);
+    calc();
 }
-void Controller::changeItem(int id1, int id2){
-    col->modifyCharInv(id1,id2);
+
+void Controller::changeItem1(QString s)
+{
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
+    col->modifyCharInv(id,prevId[0]);
+    prevId[0] = id;
+}
+
+void Controller::changeItem2(QString s)
+{
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
+    col->modifyCharInv(id,prevId[1]);
+    prevId[1] = id;
+}
+
+void Controller::changeItem3(QString s)
+{
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
+    col->modifyCharInv(id,prevId[2]);
+    prevId[2] = id;
 }
 
 void Controller::getInfoObj(QListWidgetItem *item)
@@ -195,17 +243,9 @@ void Controller::getInfoObj(QListWidgetItem *item)
     codex->showDetails(s);
 }
 
-void Controller::getPrevId(QString s)
-{
-    std::cout<<"prev id"<<std::endl;
-    QString subString = s.mid(0,s.indexOf(')'));
-    std::cout<<subString.toInt()<<std::endl;
-    prevId = subString.toInt();
-}
 
 void Controller::showCodex()
 {
-
     codex = new Codex(this,getItemsNames());
     codex->exec();
 }
@@ -217,7 +257,7 @@ void Controller::importChar()  //per importare
     try {
         QString path = window->importCharDialog();
         col->importChara(path.toStdString());
-        //setWindowChar();
+        refreshWindow();
         //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //window->showWarning(exc.what());

@@ -40,7 +40,7 @@ public:
 
     Character(const Character& x);
 
-    virtual Character* clone() const {return new Character(*this);}
+    Character* clone() const {return new Character(*this);}
 
     //get
     std::string getName() const;

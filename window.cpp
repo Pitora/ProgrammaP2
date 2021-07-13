@@ -101,11 +101,6 @@ void Window::addLabel(QHBoxLayout* layout){
     dex_text->setMaximumWidth(70);
     aim_text->setMaximumWidth(70);
 
-    vit_text->setText("0");
-    str_text->setText("0");
-    dex_text->setText("0");
-    aim_text->setText("0");
-
     vit_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     str_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     dex_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
@@ -151,7 +146,7 @@ void Window::addButton(QVBoxLayout *layout){
     QHBoxLayout* hLayout = new QHBoxLayout;
     layout->addLayout(hLayout);
 
-    import = new QPushButton("Import");
+    import = new QPushButton("Import Build");
     save = new QPushButton("Export Build");
 
     import->setMaximumWidth(300);
@@ -192,12 +187,14 @@ void Window::setController(Controller *c){
 
     connect(build_name,SIGNAL(textChanged(QString)),controller,SLOT(changeName(QString)));
 
-    connect(weapon_box,SIGNAL(currentTextChanged(QString)),controller,SLOT(changeWeapon(QString)));
-    connect(helm_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
-    connect(chest_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
-    connect(gloves_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
-    connect(boots_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
-    connect(item1_box,SIGNAL(activated(QString)),controller,SLOT(getPrevId(QString)));
+    connect(weapon_box,SIGNAL(activated(QString)),controller,SLOT(changeWeapon(QString)));
+    connect(helm_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
+    connect(chest_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
+    connect(gloves_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
+    connect(boots_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
+    connect(item1_box,SIGNAL(activated(QString)),controller,SLOT(changeItem1(QString)));
+    connect(item2_box,SIGNAL(activated(QString)),controller,SLOT(changeItem2(QString)));
+    connect(item3_box,SIGNAL(activated(QString)),controller,SLOT(changeItem3(QString)));
 
 }
 
@@ -210,21 +207,29 @@ void Window::loadBox(QList<QString> n,int i)
 {
     switch (i) {
     case 1:
+        weapon_box->clear();
         weapon_box->addItems(n);
         break;
     case 2:
+        helm_box->clear();
         helm_box->addItems(n);
         break;
     case 3:
+        chest_box->clear();
         chest_box->addItems(n);
         break;
     case 4:
+        gloves_box->clear();
         gloves_box->addItems(n);
         break;
     case 5:
+        boots_box->clear();
         boots_box->addItems(n);
         break;
     case 6:
+        item1_box->clear();
+        item2_box->clear();
+        item3_box->clear();
         item1_box->addItems(n);
         item2_box->addItems(n);
         item3_box->addItems(n);
@@ -232,6 +237,49 @@ void Window::loadBox(QList<QString> n,int i)
     default:
         break;
     }
+}
+
+void Window::setBuildName(QString s)
+{
+    build_name->setText(s);
+}
+
+void Window::setStats(QList<QString> l)
+{
+    vit_text->setText(l[0]);
+    str_text->setText(l[1]);
+    dex_text->setText(l[2]);
+    aim_text->setText(l[3]);
+}
+
+void Window::setWeapon(QString s)
+{
+    weapon_box->setCurrentIndex(weapon_box->findText(s));
+}
+
+void Window::setArmor(QList<QString> l)
+{
+    for(auto i = l.begin(); i != l.end(); ++i){
+        if(helm_box->findText(*i) != -1){
+            helm_box->setCurrentIndex(helm_box->findText(*i));
+        }
+        if(chest_box->findText(*i) != -1){
+            chest_box->setCurrentIndex(chest_box->findText(*i));
+        }
+        if(gloves_box->findText(*i) != -1){
+            gloves_box->setCurrentIndex(gloves_box->findText(*i));
+        }
+        if(boots_box->findText(*i) != -1){
+            boots_box->setCurrentIndex(boots_box->findText(*i));
+        }
+    }
+}
+
+void Window::setItems(QList<QString> l)
+{
+    item1_box->setCurrentIndex(item1_box->findText(l[0]));
+    item2_box->setCurrentIndex(item2_box->findText(l[1]));
+    item3_box->setCurrentIndex(item3_box->findText(l[2]));
 }
 
 QString Window::importCharDialog()

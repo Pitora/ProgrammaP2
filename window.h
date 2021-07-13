@@ -64,11 +64,17 @@ private:
 public:
 
     Window(QWidget *parent = 0);
+    QString exportCharDialog();
+    QString importCharDialog();
     void setController(Controller *c);
     void calcDmgDef(int a, int d);
     void loadBox(QList<QString> n, int i);
-    QString importCharDialog();
-    QString exportCharDialog();
+    void setBuildName(QString s);
+    void setStats(QList<QString> l);
+    void setWeapon(QString s);
+    void setArmor(QList<QString> l);
+    void setItems(QList<QString> l);
+
     ~Window();
 
 };

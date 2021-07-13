@@ -21,7 +21,7 @@ class Codex : public QDialog
 {
     Q_OBJECT
 private:
-    Controller* c;
+    Controller* controller;
     QScrollArea* container;
     QListWidget* cont;
     QTextEdit* details;

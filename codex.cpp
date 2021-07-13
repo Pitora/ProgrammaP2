@@ -2,7 +2,7 @@
 
 Codex::Codex(Controller *cont,QList<QString> list, QWidget *parent) : QDialog(parent)
 {
-    c = cont;
+    controller = cont;
     setWindowTitle("Codex");
     setFixedSize(500,600);
 
@@ -30,9 +30,7 @@ void Codex::addScrollArea(QList<QString> l)
     details->setReadOnly(true);
     details->setFrameShape(QFrame::NoFrame);
 
-    connect(cont,SIGNAL(itemClicked(QListWidgetItem*)),c,SLOT(getInfoObj(QListWidgetItem*)));
-
-
+    connect(cont,SIGNAL(itemClicked(QListWidgetItem*)),controller,SLOT(getInfoObj(QListWidgetItem*)));
 }
 
 void Codex::addControls()
@@ -45,17 +43,23 @@ void Codex::addControls()
     import_item->setGeometry(310,520,60,30);
     export_item->setGeometry(380,520,60,30);
 
-    connect(remove_item,SIGNAL(clicked()),c,SLOT(eliminateObj()));
-    connect(import_item,SIGNAL(clicked()),c,SLOT(importObj()));
-    connect(export_item,SIGNAL(clicked()),c,SLOT(exportObj()));
+    remove_item->setEnabled(false);
+    export_item->setEnabled(false);
+
+    connect(remove_item,SIGNAL(clicked()),controller,SLOT(eliminateObj()));
+    connect(import_item,SIGNAL(clicked()),controller,SLOT(importObj()));
+    connect(export_item,SIGNAL(clicked()),controller,SLOT(exportObj()));
 
 }
 
 void Codex::refreshCodex(QList<QString> l)
 {
+    remove_item->setEnabled(false);
+    export_item->setEnabled(false);
     cont->clear();
     cont->addItems(l);
     details->clear();
+    controller->refreshWindow();
 }
 
 QString Codex::getSelectedItem()
@@ -72,7 +76,6 @@ QString Codex::showExpDialog()
         return fileName;
 }
 
-
 QString Codex::showImportDialog()
 {
     QString fileName = QFileDialog::getOpenFileName(
@@ -84,5 +87,7 @@ QString Codex::showImportDialog()
 
 void Codex::showDetails(QString s)
 {
+    remove_item->setEnabled(true);
+    export_item->setEnabled(true);
     details->setText(s);
 }

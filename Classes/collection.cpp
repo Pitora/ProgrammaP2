@@ -110,8 +110,7 @@ int Collection::generateId(){
         if ((*i)->getId()>max)
         {
             max = (*i)->getId();
-        }
-        
+        }  
     }
     return max+1;
 }
@@ -154,7 +153,7 @@ bool Collection::remove(int id){
     return false;
 }
 
-void Collection::checkEq(int id)        //metodo che reimposta l'equipaggiamento di default in caso di cancellazione
+void Collection::checkEq(int id)//metodo che reimposta l'equipaggiamento di default in caso di cancellazione
 {
     if (chara.isRemovingEq(id))
     {
@@ -189,8 +188,6 @@ void Collection::checkEq(int id)        //metodo che reimposta l'equipaggiamento
         }
     }
 }
-
-
 
 std::string Collection::readFile(std::string filename)          //ritorna tutto il file sottoforma di stringa
 {
@@ -234,8 +231,6 @@ C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
     }
     return i;
 }
-
-
 
 bool Collection::importObj(std::string filename){
     try{
@@ -285,7 +280,7 @@ bool Collection::importObj(std::string filename){
     catch(err_fileNotReadable){std::cout<<"Il file non esiste"<<std::endl;}
     catch(err_import){std::cout<<"Il file non esiste"<<std::endl;}
     catch(err_notNew){std::cout<<"L'oggetto è già presente"<<std::endl; return false;}
-    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
+    catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl;}
 
 }
 
@@ -317,9 +312,9 @@ void Collection::importChara(std::string filename){
         chara = Character(file);
 
         DeepPtr<Weapon> w = chara.getEqWeap();
+        std::cout<<w<<std::endl;
         if(!checkId(w->getId()))
-        {
-            
+        {           
             if (Melee* m = dynamic_cast<Melee*>(&(*w)))
             {
                 list.insertBack(DeepPtr<Obj>(new Melee(*m)));
@@ -355,9 +350,9 @@ void Collection::importChara(std::string filename){
             }
         }
     }
-    catch(err_fileNotReadable){std::cout<<"Il file non esiste"<<std::endl; abort();}
-    catch(err_import){std::cout<<"L'importazione non è andata a buon fine"<<std::endl; abort();}
-    catch(err_sub) {std::cout<<"Substring ha fallito : valori mancanti"<<std::endl; abort();}
+    catch(err_fileNotReadable){std::cout<<"Il file non esiste"<<std::endl;}
+    catch(err_import){std::cout<<"L'importazione non è andata a buon fine"<<std::endl;}
+    catch(err_sub) {std::cout<<"Substring ha fallito : valori mancanti"<<std::endl;}
     
 }
 
@@ -418,7 +413,7 @@ void Collection::modifyCharArmor(int id1, int id2){
     catch(err_sameObject){std::cout<<"L'oggetto che si vuole rimuovere è lo stesso che si vuole aggiungere."<<std::endl;}
 }
 
-void Collection::modifyCharArmorAlt(int id)             //metodo per chiamare la versione alternativa del metodo che cambia l'armatura, (usa solo l'id)
+void Collection::modifyCharArmorAlt(int id)//metodo per chiamare la versione alternativa del metodo che cambia l'armatura, (usa solo l'id)
 {
     try{
         if (checkId(id) && !chara.isRemovingEq(id))
@@ -456,9 +451,22 @@ void Collection::removeCharEq(int id){
 }
 
 void Collection::setCharVit(int x){chara.setVit(x);}
+
 void Collection::setCharStr(int x){chara.setStr(x);}
+
 void Collection::setCharDex(int x){chara.setDex(x);}
+
 void Collection::setCharAim(int x){chara.setAim(x);}
+
+std::string Collection::getCharName(){return chara.getName();}
+
+C<int> Collection::getCharStats(){ return chara.getStats();}
+
+DeepPtr<Weapon> Collection::getCharWeapon(){return chara.getEqWeap();}
+
+C<DeepPtr<Armor>> Collection::getCharArmor(){return chara.getEqArmor();}
+
+C<DeepPtr<Consumable>> Collection::getCharCons(){return chara.getInv();}
 
 int Collection::getCharAtk(){return chara.damage();}
 
@@ -495,7 +503,8 @@ const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(
 const C<DeepPtr<Obj>> Collection::getAllObj() const{
     return list;
 }
- std::string Collection::getInfoObj(int id) const {
+
+std::string Collection::getInfoObj(int id) const {
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     if (i != list.end())
     {
@@ -503,11 +512,3 @@ const C<DeepPtr<Obj>> Collection::getAllObj() const{
     }
     return "Placeholder : se sei qui, bravo.";
 }
-
-
-
-
-
-
-
-

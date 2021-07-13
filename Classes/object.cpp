@@ -17,7 +17,6 @@ Obj::~Obj() {
     std::cout<<"Distruttore virtuale puro chiamato"<<std::endl;
 }
 
-
 std::string Obj::exp() const{       //Esempio di export?
     std::string s = "<Obj>";
     s += "<Id>" + std::to_string(id) + "</Id>";
@@ -29,9 +28,6 @@ std::string Obj::exp() const{       //Esempio di export?
 std::string Obj::getInfo() const{
     return "Id : " + std::to_string(id) + "\n" + "Nome : " + name + "\n";
 }
-
-
-
 
 std::ostream& operator<<(std::ostream& s, const Obj& o) {
         o.print(s);

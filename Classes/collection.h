@@ -78,6 +78,11 @@ void setCharStr(int x);
 void setCharDex(int x);
 void setCharAim(int x);
 
+std::string getCharName();
+C<int> getCharStats();
+DeepPtr<Weapon> getCharWeapon();
+C<DeepPtr<Armor>> getCharArmor();
+C<DeepPtr<Consumable>> getCharCons();
 int getCharAtk();
 int getCharDef();
 

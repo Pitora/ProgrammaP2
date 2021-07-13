@@ -36,15 +36,18 @@ Character::Character(std::string imported){
         s = sm::substring(imported, "<Inventory>", "</Inventory>");
         Consumable* c;
         i = 0;
+        std::string s2;
         while (s.find("<Consum" + std::to_string(i) + '>') != -1 && s.find("</Consum" + std::to_string(i) + '>') != -1 )
         {   
-            if (s.find("<Healing>") != -1 && s.find("</Healing>") != -1)
+            s2 = sm::substring(s,"<Consum" + std::to_string(i) + '>',"</Consum" + std::to_string(i) + '>');
+
+            if (s2.find("<Healing>") != -1 && s2.find("</Healing>") != -1)
             {
-                c = new Healing(sm::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+                c = new Healing(s2);
             }
-            else if (s.find("<Buff>") != -1 && s.find("</Buff>") != -1)
+            else if (s2.find("<Buff>") != -1 && s2.find("</Buff>") != -1)
             {
-                c = new Buff(sm::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+                c = new Buff(s2);
             }
             inventory.insertBack(DeepPtr<Consumable>(c));
             i++;
@@ -95,6 +98,7 @@ C<int> Character::getStats() const {
 void Character::setName(std::string s) {
     name_build = s;
 }
+
 void Character::setWeap(const DeepPtr<Obj>& w) {
     if (dynamic_cast<Weapon*>(&(*w)))
     {
@@ -165,6 +169,7 @@ void Character::changeArmorEq(const DeepPtr<Obj>& a){
         }else throw err_notFound();
     }
 }
+
 void Character::addArmor(const DeepPtr<Obj>& a) {
     if (dynamic_cast<Armor*>(&(*a)))
     {
@@ -216,7 +221,6 @@ bool Character::isRemovingEq(int id) const
     return false;
 }
 
-
 int Character::damage() const{
     int atk = eq_weap->getAttack();
     int scaleSum = (strenght*eq_weap->getScalingStr()/10)+(dexterity*eq_weap->getScalingDex()/10)+(aim*eq_weap->getScalingAim()/10);
@@ -231,9 +235,7 @@ int Character::defense() const{
     return (def+vitality/10);
 }
 
-
-
-std::string Character::exp() const{       
+std::string Character::exp() const{
     std::string s = "<Character>";
     s += "<NameBuild>" + name_build + "</NameBuild>";
     s += "<EqWeap>" + (*eq_weap).exp() + "</EqWeap>";
