@@ -7,7 +7,7 @@ Weapon::Weapon(int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s
 Weapon::Weapon(int i, std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim) : Obj(i,n), weight(w), cost(c), rarity(r), raw_attack_value(rav), critical_chance(cc), scaling_str(s_str), scaling_dex(s_dex), scaling_aim(s_aim){}
 
 Weapon::Weapon(std::string imported) : Obj(imported){     
-    if (imported.find("<Weapon>") != -1 && imported.find("</Weapon>") != -1)
+    if (checkKW(imported,"<Weapon>", "</Weapon>"))
     {
         weight = stoi(substring(imported,"<Weight>","</Weight>")); 
 

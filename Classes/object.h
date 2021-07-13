@@ -10,7 +10,7 @@ class Obj {
 private:
 
     unsigned int id;
-    std::string name;   
+    std::string name;
     
 public:
 
@@ -42,6 +42,7 @@ public:
     virtual std::string getInfo() const;
 
     static std::string substring (std::string s, std::string w1, std::string w2);
+    static bool checkKW(std::string s, std::string kw1, std::string kw2);
 
 };
 

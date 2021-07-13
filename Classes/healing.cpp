@@ -5,7 +5,7 @@ Healing::Healing(std::string a_v, unsigned int p) : affected_value(a_v), potency
 Healing::Healing(int i, std::string n, std::string a_v, unsigned int p) : Consumable(i,n), affected_value(a_v), potency(p) {}
 
 Healing::Healing(std::string imported) : Consumable(imported){       
-    if (imported.find("<Healing>") != -1 && imported.find("</Healing>") != -1)
+    if (checkKW(imported, "<Healing>", "</Healing>"))
     {
         affected_value = substring(imported, "<AffValue>", "</AffValue>" ); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 

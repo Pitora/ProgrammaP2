@@ -68,7 +68,8 @@ public:
     void setController(Controller *c);
     void calcDmgDef(int a, int d);
     void loadBox(QList<QString> n, int i);
-    QString importFileDialog();
+    QString importCharDialog();
+    QString exportCharDialog();
     ~Window();
 
 };

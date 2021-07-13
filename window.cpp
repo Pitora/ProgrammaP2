@@ -220,12 +220,23 @@ void Window::loadBox(QList<QString> n,int i)
     }
 }
 
-QString Window::importFileDialog()
+
+
+QString Window::importCharDialog()
 {
     QString fileName = QFileDialog::getOpenFileName(
-            this, tr("Open File"), "/home", tr("XML File (*.xml)"));
+            this, tr("Import character"), "/home", tr("XML File (*.xml)"));
     if (fileName == "")
         throw std::runtime_error("No File Selected");
+    return fileName;
+}
+
+QString Window::exportCharDialog()
+{
+    QString fileName = QFileDialog::getSaveFileName(
+            this, tr("Export character"), "/home", tr("XML File (*.xml)"));
+    if (fileName == "")
+        throw std::runtime_error("No name");
     return fileName;
 }
 

@@ -49,7 +49,7 @@ public slots:
     void createBuff(QString n, QString e, int p, int d);
     void eliminateObj();
 
-    void setChar();
+    void setWindowChar();
     void setVitality(int x);
     void setStrenght(int x);
     void setDexterity(int x);

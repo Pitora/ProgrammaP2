@@ -43,7 +43,9 @@ void add(std::string n, std::string a_v, int p);   //Healing
 
 
 
-bool remove(int i);
+bool remove(int id);
+
+void checkEq(int id);
 
 
 //getinfo

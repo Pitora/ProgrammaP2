@@ -116,16 +116,37 @@ void Controller::createBuff(QString n, QString e, int p, int d){
 void Controller::eliminateObj(){
     QString s = codex->getSelectedItem();
     if(!s.isNull()){
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    col->remove(id);
-    codex->refreshCodex(getItemsNames());
+        QString subString = s.mid(0,s.indexOf(')'));
+        int id = subString.toInt();
+        col->remove(id);
+        codex->refreshCodex(getItemsNames());
     }
 }
 
-void Controller::setChar(){
-    DeepPtr<Character> c = col->getChar();
-    //cose
+void Controller::setWindowChar(){       //per reimpostare dopo refresh
+    DeepPtr<Character> chara = col->getChar();
+    QString name = QString::fromStdString(chara->getName());
+    //metodo che setta nome sulla view
+
+    C<int> stats = chara->getStats();
+    QList<int> statsQ;
+    for (auto i = stats.begin(); i != stats.end(); ++i)
+    {
+        statsQ.append(*i);
+    }
+    //metodo che setta le statistiche
+    calc();
+
+    DeepPtr<Weapon> w = chara->getEqWeap();
+    //elaborazione e metodo che setta sulla window l'oggetto equipaggiato
+
+    C<DeepPtr<Armor>> a = chara->getEqArmor();
+    //stessa cosa ma più complicato
+
+    C<DeepPtr<Consumable>> inv = chara->getInv();
+    //stessa cossa ma leggermente più complicato
+
+
 }
 
 void Controller::setVitality(int x) {
@@ -179,8 +200,9 @@ void Controller::showCodex()
 void Controller::importChar()  //per importare
 {
     try {
-        QString path = window->importFileDialog();
+        QString path = window->importCharDialog();
         col->importChara(path.toStdString());
+        //setWindowChar();
         //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //window->showWarning(exc.what());
@@ -194,6 +216,17 @@ void Controller::importObj()  //per importare
         QString path = codex->showImportDialog();
         col->importObj(path.toStdString());
         codex->refreshCodex(getItemsNames());
+    } catch (std::runtime_error exc) {
+        //view->showWarning(exc.what());
+    }
+
+}
+
+void Controller::exportChar()  //per esportare
+{
+    try {
+        QString path = window->exportCharDialog();
+        col->exportChara(path.toStdString());
         //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //view->showWarning(exc.what());
@@ -201,19 +234,7 @@ void Controller::importObj()  //per importare
 
 }
 
-void Controller::exportChar()  //per importare
-{
-//    try {
-//        QString path = window->importFileDialog();
-//        col->importChara(path.toStdString());
-//        //metodo/i che refreshano la finestra
-//    } catch (std::runtime_error exc) {
-//        view->showWarning(exc.what());
-//    }
-
-}
-
-void Controller::exportObj()  //per importare
+void Controller::exportObj()  //per edportare
 {
     try {
         QString path = codex->showExpDialog();

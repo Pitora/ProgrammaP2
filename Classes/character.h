@@ -22,9 +22,9 @@ private:
     DeepPtr<Weapon> eq_weap;
     C<DeepPtr<Armor>> eq_armor;
     C<DeepPtr<Consumable>> inventory;
-    int vit; 
-    int str;
-    int dex;
+    int vitality;
+    int strenght;
+    int dexterity;
     int aim; 
     
 public:
@@ -58,6 +58,8 @@ public:
     void setStr(int x);
     void setDex(int x);
     void setAim(int x);
+
+    bool isRemovingEq(int id) const;
 
     int damage() const;
 

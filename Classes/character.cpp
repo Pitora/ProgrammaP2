@@ -1,23 +1,23 @@
 #include "character.h"
 
-Character::Character(){}
+Character::Character() : name_build("Default build"), vitality(10), strenght(10), dexterity(10), aim(10){}
 
-Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv),vit(v),str(s),dex(d),aim(a) {}
+Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv),vitality(v),strenght(s),dexterity(d),aim(a) {}
 
 Character::Character(std::string imported){
-    if (imported.find("<Character>") != -1 && imported.find("</Character>") != -1)
+    if (imported.find("<Character>") != size_t(-1) && imported.find("</Character>") != size_t(-1))
     {
-        if (imported.find("<NameBuild>") != -1 && imported.find("</NameBuild>") != -1)
+        if (imported.find("<NameBuild>") != size_t(-1) && imported.find("</NameBuild>") != size_t(-1))
         {
             name_build = Obj::substring(imported, "<NameBuild>", "</NameBuild>"); 
         }else throw err_import();
-        if (imported.find("<EqWeap>") != -1 && imported.find("</EqWeap>") != -1)
+        if (imported.find("<EqWeap>") != size_t(-1) && imported.find("</EqWeap>") != size_t(-1))
         {
-            if (imported.find("<Melee>") != -1 && imported.find("</Melee>") != -1)
+            if (imported.find("<Melee>") != size_t(-1) && imported.find("</Melee>") != size_t(-1))
             {
                 eq_weap = DeepPtr<Weapon>(new Melee(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
-            else if (imported.find("<Ranged>") != -1 && imported.find("</Ranged>") != -1)
+            else if (imported.find("<Ranged>") != size_t(-1) && imported.find("</Ranged>") != size_t(-1))
             {
                 eq_weap = DeepPtr<Weapon>(new Ranged(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
@@ -26,7 +26,7 @@ Character::Character(std::string imported){
         std::string s = Obj::substring(imported, "<EqArmor>", "</EqArmor>");
         Armor* a; 
         int i = 0;
-        while (s.find("<ArmorP" + std::to_string(i) + '>') != -1 && s.find("</ArmorP" + std::to_string(i) + '>') != -1 )
+        while (s.find("<ArmorP" + std::to_string(i) + '>') != size_t(-1) && s.find("</ArmorP" + std::to_string(i) + '>') != size_t(-1) )
         {   
             a = new Armor(Obj::substring(s, "<ArmorP" + std::to_string(i) + '>', "</ArmorP" + std::to_string(i) + '>'));
             eq_armor.insertBack(DeepPtr<Armor>(a));
@@ -53,9 +53,9 @@ Character::Character(std::string imported){
 
         if(imported.find("<Stats>") != -1 && imported.find("</Stats>") != -1)
         {
-            vit = stoi(Obj::substring(imported,"<Vit>","</Vit>"));
-            str = stoi(Obj::substring(imported,"<Str>","</Str>"));
-            dex = stoi(Obj::substring(imported,"<Dex>","</Dex>"));
+            vitality = stoi(Obj::substring(imported,"<Vit>","</Vit>"));
+            strenght = stoi(Obj::substring(imported,"<Str>","</Str>"));
+            dexterity = stoi(Obj::substring(imported,"<Dex>","</Dex>"));
             aim = stoi(Obj::substring(imported,"<Aim>","</Aim>"));
         }else throw err_import();
     }else throw err_import();
@@ -85,9 +85,9 @@ C<DeepPtr<Consumable>> Character::getInv() const{
 
 C<int> Character::getStats() const {
     C<int> l;
-    l.insertBack(vit);
-    l.insertBack(str);
-    l.insertBack(dex);
+    l.insertBack(vitality);
+    l.insertBack(strenght);
+    l.insertBack(dexterity);
     l.insertBack(aim);
     return l;
 }
@@ -159,18 +159,43 @@ void Character::addConsum(const DeepPtr<Obj>& c) {
     }else throw err_wrongType();
 }
 
-void Character::setVit(int x){vit = x;}
+void Character::setVit(int x){vitality = x;}
 
-void Character::setStr(int x){str = x;}
+void Character::setStr(int x){strenght = x;}
 
-void Character::setDex(int x){dex = x;}
+void Character::setDex(int x){dexterity = x;}
 
 void Character::setAim(int x){aim = x;}
+
+bool Character::isRemovingEq(int id) const
+{
+    if (eq_weap->getId() == id)
+    {
+        return true;
+    }
+    for (C<DeepPtr<Armor>>::const_iterator i = eq_armor.begin(); i != eq_armor.end(); ++i)
+    {
+        if ((*i)->getId() == id)
+        {
+            return true;
+        }
+    }
+
+    for (C<DeepPtr<Consumable>>::const_iterator i = inventory.begin(); i != inventory.end(); ++i)
+    {
+        if ((*i)->getId() == id)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 
 int Character::damage() const{
     int atk = eq_weap->getAttack();
-    int scaleSum = (str*eq_weap->getScalingStr()/100)+(dex*eq_weap->getScalingDex()/100)+(aim*eq_weap->getScalingAim()/100);
+    int scaleSum = (strenght*eq_weap->getScalingStr()/100)+(dexterity*eq_weap->getScalingDex()/100)+(aim*eq_weap->getScalingAim()/100);
     return (atk+scaleSum);
 }
 
@@ -209,9 +234,9 @@ std::string Character::exp() const{
     }
     s += "</Inventory>";
     s += "<Stats>";
-    s += "<Vit>" + std::to_string(vit) + "</Vit>";
-    s += "<Str>" + std::to_string(str) + "</Str>";
-    s += "<Dex>" + std::to_string(dex) + "</Dex>";
+    s += "<Vit>" + std::to_string(vitality) + "</Vit>";
+    s += "<Str>" + std::to_string(strenght) + "</Str>";
+    s += "<Dex>" + std::to_string(dexterity) + "</Dex>";
     s += "<Aim>" + std::to_string(aim) + "</Aim>";
     s += "</Stats>";
     s += "</Character>";

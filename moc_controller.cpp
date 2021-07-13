@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Controller_t {
     QByteArrayData data[54];
-    char stringdata0[428];
+    char stringdata0[434];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -63,28 +63,28 @@ QT_MOC_LITERAL(28, 201, 1), // "p"
 QT_MOC_LITERAL(29, 203, 10), // "createBuff"
 QT_MOC_LITERAL(30, 214, 1), // "e"
 QT_MOC_LITERAL(31, 216, 12), // "eliminateObj"
-QT_MOC_LITERAL(32, 229, 7), // "setChar"
-QT_MOC_LITERAL(33, 237, 11), // "setVitality"
-QT_MOC_LITERAL(34, 249, 1), // "x"
-QT_MOC_LITERAL(35, 251, 11), // "setStrenght"
-QT_MOC_LITERAL(36, 263, 12), // "setDexterity"
-QT_MOC_LITERAL(37, 276, 6), // "setAim"
-QT_MOC_LITERAL(38, 283, 10), // "changeName"
-QT_MOC_LITERAL(39, 294, 1), // "s"
-QT_MOC_LITERAL(40, 296, 12), // "changeWeapon"
-QT_MOC_LITERAL(41, 309, 2), // "id"
-QT_MOC_LITERAL(42, 312, 11), // "changeArmor"
-QT_MOC_LITERAL(43, 324, 3), // "id1"
-QT_MOC_LITERAL(44, 328, 3), // "id2"
-QT_MOC_LITERAL(45, 332, 10), // "changeItem"
-QT_MOC_LITERAL(46, 343, 10), // "getInfoObj"
-QT_MOC_LITERAL(47, 354, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(48, 371, 4), // "item"
-QT_MOC_LITERAL(49, 376, 9), // "showCodex"
-QT_MOC_LITERAL(50, 386, 10), // "importChar"
-QT_MOC_LITERAL(51, 397, 9), // "importObj"
-QT_MOC_LITERAL(52, 407, 10), // "exportChar"
-QT_MOC_LITERAL(53, 418, 9) // "exportObj"
+QT_MOC_LITERAL(32, 229, 13), // "setWindowChar"
+QT_MOC_LITERAL(33, 243, 11), // "setVitality"
+QT_MOC_LITERAL(34, 255, 1), // "x"
+QT_MOC_LITERAL(35, 257, 11), // "setStrenght"
+QT_MOC_LITERAL(36, 269, 12), // "setDexterity"
+QT_MOC_LITERAL(37, 282, 6), // "setAim"
+QT_MOC_LITERAL(38, 289, 10), // "changeName"
+QT_MOC_LITERAL(39, 300, 1), // "s"
+QT_MOC_LITERAL(40, 302, 12), // "changeWeapon"
+QT_MOC_LITERAL(41, 315, 2), // "id"
+QT_MOC_LITERAL(42, 318, 11), // "changeArmor"
+QT_MOC_LITERAL(43, 330, 3), // "id1"
+QT_MOC_LITERAL(44, 334, 3), // "id2"
+QT_MOC_LITERAL(45, 338, 10), // "changeItem"
+QT_MOC_LITERAL(46, 349, 10), // "getInfoObj"
+QT_MOC_LITERAL(47, 360, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(48, 377, 4), // "item"
+QT_MOC_LITERAL(49, 382, 9), // "showCodex"
+QT_MOC_LITERAL(50, 392, 10), // "importChar"
+QT_MOC_LITERAL(51, 403, 9), // "importObj"
+QT_MOC_LITERAL(52, 413, 10), // "exportChar"
+QT_MOC_LITERAL(53, 424, 9) // "exportObj"
 
     },
     "Controller\0calc\0\0getBoxItems\0"
@@ -93,8 +93,8 @@ QT_MOC_LITERAL(53, 418, 9) // "exportObj"
     "w\0c\0r\0rav\0cc\0s_str\0s_dex\0s_aim\0a_t\0"
     "a_e\0d\0createRanged\0rec\0rel\0m\0createArmor\0"
     "d_v\0createHealing\0a_v\0p\0createBuff\0e\0"
-    "eliminateObj\0setChar\0setVitality\0x\0"
-    "setStrenght\0setDexterity\0setAim\0"
+    "eliminateObj\0setWindowChar\0setVitality\0"
+    "x\0setStrenght\0setDexterity\0setAim\0"
     "changeName\0s\0changeWeapon\0id\0changeArmor\0"
     "id1\0id2\0changeItem\0getInfoObj\0"
     "QListWidgetItem*\0item\0showCodex\0"
@@ -192,7 +192,7 @@ void Controller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->createHealing((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 9: _t->createBuff((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
         case 10: _t->eliminateObj(); break;
-        case 11: _t->setChar(); break;
+        case 11: _t->setWindowChar(); break;
         case 12: _t->setVitality((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 13: _t->setStrenght((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 14: _t->setDexterity((*reinterpret_cast< int(*)>(_a[1]))); break;

@@ -4,35 +4,36 @@ Collection::Collection() : list(){
     try {
         std::string s = readFile("data.xml");
         if (s != ""){
-            if (s.find("<Data>") != -1 && s.find("</Data>") != -1){
+            if (Obj::checkKW(s , "<Data>","</Data>")){
                 std::cout<<"Sto leggendo"<<std::endl;
                 int i = 0;
-                while(s.find("<Item" + std::to_string(i) + '>') != -1)
+                while(Obj::checkKW(s, "<Item" + std::to_string(i) + '>', "</Item" + std::to_string(i) + '>'))
                 {
                     std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
-                    if (item.find("<Melee>") != -1 && item.find("</Melee>") != -1)
+                    if (Obj::checkKW(item, "<Melee>", "</Melee>"))
                     {   
                         list.insertBack(DeepPtr<Obj>(new Melee(item)));
                     }
-                    else if (item.find("<Ranged>") != -1 && item.find("</Ranged>") != -1)
+                    else if (Obj::checkKW(item, "<Ranged>", "</Ranged>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Ranged(item)));
                     }
-                    else if (item.find("<Armor>") != -1 && item.find("</Armor>") != -1)
+                    else if (Obj::checkKW(item, "<Armor>", "</Armor>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Armor(item)));
                     }
-                    else if (item.find("<Healing>") != -1 && item.find("</Healing>") != -1)
+                    else if (Obj::checkKW(item, "<Healing>", "</Healing>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Healing(item)));
                     }
-                    else if (item.find("<Buff>") != -1 && item.find("</Buff>") != -1)
+                    else if (Obj::checkKW(item, "<Buff>", "</Buff>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Buff(item)));
                     }
                     i++;
                 }
                 std::cout<<"Database letto"<<std::endl;
+                initialize();
             }else throw err_file();
         }else{
             throw err_fileNotReadable();
@@ -65,7 +66,7 @@ void Collection::initialize(){
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
     }
-    modifyCharName("Default build");
+    //modifyCharName("Default build");
     modifyCharWeap(5);
     modifyCharArmor(0,-1);
     modifyCharArmor(1,-1);
@@ -141,12 +142,51 @@ bool Collection::remove(int id){
 
     if (i != list.end() && id > 7)          //7 oggetti di default intoccabili
     {
+        checkEq(id);
         list.remove(*i);
         return true;
     }
 
     return false;
 }
+
+void Collection::checkEq(int id)        //metodo che reimposta l'equipaggiamento di default in caso di cancellazione
+{
+    if (chara.isRemovingEq(id))
+    {
+        C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+        if (dynamic_cast<Weapon*>(&(*(*i))))
+        {
+            modifyCharWeap(4);
+        }
+        else if (dynamic_cast<Consumable*>(&(*(*i))))
+        {
+            modifyCharInv(7,id);
+        }
+        else if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))
+        {
+            if(a->getArmorType() == "HELM")
+            {
+                modifyCharArmor(0,id);
+            }
+            else if(a->getArmorType() == "CHEST")
+            {
+                modifyCharArmor(1,id);
+            }
+            else if(a->getArmorType() == "GLOVES")
+            {
+                modifyCharArmor(2, id);
+            }
+            else if(a->getArmorType() == "BOOTS")
+            {
+                modifyCharArmor(3,id);
+            }
+
+        }
+    }
+}
+
+
 
 std::string Collection::readFile(std::string filename)          //ritorna tutto il file sottoforma di stringa
 {
@@ -196,29 +236,29 @@ C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
 bool Collection::importObj(std::string filename){
     try{
         std::string file = readFile(filename);
-        if(file.find("<Id>") != -1 && file.find("</Id>") != -1)
+        if(Obj::checkKW(file, "<Id>", "</Id>"))
         {
             int probId = stoi(Obj::substring(file, "<Id>", "</Id>"));
             //std::cout<<probId<<std::endl;
             if(!checkId(probId)){
 
-                if (file.find("<Melee>") != -1 && file.find("</Melee>") != -1)
+                if (Obj::checkKW(file, "<Melee>", "</Melee>"))
                 {   
                     list.insertBack(DeepPtr<Obj>(new Melee(file)));
                 }
-                else if (file.find("<Ranged>") != -1 && file.find("</Ranged>") != -1)
+                else if (Obj::checkKW(file, "<Ranged>", "</Ranged>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Ranged(file)));
                 }
-                else if (file.find("<Armor>") != -1 && file.find("</Armor>") != -1)
+                else if (Obj::checkKW(file, "<Armor>", "</Armor>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Armor(file)));
                 }
-                else if (file.find("<Healing>") != -1 && file.find("</Healing>") != -1)
+                else if (Obj::checkKW(file, "<Healing>", "</Healing>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Healing(file)));
                 }
-                else if (file.find("<Buff>") != -1 && file.find("</Buff>") != -1)
+                else if (Obj::checkKW(file, "<Buff>", "</Buff>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Buff(file)));
                 }
@@ -321,7 +361,7 @@ void Collection::exportChara(std::string filename){
     std::string ex = chara.exp();
 
     try{
-        std::ofstream out(filename);
+        std::ofstream out(filename + ".xml");
         if (out)
         {
             out<<"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"<<ex;
@@ -359,30 +399,37 @@ void Collection::modifyCharWeap(int id){
 
 void Collection::modifyCharArmor(int id1, int id2){
     try{
-        if (id2 > 7)
-        {
-            removeCharEq(id2);
-        }
-        C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-        chara.addArmor(*i);
+        if (id1 != id2){
+                if (id2 != -1)
+                {
+                    removeCharEq(id2);
+                }
+                C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
+                chara.addArmor(*i);
+        }else throw err_sameObject();
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
     catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
-    catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso"<<std::endl;}
+    catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso perché non è uno di questi oggetti."<<std::endl;}
+    catch(err_sameObject){std::cout<<"L'oggetto che si vuole rimuovere è lo stesso che si vuole aggiungere."<<std::endl;}
 }
 
 void Collection::modifyCharInv(int id1, int id2){
     try{
-        if (id2 > 7)        //7 oggetti di default
-        {
-            removeCharEq(id2);
-        }
-        C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-        chara.addConsum(*i);
+        if (id1 != id2){
+            if (id2 != -1)        //7 oggetti di default
+            {
+                removeCharEq(id2);
+            }
+            C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
+            chara.addConsum(*i);
+        }else throw err_sameObject();
     }
-    catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
-    catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
-    catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso"<<std::endl;}
+    catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono."<<std::endl;}
+    catch(err_notFound){std::cout<<"L'oggetto non esiste."<<std::endl;}
+    catch(err_disequip){std::cout<<"L'oggetto non può essere rimosso perché non è uno di questi oggetti."<<std::endl;}
+    catch(err_sameObject){std::cout<<"L'oggetto che si vuole rimuovere è lo stesso che si vuole aggiungere."<<std::endl;}
+
 }
 
 void Collection::removeCharEq(int id){

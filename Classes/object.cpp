@@ -5,7 +5,7 @@ Obj::Obj(){}
 Obj::Obj(int i, std::string n) : id(i), name(n) {}
 
 Obj::Obj(std::string imported){
-    if (imported.find("<Obj>") != -1 && imported.find("</Obj>") != -1)
+    if (checkKW(imported, "<Obj>", "</Obj>"))
     {
         id = stoi(substring(imported, "<Id>", "</Id>"));
         name = substring(imported, "<Name>", "</Name>");
@@ -41,6 +41,15 @@ std::string Obj::substring(std::string s, std::string w1, std::string w2)
     }
     else throw err_sub();
     
+}
+
+bool Obj::checkKW(std::string s, std::string kw1, std::string kw2)
+{
+    if (s.find(kw1) != size_t(-1) && s.find(kw2) != size_t(-1))
+    {
+        return true;
+    }
+    else return false;
 }
 
 

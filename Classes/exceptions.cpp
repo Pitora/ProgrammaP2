@@ -1,7 +1,6 @@
 #ifndef ERROR
 #define ERROR
 
-
 class err_file {};
 
 class err_sub {};
@@ -20,5 +19,7 @@ class err_fileNotReadable{};
 class err_notNew{};
 
 class err_import{};
+
+class err_sameObject{};
 
 #endif

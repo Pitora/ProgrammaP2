@@ -5,7 +5,7 @@ Armor::Armor(std::string a_t, std::string r, int d_v, int d) : armor_type(a_t), 
 Armor::Armor(int i, std::string n, std::string a_t, std::string r, int d_v, int d) : Obj(i,n), armor_type(a_t), resistance(r), defense_value(d_v), durability(d) {}
 
 Armor::Armor(std::string imported) : Obj(imported){       
-    if (imported.find("<Armor>") != -1 && imported.find("</Armor>") != -1)
+    if (checkKW(imported,"<Armor>","</Armor>"))
     {
         armor_type = substring(imported, "<ArmorType>", "</ArmorType>"); 
         resistance = substring(imported, "<Res>", "</Res>");
