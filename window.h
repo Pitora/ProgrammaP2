@@ -27,7 +27,6 @@ private:
     QMenu* file;
     QMenu* create;
 
-    QPushButton* calculate;
     QPushButton* import;
     QPushButton* save;
 

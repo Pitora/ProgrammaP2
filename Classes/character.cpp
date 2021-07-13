@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character::Character() : name_build("Default build"), vitality(10), strenght(10), dexterity(10), aim(10){}
+Character::Character(){}//:name_build("Default build"), vitality(10), strenght(10), dexterity(10), aim(10){}
 
 Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv),vitality(v),strenght(s),dexterity(d),aim(a) {}
 
@@ -195,16 +195,16 @@ bool Character::isRemovingEq(int id) const
 
 int Character::damage() const{
     int atk = eq_weap->getAttack();
-    int scaleSum = (strenght*eq_weap->getScalingStr()/100)+(dexterity*eq_weap->getScalingDex()/100)+(aim*eq_weap->getScalingAim()/100);
+    int scaleSum = (strenght*eq_weap->getScalingStr()/10)+(dexterity*eq_weap->getScalingDex()/10)+(aim*eq_weap->getScalingAim()/10);
     return (atk+scaleSum);
 }
 
 int Character::defense() const{
-    int def;
+    int def = 0;
     for (auto i = eq_armor.begin(); i != eq_armor.end(); i++){
         def += (*i)->getDefense();
     }
-    return def;
+    return (def+vitality/10);
 }
 
 

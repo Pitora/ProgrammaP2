@@ -76,6 +76,10 @@ void setCharVit(int x);
 void setCharStr(int x);
 void setCharDex(int x);
 void setCharAim(int x);
+
+int getCharAtk();
+int getCharDef();
+
 const DeepPtr<Character> getChar() const;
 
 C<DeepPtr<Obj>>::const_iterator getIter(int id) const;

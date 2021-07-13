@@ -1,6 +1,6 @@
 #include "collection.h"
 
-Collection::Collection() : list(){
+Collection::Collection() : list(), chara(){
     try {
         std::string s = readFile("data.xml");
         if (s != ""){
@@ -66,8 +66,8 @@ void Collection::initialize(){
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
     }
-    //modifyCharName("Default build");
-    modifyCharWeap(5);
+    modifyCharName("Default build");
+    modifyCharWeap(4);
     modifyCharArmor(0,-1);
     modifyCharArmor(1,-1);
     modifyCharArmor(2,-1);
@@ -75,6 +75,10 @@ void Collection::initialize(){
     modifyCharInv(7,-1);
     modifyCharInv(7,-1);
     modifyCharInv(7,-1);
+    setCharAim(15);
+    setCharDex(15);
+    setCharStr(15);
+    setCharVit(15);
 }
 
 void Collection::save(){
@@ -445,14 +449,16 @@ void Collection::setCharStr(int x){chara.setStr(x);}
 void Collection::setCharDex(int x){chara.setDex(x);}
 void Collection::setCharAim(int x){chara.setAim(x);}
 
-const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(new Character(chara));}
+int Collection::getCharAtk(){return chara.damage();}
 
+int Collection::getCharDef(){return chara.defense();}
+
+const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(&chara);}
 
  C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2 ) const{
     C<DeepPtr<Obj>> l;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
     {
-        std::cout<< "nel for" << std::endl;
         if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))    //Ampliabile
         {
             l.insertBack(*i);

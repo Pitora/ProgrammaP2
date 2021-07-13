@@ -26,9 +26,9 @@ QList<QString> Controller::getItemsNames()
 }
 
 void Controller::calc() const{
-    DeepPtr<Character> c = col->getChar();
-    int atk = c->damage();
-    int def = c->defense();
+
+    int atk = col->getCharAtk();
+    int def = col->getCharDef();
 
     window->calcDmgDef(atk,def);
 }
@@ -149,23 +149,28 @@ void Controller::setWindowChar(){       //per reimpostare dopo refresh
 
 }
 
-void Controller::setVitality(int x) {
-    col->setCharVit(x);
+void Controller::setVitality(QString x) {
+    col->setCharVit(x.toInt());
     calc();
 }
-void Controller::setStrenght(int x){
-    col->setCharStr(x);
+void Controller::setStrenght(QString x){
+    col->setCharStr(x.toInt());
     calc();
 }
-void Controller::setDexterity(int x){
-    col->setCharDex(x);
+void Controller::setDexterity(QString x){
+    col->setCharDex(x.toInt());
     calc();
 }
-void Controller::setAim(int x){
-    col->setCharAim(x);
+void Controller::setAim(QString x){
+    col->setCharAim(x.toInt());
     calc();
 }
+
+
 void Controller::changeName(QString s){
+    if(s.isEmpty()){
+        s = "Build Name";
+    }
     col->modifyCharName(s.toStdString());
 }
 void Controller::changeWeapon(int id){

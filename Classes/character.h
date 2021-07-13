@@ -23,10 +23,10 @@ private:
     DeepPtr<Weapon> eq_weap;
     C<DeepPtr<Armor>> eq_armor;
     C<DeepPtr<Consumable>> inventory;
-    int vitality;
-    int strenght;
-    int dexterity;
-    int aim; 
+    unsigned int vitality;
+    unsigned int strenght;
+    unsigned int dexterity;
+    unsigned int aim;
     
 public:
 

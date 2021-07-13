@@ -50,10 +50,10 @@ public slots:
     void eliminateObj();
 
     void setWindowChar();
-    void setVitality(int x);
-    void setStrenght(int x);
-    void setDexterity(int x);
-    void setAim(int x);
+    void setVitality(QString x);
+    void setStrenght(QString x);
+    void setDexterity(QString x);
+    void setAim(QString x);
     void changeName(QString s);
     void changeWeapon(int id);
     void changeArmor(int id1, int id2);

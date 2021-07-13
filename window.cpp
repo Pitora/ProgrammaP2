@@ -151,11 +151,12 @@ void Window::addButton(QVBoxLayout *layout){
     QHBoxLayout* hLayout = new QHBoxLayout;
     layout->addLayout(hLayout);
 
-    calculate = new QPushButton("Calculate");
     import = new QPushButton("Import");
     save = new QPushButton("Export Build");
 
-    hLayout->addWidget(calculate);
+    import->setMaximumWidth(300);
+    save->setMaximumWidth(300);
+
     hLayout->addWidget(import);
     hLayout->addWidget(save);
 }
@@ -168,7 +169,7 @@ Window::Window(QWidget *parent) : QWidget(parent){
     addCommand(main);
     addButton(main);
     setLayout(main);
-    setFixedSize(900,600);
+    setFixedSize(1024,600);
 
 }
 
@@ -177,13 +178,19 @@ void Window::setController(Controller *c){
 
     connect(save,SIGNAL(clicked()),controller,SLOT(exportChar()));
     connect(import,SIGNAL(clicked()),controller,SLOT(importChar()));
-    connect(calculate,SIGNAL(clicked()),controller,SLOT(calc()));
 
     connect(file->actions()[0],SIGNAL(triggered()),this,SLOT(close()));
     connect(create->actions()[0],SIGNAL(triggered()),controller,SLOT(createWeaponDialog()));
     connect(create->actions()[1],SIGNAL(triggered()),controller,SLOT(createArmorDialog()));
     connect(create->actions()[2],SIGNAL(triggered()),controller,SLOT(createConsumableDialog()));
     connect(create->actions()[3],SIGNAL(triggered()),controller,SLOT(showCodex()));
+
+    connect(vit_text,SIGNAL(textChanged(QString)),controller,SLOT(setVitality(QString)));
+    connect(str_text,SIGNAL(textChanged(QString)),controller,SLOT(setStrenght(QString)));
+    connect(dex_text,SIGNAL(textChanged(QString)),controller,SLOT(setDexterity(QString)));
+    connect(aim_text,SIGNAL(textChanged(QString)),controller,SLOT(setAim(QString)));
+
+    connect(build_name,SIGNAL(textChanged(QString)),controller,SLOT(changeName(QString)));
 
 }
 
