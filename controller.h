@@ -25,6 +25,7 @@ private:
     Collection* col;
     Codex* codex;
     AddItem* add;
+    int prevId;
 
 public:
     explicit Controller(QObject *parent = nullptr);
@@ -55,11 +56,13 @@ public slots:
     void setDexterity(QString x);
     void setAim(QString x);
     void changeName(QString s);
-    void changeWeapon(int id);
+    void changeWeapon(QString s);
     void changeArmor(int id1, int id2);
     void changeItem(int id1, int id2);
 
     void getInfoObj(QListWidgetItem *item);
+
+    void getPrevId(QString s);
 
     void showCodex();
 

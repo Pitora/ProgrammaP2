@@ -93,18 +93,18 @@ void Window::addLabel(QHBoxLayout* layout){
     build_name->setPalette(pal);
     build_name->setFrame(QFrame::NoFrame);
     build_name->setFixedWidth(200);
-    atk_lbl->setText("ATK : 500");
-    def_lbl->setText("DEF : 500");
+    atk_lbl->setText("ATK : ");
+    def_lbl->setText("DEF : ");
 
     vit_text->setMaximumWidth(70);
     str_text->setMaximumWidth(70);
     dex_text->setMaximumWidth(70);
     aim_text->setMaximumWidth(70);
 
-    vit_text->setText("500");
-    str_text->setText("400");
-    dex_text->setText("300");
-    aim_text->setText("400");
+    vit_text->setText("0");
+    str_text->setText("0");
+    dex_text->setText("0");
+    aim_text->setText("0");
 
     vit_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     str_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
@@ -192,6 +192,13 @@ void Window::setController(Controller *c){
 
     connect(build_name,SIGNAL(textChanged(QString)),controller,SLOT(changeName(QString)));
 
+    connect(weapon_box,SIGNAL(currentTextChanged(QString)),controller,SLOT(changeWeapon(QString)));
+    connect(helm_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
+    connect(chest_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
+    connect(gloves_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
+    connect(boots_box,SIGNAL(currentTextChanged(QString)),controller,SLOT());
+    connect(item1_box,SIGNAL(activated(QString)),controller,SLOT(getPrevId(QString)));
+
 }
 
 void Window::calcDmgDef(int a,int d){
@@ -226,8 +233,6 @@ void Window::loadBox(QList<QString> n,int i)
         break;
     }
 }
-
-
 
 QString Window::importCharDialog()
 {

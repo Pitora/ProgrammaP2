@@ -173,7 +173,9 @@ void Controller::changeName(QString s){
     }
     col->modifyCharName(s.toStdString());
 }
-void Controller::changeWeapon(int id){
+void Controller::changeWeapon(QString s){
+    QString subString = s.mid(0,s.indexOf(')'));
+    int id = subString.toInt();
     col->modifyCharWeap(id);
     calc();
 }
@@ -191,6 +193,14 @@ void Controller::getInfoObj(QListWidgetItem *item)
     int id = subString.toInt();
     s = QString::fromStdString(col->getInfoObj(id));
     codex->showDetails(s);
+}
+
+void Controller::getPrevId(QString s)
+{
+    std::cout<<"prev id"<<std::endl;
+    QString subString = s.mid(0,s.indexOf(')'));
+    std::cout<<subString.toInt()<<std::endl;
+    prevId = subString.toInt();
 }
 
 void Controller::showCodex()
