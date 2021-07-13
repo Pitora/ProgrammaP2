@@ -33,7 +33,6 @@ SOURCES += \
     Classes/character.cpp \
     Classes/collection.cpp \
     Classes/consumable.cpp \
-    Classes/exceptions.cpp \
     Classes/healing.cpp \
     Classes/melee.cpp \
     Classes/object.cpp \
@@ -41,7 +40,8 @@ SOURCES += \
     Classes/tc.cpp \
     Classes/tdeep.cpp \
     Classes/weapon.cpp \
-    codex.cpp
+    codex.cpp \
+    Classes/stringm.cpp
 
 HEADERS += \
         window.h \
@@ -57,7 +57,9 @@ HEADERS += \
     Classes/object.h \
     Classes/ranged.h \
     Classes/weapon.h \
-    codex.h
+    codex.h \
+    Classes/stringm.h \
+    Classes/exceptions.h
 
 DISTFILES += \
     Classes/data.xml

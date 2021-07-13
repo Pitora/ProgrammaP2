@@ -7,23 +7,23 @@ Weapon::Weapon(int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s
 Weapon::Weapon(int i, std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim) : Obj(i,n), weight(w), cost(c), rarity(r), raw_attack_value(rav), critical_chance(cc), scaling_str(s_str), scaling_dex(s_dex), scaling_aim(s_aim){}
 
 Weapon::Weapon(std::string imported) : Obj(imported){     
-    if (checkKW(imported,"<Weapon>", "</Weapon>"))
+    if (sm::checkKW(imported,"<Weapon>", "</Weapon>"))
     {
-        weight = stoi(substring(imported,"<Weight>","</Weight>")); 
+        weight = stoi(sm::substring(imported,"<Weight>","</Weight>"));
 
-        cost = stoi(substring(imported, "<Cost>", "</Cost>"));
+        cost = stoi(sm::substring(imported, "<Cost>", "</Cost>"));
 
-        rarity = stoi(substring(imported, "<Rarity>", "</Rarity>"));
+        rarity = stoi(sm::substring(imported, "<Rarity>", "</Rarity>"));
 
-        raw_attack_value = stoi(substring(imported, "<RawAttack>", "</RawAttack>"));
+        raw_attack_value = stoi(sm::substring(imported, "<RawAttack>", "</RawAttack>"));
 
-        critical_chance = stoi(substring(imported, "<CritChance>", "</CritChance>"));
+        critical_chance = stoi(sm::substring(imported, "<CritChance>", "</CritChance>"));
 
-        scaling_str = stoi(substring(imported, "<ScStr>", "</ScStr>"));
+        scaling_str = stoi(sm::substring(imported, "<ScStr>", "</ScStr>"));
 
-        scaling_dex = stoi(substring(imported, "<ScDex>", "</ScDex>"));
+        scaling_dex = stoi(sm::substring(imported, "<ScDex>", "</ScDex>"));
 
-        scaling_aim = stoi(substring(imported, "<ScAim>", "</ScAim>"));
+        scaling_aim = stoi(sm::substring(imported, "<ScAim>", "</ScAim>"));
 
 
     }else{

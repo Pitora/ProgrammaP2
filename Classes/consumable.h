@@ -4,7 +4,9 @@
 #include<iostream>
 #include <string>
 #include "object.h"
-#include "exceptions.cpp"
+#include "stringm.h"
+#include "exceptions.h"
+
 
 class Consumable : public Obj {
 

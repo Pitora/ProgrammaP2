@@ -64,7 +64,8 @@ SOURCES       = main.cpp \
 		Classes/object.cpp \
 		Classes/ranged.cpp \
 		Classes/weapon.cpp \
-		codex.cpp moc_window.cpp \
+		codex.cpp \
+		Classes/stringm.cpp moc_window.cpp \
 		moc_additem.cpp \
 		moc_controller.cpp \
 		moc_codex.cpp
@@ -83,6 +84,7 @@ OBJECTS       = main.o \
 		ranged.o \
 		weapon.o \
 		codex.o \
+		stringm.o \
 		moc_window.o \
 		moc_additem.o \
 		moc_controller.o \
@@ -177,7 +179,9 @@ DIST          = Classes/data.xml \
 		Classes/object.h \
 		Classes/ranged.h \
 		Classes/weapon.h \
-		codex.h main.cpp \
+		codex.h \
+		Classes/stringm.h \
+		Classes/exceptions.h main.cpp \
 		window.cpp \
 		additem.cpp \
 		controller.cpp \
@@ -191,7 +195,8 @@ DIST          = Classes/data.xml \
 		Classes/object.cpp \
 		Classes/ranged.cpp \
 		Classes/weapon.cpp \
-		codex.cpp
+		codex.cpp \
+		Classes/stringm.cpp
 QMAKE_TARGET  = ProgrammaP2
 DESTDIR       = 
 TARGET        = ProgrammaP2
@@ -380,8 +385,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents window.h additem.h controller.h Classes/armor.h Classes/buff.h Classes/character.h Classes/collection.h Classes/consumable.h Classes/healing.h Classes/melee.h Classes/object.h Classes/ranged.h Classes/weapon.h codex.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp window.cpp additem.cpp controller.cpp Classes/armor.cpp Classes/buff.cpp Classes/character.cpp Classes/collection.cpp Classes/consumable.cpp Classes/healing.cpp Classes/melee.cpp Classes/object.cpp Classes/ranged.cpp Classes/weapon.cpp codex.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents window.h additem.h controller.h Classes/armor.h Classes/buff.h Classes/character.h Classes/collection.h Classes/consumable.h Classes/healing.h Classes/melee.h Classes/object.h Classes/ranged.h Classes/weapon.h codex.h Classes/stringm.h Classes/exceptions.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp window.cpp additem.cpp controller.cpp Classes/armor.cpp Classes/buff.cpp Classes/character.cpp Classes/collection.cpp Classes/consumable.cpp Classes/healing.cpp Classes/melee.cpp Classes/object.cpp Classes/ranged.cpp Classes/weapon.cpp codex.cpp Classes/stringm.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -427,7 +432,8 @@ moc_additem.cpp: controller.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -449,7 +455,8 @@ moc_controller.cpp: window.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -471,7 +478,8 @@ moc_codex.cpp: controller.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -507,7 +515,8 @@ main.o: main.cpp window.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -526,7 +535,8 @@ window.o: window.cpp window.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -545,7 +555,8 @@ additem.o: additem.cpp additem.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -564,7 +575,8 @@ controller.o: controller.cpp controller.h \
 		codex.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -579,19 +591,22 @@ controller.o: controller.cpp controller.h \
 
 armor.o: Classes/armor.cpp Classes/armor.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o armor.o Classes/armor.cpp
 
 buff.o: Classes/buff.cpp Classes/buff.h \
 		Classes/consumable.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buff.o Classes/buff.cpp
 
 character.o: Classes/character.cpp Classes/character.h \
 		Classes/armor.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/weapon.h \
 		Classes/melee.h \
 		Classes/ranged.h \
@@ -604,7 +619,8 @@ character.o: Classes/character.cpp Classes/character.h \
 
 collection.o: Classes/collection.cpp Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -619,34 +635,40 @@ collection.o: Classes/collection.cpp Classes/collection.h \
 
 consumable.o: Classes/consumable.cpp Classes/consumable.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o consumable.o Classes/consumable.cpp
 
 healing.o: Classes/healing.cpp Classes/healing.h \
 		Classes/consumable.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o healing.o Classes/healing.cpp
 
 melee.o: Classes/melee.cpp Classes/melee.h \
 		Classes/weapon.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o melee.o Classes/melee.cpp
 
 object.o: Classes/object.cpp Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o object.o Classes/object.cpp
 
 ranged.o: Classes/ranged.cpp Classes/ranged.h \
 		Classes/weapon.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ranged.o Classes/ranged.cpp
 
 weapon.o: Classes/weapon.cpp Classes/weapon.h \
 		Classes/object.h \
-		Classes/exceptions.cpp
+		Classes/stringm.h \
+		Classes/exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o weapon.o Classes/weapon.cpp
 
 codex.o: codex.cpp codex.h \
@@ -655,7 +677,8 @@ codex.o: codex.cpp codex.h \
 		additem.h \
 		Classes/collection.h \
 		Classes/object.h \
-		Classes/exceptions.cpp \
+		Classes/stringm.h \
+		Classes/exceptions.h \
 		Classes/melee.h \
 		Classes/weapon.h \
 		Classes/ranged.h \
@@ -667,6 +690,10 @@ codex.o: codex.cpp codex.h \
 		Classes/tc.cpp \
 		Classes/tdeep.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o codex.o codex.cpp
+
+stringm.o: Classes/stringm.cpp Classes/stringm.h \
+		Classes/exceptions.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o stringm.o Classes/stringm.cpp
 
 moc_window.o: moc_window.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_window.o moc_window.cpp

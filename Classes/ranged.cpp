@@ -6,13 +6,13 @@ Ranged::Ranged(int rec, int rel, int m) : recoil(rec), reload_time(rel), magazin
 Ranged::Ranged(int i, std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m) : Weapon(i,n,w,c,r,rav,cc,s_str,s_dex,s_aim), recoil(rec), reload_time(rel), magazine(m) {}
 
 Ranged::Ranged(std::string imported) : Weapon(imported){       
-    if (checkKW(imported, "<Ranged>", "</Ranged>"))
+    if (sm::checkKW(imported, "<Ranged>", "</Ranged>"))
     {
-        recoil = stoi(substring(imported,"<Recoil>","</Recoil>"));
+        recoil = stoi(sm::substring(imported,"<Recoil>","</Recoil>"));
 
-        reload_time = stoi(substring(imported,"<ReloadT>","</ReloadT>"));
+        reload_time = stoi(sm::substring(imported,"<ReloadT>","</ReloadT>"));
 
-        magazine = stoi(substring(imported,"<Magazine>","</Magazine>"));
+        magazine = stoi(sm::substring(imported,"<Magazine>","</Magazine>"));
 
     }else{
         throw err_import();

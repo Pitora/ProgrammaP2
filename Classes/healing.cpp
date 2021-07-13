@@ -5,11 +5,11 @@ Healing::Healing(std::string a_v, unsigned int p) : affected_value(a_v), potency
 Healing::Healing(int i, std::string n, std::string a_v, unsigned int p) : Consumable(i,n), affected_value(a_v), potency(p) {}
 
 Healing::Healing(std::string imported) : Consumable(imported){       
-    if (checkKW(imported, "<Healing>", "</Healing>"))
+    if (sm::checkKW(imported, "<Healing>", "</Healing>"))
     {
-        affected_value = substring(imported, "<AffValue>", "</AffValue>" ); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
+        affected_value = sm::substring(imported, "<AffValue>", "</AffValue>" ); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 
-        potency = stoi(substring(imported, "<Potency>", "</Potency>"));
+        potency = stoi(sm::substring(imported, "<Potency>", "</Potency>"));
 
     }else throw err_import();
 } 

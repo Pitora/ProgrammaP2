@@ -12,7 +12,8 @@
 #include "character.h"
 #include "tc.cpp"
 #include "tdeep.cpp"
-#include "exceptions.cpp"
+#include "stringm.h"
+#include "exceptions.h"
 
 class Collection {
 

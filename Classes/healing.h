@@ -4,7 +4,9 @@
 #include<iostream>
 #include <string>
 #include "consumable.h"
-#include "exceptions.cpp"
+#include "stringm.h"
+#include "exceptions.h"
+
 
 class Healing : public Consumable {
 

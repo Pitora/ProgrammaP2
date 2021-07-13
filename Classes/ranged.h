@@ -4,7 +4,8 @@
 #include<iostream>
 #include <string>
 #include "weapon.h"
-#include "exceptions.cpp"
+#include "stringm.h"
+#include "exceptions.h"
 
 
 class Ranged : public Weapon {

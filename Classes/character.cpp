@@ -9,42 +9,42 @@ Character::Character(std::string imported){
     {
         if (imported.find("<NameBuild>") != size_t(-1) && imported.find("</NameBuild>") != size_t(-1))
         {
-            name_build = Obj::substring(imported, "<NameBuild>", "</NameBuild>"); 
+            name_build = sm::substring(imported, "<NameBuild>", "</NameBuild>");
         }else throw err_import();
         if (imported.find("<EqWeap>") != size_t(-1) && imported.find("</EqWeap>") != size_t(-1))
         {
             if (imported.find("<Melee>") != size_t(-1) && imported.find("</Melee>") != size_t(-1))
             {
-                eq_weap = DeepPtr<Weapon>(new Melee(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
+                eq_weap = DeepPtr<Weapon>(new Melee(sm::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
             else if (imported.find("<Ranged>") != size_t(-1) && imported.find("</Ranged>") != size_t(-1))
             {
-                eq_weap = DeepPtr<Weapon>(new Ranged(Obj::substring(imported, "<EqWeap>", "</EqWeap>")));
+                eq_weap = DeepPtr<Weapon>(new Ranged(sm::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
         }else throw err_import();       
         
-        std::string s = Obj::substring(imported, "<EqArmor>", "</EqArmor>");
+        std::string s = sm::substring(imported, "<EqArmor>", "</EqArmor>");
         Armor* a; 
         int i = 0;
         while (s.find("<ArmorP" + std::to_string(i) + '>') != size_t(-1) && s.find("</ArmorP" + std::to_string(i) + '>') != size_t(-1) )
         {   
-            a = new Armor(Obj::substring(s, "<ArmorP" + std::to_string(i) + '>', "</ArmorP" + std::to_string(i) + '>'));
+            a = new Armor(sm::substring(s, "<ArmorP" + std::to_string(i) + '>', "</ArmorP" + std::to_string(i) + '>'));
             eq_armor.insertBack(DeepPtr<Armor>(a));
             i++;
         }
         delete a;
-        s = Obj::substring(imported, "<Inventory>", "</Inventory>");
+        s = sm::substring(imported, "<Inventory>", "</Inventory>");
         Consumable* c;
         i = 0;
         while (s.find("<Consum" + std::to_string(i) + '>') != -1 && s.find("</Consum" + std::to_string(i) + '>') != -1 )
         {   
             if (s.find("<Healing>") != -1 && s.find("</Healing>") != -1)
             {
-                c = new Healing(Obj::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+                c = new Healing(sm::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
             }
             else if (s.find("<Buff>") != -1 && s.find("</Buff>") != -1)
             {
-                c = new Buff(Obj::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
+                c = new Buff(sm::substring(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'));
             }
             inventory.insertBack(DeepPtr<Consumable>(c));
             i++;
@@ -53,10 +53,10 @@ Character::Character(std::string imported){
 
         if(imported.find("<Stats>") != -1 && imported.find("</Stats>") != -1)
         {
-            vitality = stoi(Obj::substring(imported,"<Vit>","</Vit>"));
-            strenght = stoi(Obj::substring(imported,"<Str>","</Str>"));
-            dexterity = stoi(Obj::substring(imported,"<Dex>","</Dex>"));
-            aim = stoi(Obj::substring(imported,"<Aim>","</Aim>"));
+            vitality = stoi(sm::substring(imported,"<Vit>","</Vit>"));
+            strenght = stoi(sm::substring(imported,"<Str>","</Str>"));
+            dexterity = stoi(sm::substring(imported,"<Dex>","</Dex>"));
+            aim = stoi(sm::substring(imported,"<Aim>","</Aim>"));
         }else throw err_import();
     }else throw err_import();
 }

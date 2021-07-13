@@ -2,7 +2,7 @@
 #define TC_H
 
 #include <iostream>
-#include "exceptions.cpp"
+#include "exceptions.h"
 
 template<class T>
 class C {

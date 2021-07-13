@@ -3,7 +3,9 @@
 
 #include<iostream>
 #include <string>
-#include "exceptions.cpp"
+#include "stringm.h"
+#include "exceptions.h"
+
 
 class Obj {
 
@@ -41,8 +43,6 @@ public:
 
     virtual std::string getInfo() const;
 
-    static std::string substring (std::string s, std::string w1, std::string w2);
-    static bool checkKW(std::string s, std::string kw1, std::string kw2);
 
 };
 

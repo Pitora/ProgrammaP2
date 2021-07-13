@@ -4,29 +4,29 @@ Collection::Collection() : list(){
     try {
         std::string s = readFile("data.xml");
         if (s != ""){
-            if (Obj::checkKW(s , "<Data>","</Data>")){
+            if (sm::checkKW(s , "<Data>","</Data>")){
                 std::cout<<"Sto leggendo"<<std::endl;
                 int i = 0;
-                while(Obj::checkKW(s, "<Item" + std::to_string(i) + '>', "</Item" + std::to_string(i) + '>'))
+                while(sm::checkKW(s, "<Item" + std::to_string(i) + '>', "</Item" + std::to_string(i) + '>'))
                 {
-                    std::string item = Obj::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
-                    if (Obj::checkKW(item, "<Melee>", "</Melee>"))
+                    std::string item = sm::substring(s,"<Item" + std::to_string(i) +'>' ,"</Item" + std::to_string(i) +'>');
+                    if (sm::checkKW(item, "<Melee>", "</Melee>"))
                     {   
                         list.insertBack(DeepPtr<Obj>(new Melee(item)));
                     }
-                    else if (Obj::checkKW(item, "<Ranged>", "</Ranged>"))
+                    else if (sm::checkKW(item, "<Ranged>", "</Ranged>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Ranged(item)));
                     }
-                    else if (Obj::checkKW(item, "<Armor>", "</Armor>"))
+                    else if (sm::checkKW(item, "<Armor>", "</Armor>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Armor(item)));
                     }
-                    else if (Obj::checkKW(item, "<Healing>", "</Healing>"))
+                    else if (sm::checkKW(item, "<Healing>", "</Healing>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Healing(item)));
                     }
-                    else if (Obj::checkKW(item, "<Buff>", "</Buff>"))
+                    else if (sm::checkKW(item, "<Buff>", "</Buff>"))
                     {
                         list.insertBack(DeepPtr<Obj>(new Buff(item)));
                     }
@@ -236,29 +236,29 @@ C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
 bool Collection::importObj(std::string filename){
     try{
         std::string file = readFile(filename);
-        if(Obj::checkKW(file, "<Id>", "</Id>"))
+        if(sm::checkKW(file, "<Id>", "</Id>"))
         {
-            int probId = stoi(Obj::substring(file, "<Id>", "</Id>"));
+            int probId = stoi(sm::substring(file, "<Id>", "</Id>"));
             //std::cout<<probId<<std::endl;
             if(!checkId(probId)){
 
-                if (Obj::checkKW(file, "<Melee>", "</Melee>"))
+                if (sm::checkKW(file, "<Melee>", "</Melee>"))
                 {   
                     list.insertBack(DeepPtr<Obj>(new Melee(file)));
                 }
-                else if (Obj::checkKW(file, "<Ranged>", "</Ranged>"))
+                else if (sm::checkKW(file, "<Ranged>", "</Ranged>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Ranged(file)));
                 }
-                else if (Obj::checkKW(file, "<Armor>", "</Armor>"))
+                else if (sm::checkKW(file, "<Armor>", "</Armor>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Armor(file)));
                 }
-                else if (Obj::checkKW(file, "<Healing>", "</Healing>"))
+                else if (sm::checkKW(file, "<Healing>", "</Healing>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Healing(file)));
                 }
-                else if (Obj::checkKW(file, "<Buff>", "</Buff>"))
+                else if (sm::checkKW(file, "<Buff>", "</Buff>"))
                 {
                     list.insertBack(DeepPtr<Obj>(new Buff(file)));
                 }

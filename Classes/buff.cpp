@@ -6,13 +6,13 @@ Buff::Buff(std::string e, unsigned int p, unsigned int d) : effect(e), percentag
 Buff::Buff(int i, std::string n, std::string e, unsigned int p, unsigned int d) : Consumable(i,n), effect(e), percentage(p), duration(d) {}
 
 Buff::Buff(std::string imported) : Consumable(imported){       
-    if (checkKW(imported,"<Buff>","</Buff>"))
+    if (sm::checkKW(imported,"<Buff>","</Buff>"))
     {
-        effect = substring(imported, "<Effect>", "</Effect>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
+        effect = sm::substring(imported, "<Effect>", "</Effect>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
 
-        percentage = stoi(substring(imported,"<Percentage>", "</Percentage>"));
+        percentage = stoi(sm::substring(imported,"<Percentage>", "</Percentage>"));
 
-        duration = stoi(substring(imported, "<Duration>", "</Duration>"));
+        duration = stoi(sm::substring(imported, "<Duration>", "</Duration>"));
 
     }else throw err_import();
 } 
