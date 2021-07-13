@@ -4,13 +4,13 @@
 #include <QObject>
 #include <QList>
 #include <QListWidget>
-#include "window.h"
-#include "additem.h"
-#include "codex.h"
-#include "Classes/collection.h"
-#include "Classes/tc.cpp"
-#include "Classes/tdeep.cpp"
-#include "Classes/object.h"
+#include "view/window.h"
+#include "view/additem.h"
+#include "view/codex.h"
+#include "model/collection.h"
+#include "model/tc.cpp"
+#include "model/tdeep.cpp"
+#include "model/object.h"
 
 class AddItem;
 class Codex;

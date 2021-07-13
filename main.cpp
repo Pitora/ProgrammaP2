@@ -1,6 +1,6 @@
-#include "window.h"
-#include "controller.h"
-#include "Classes/collection.h"
+#include "view/window.h"
+#include "controller/controller.h"
+#include "model/collection.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

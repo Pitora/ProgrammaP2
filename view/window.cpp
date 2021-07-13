@@ -1,5 +1,5 @@
 #include "window.h"
-#include "controller.h"
+#include "controller/controller.h"
 #include <string>
 #include<iostream>
 

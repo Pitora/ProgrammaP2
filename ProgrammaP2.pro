@@ -25,41 +25,42 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        window.cpp \
-    additem.cpp \
-    controller.cpp \
-    Classes/armor.cpp \
-    Classes/buff.cpp \
-    Classes/character.cpp \
-    Classes/collection.cpp \
-    Classes/consumable.cpp \
-    Classes/healing.cpp \
-    Classes/melee.cpp \
-    Classes/object.cpp \
-    Classes/ranged.cpp \
-    Classes/tc.cpp \
-    Classes/tdeep.cpp \
-    Classes/weapon.cpp \
-    codex.cpp \
-    Classes/stringm.cpp
+        view/window.cpp \
+    view/additem.cpp \
+    view/codex.cpp \
+    controller/controller.cpp \
+    model/armor.cpp \
+    model/buff.cpp \
+    model/character.cpp \
+    model/collection.cpp \
+    model/consumable.cpp \
+    model/healing.cpp \
+    model/melee.cpp \
+    model/object.cpp \
+    model/ranged.cpp \
+    model/tc.cpp \
+    model/tdeep.cpp \
+    model/weapon.cpp \
+    model/stringm.cpp
+
 
 HEADERS += \
-        window.h \
-    additem.h \
-    controller.h \
-    Classes/armor.h \
-    Classes/buff.h \
-    Classes/character.h \
-    Classes/collection.h \
-    Classes/consumable.h \
-    Classes/healing.h \
-    Classes/melee.h \
-    Classes/object.h \
-    Classes/ranged.h \
-    Classes/weapon.h \
-    codex.h \
-    Classes/stringm.h \
-    Classes/exceptions.h
+        view/window.h \
+    view/additem.h \
+    view/codex.h \
+    controller/controller.h \
+    model/armor.h \
+    model/buff.h \
+    model/character.h \
+    model/collection.h \
+    model/consumable.h \
+    model/healing.h \
+    model/melee.h \
+    model/object.h \
+    model/ranged.h \
+    model/weapon.h \
+    model/exceptions.h \
+    model/stringm.h
+
 
 DISTFILES += \
-    Classes/data.xml

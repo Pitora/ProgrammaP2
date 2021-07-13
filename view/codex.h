@@ -1,7 +1,7 @@
 #ifndef CODEX_H
 #define CODEX_H
 
-#include "controller.h"
+#include "controller/controller.h"
 #include "window.h"
 
 #include <QWidget>
