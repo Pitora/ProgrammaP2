@@ -418,6 +418,17 @@ void Collection::modifyCharArmor(int id1, int id2){
     catch(err_sameObject){std::cout<<"L'oggetto che si vuole rimuovere è lo stesso che si vuole aggiungere."<<std::endl;}
 }
 
+void Collection::modifyCharArmorAlt(int id)             //metodo per chiamare la versione alternativa del metodo che cambia l'armatura, (usa solo l'id)
+{
+    try{
+        if (checkId(id) && !chara.isRemovingEq(id))
+        {
+              C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+              chara.changeArmorEq(*i);
+        }else throw err_sameObject();
+    }catch(err_sameObject){std::cout<<"L'oggetto è gia equipaggiato."<<std::endl;}
+}
+
 void Collection::modifyCharInv(int id1, int id2){
     try{
         if (id1 != id2){

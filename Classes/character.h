@@ -54,6 +54,7 @@ public:
     void setWeap(const DeepPtr<Obj>& w);
     void disequip(const DeepPtr<Obj>& r);
     void addArmor(const DeepPtr<Obj>& a);
+    void changeArmorEq(const DeepPtr<Obj>& a);
     void addConsum(const DeepPtr<Obj>& c);
     void setVit(int x);
     void setStr(int x);

@@ -141,6 +141,30 @@ void Character::disequip(const DeepPtr<Obj>& r){
         }else throw err_notFound();
     }else throw err_disequip();
 }
+
+void Character::changeArmorEq(const DeepPtr<Obj>& a){
+    if(dynamic_cast<Armor*>(&(*a)))
+    {
+        Armor* a2 = dynamic_cast<Armor*>(&(*a));
+        C<DeepPtr<Armor>>::const_iterator i = eq_armor.begin();
+        bool found = false;
+        while(i != eq_armor.end() && !found)
+        {
+            if((*i)->getArmorType() == a2->getArmorType())
+            {
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+        if (found)
+        {
+            eq_armor.remove(*i);
+            addArmor(a);
+        }else throw err_notFound();
+    }
+}
 void Character::addArmor(const DeepPtr<Obj>& a) {
     if (dynamic_cast<Armor*>(&(*a)))
     {

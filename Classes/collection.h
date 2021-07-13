@@ -70,6 +70,7 @@ int generateId();
 void modifyCharName(std::string s);
 void modifyCharWeap(int id);
 void modifyCharArmor(int id1, int id2);
+void modifyCharArmorAlt(int id);
 void modifyCharInv(int id1, int id2);
 void removeCharEq(int id);
 void setCharVit(int x);
