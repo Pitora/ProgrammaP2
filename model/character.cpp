@@ -4,7 +4,7 @@ Character::Character(){}
 
 Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv),vitality(v),strenght(s),dexterity(d),aim(a) {}
 
-Character::Character(std::string imported){
+Character::Character(std::string imported){         //Costruttore che prende la stringa ottenuta dal file .xml e ricostruisce l'oggetto
     if (sm::checkKW(imported, "<Character>","</Character>"))
     {
         if (sm::checkKW(imported, "<NameBuild>","</NameBuild>"))
@@ -24,23 +24,24 @@ Character::Character(std::string imported){
         }else throw err_import();       
         
         std::string s = sm::substring(imported, "<EqArmor>", "</EqArmor>");
-        Armor* a; 
+        Armor* a = new Armor();
         int i = 0;
         while (sm::checkKW(s, "<ArmorP" + std::to_string(i) + '>',"</ArmorP" + std::to_string(i) + '>'))
         {   
+            delete a;
             a = new Armor(sm::substring(s, "<ArmorP" + std::to_string(i) + '>', "</ArmorP" + std::to_string(i) + '>'));
             eq_armor.insertBack(DeepPtr<Armor>(a));
             i++;
         }
         delete a;
         s = sm::substring(imported, "<Inventory>", "</Inventory>");
-        Consumable* c;
+        Consumable* c = new Consumable();
         i = 0;
         std::string s2;
         while (sm::checkKW(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'))
         {   
             s2 = sm::substring(s,"<Consum" + std::to_string(i) + '>',"</Consum" + std::to_string(i) + '>');
-
+            delete c;
             if (sm::checkKW(s2, "<Healing>", "</Healing>"))
             {
                 c = new Healing(s2);
@@ -72,7 +73,7 @@ Character::~Character(){
     std::cout<<"Cancellazione personaggio"<<std::endl;
 }
 
-
+//Metodi get
 std::string Character::getName() const { return name_build;}
 DeepPtr<Weapon> Character::getEqWeap() const { return eq_weap;}
 C<DeepPtr<Armor>> Character::getEqArmor() const{ return eq_armor;}
@@ -86,8 +87,12 @@ C<int> Character::getStats() const {
     return l;
 }
 
+
+
+//Metodi set
 void Character::setName(std::string s) { name_build = s;}
 
+//Metodo che "equipaggia" un arma
 void Character::setWeap(const DeepPtr<Obj>& w) {
     if (dynamic_cast<Weapon*>(&(*w)))
     {
@@ -95,6 +100,7 @@ void Character::setWeap(const DeepPtr<Obj>& w) {
     }else throw err_wrongType();
 }
 
+//Metodo che aggiunge un pezzo d'armatura (lo equipaggia)
 void Character::addArmor(const DeepPtr<Obj>& a) {
     if (dynamic_cast<Armor*>(&(*a)))
     {
@@ -102,6 +108,7 @@ void Character::addArmor(const DeepPtr<Obj>& a) {
     }else throw err_wrongType();
 }
 
+//Metodo che dato un pezzo d'armatura, rimuove quello dello stesso tipo già equipaggiato e aggiunge quello dato
 void Character::changeArmorEq(const DeepPtr<Obj>& a){
     if(dynamic_cast<Armor*>(&(*a)))
     {
@@ -126,6 +133,7 @@ void Character::changeArmorEq(const DeepPtr<Obj>& a){
     }
 }
 
+//Metodo che "equipaggia" un consumabile
 void Character::addConsum(const DeepPtr<Obj>& c) {
     if (Buff* b = dynamic_cast<Buff*>(&(*c)))
     {
@@ -137,6 +145,7 @@ void Character::addConsum(const DeepPtr<Obj>& c) {
     }else throw err_wrongType();
 }
 
+//Metodo che rimuove (disequipaggia) un pezzo d'armatura o un consumabile
 void Character::disequip(const DeepPtr<Obj>& r){
     if(dynamic_cast<Armor*>(&(*r)))
     {
@@ -177,12 +186,13 @@ void Character::disequip(const DeepPtr<Obj>& r){
     }else throw err_disequip();
 }
 
+//Metodi set delle statistiche
 void Character::setVit(int x){vitality = x;}
 void Character::setStr(int x){strenght = x;}
 void Character::setDex(int x){dexterity = x;}
 void Character::setAim(int x){aim = x;}
 
-
+//Metodo che contolla che l'id passato sia quello di uno degli oggetti equipaggiati
 bool Character::isRemovingEq(int id) const
 {
     if (eq_weap->getId() == id)
@@ -208,12 +218,14 @@ bool Character::isRemovingEq(int id) const
     return false;
 }
 
+//Metodo che effettua il calcolo dell'attacco
 int Character::damage() const{
     int atk = eq_weap->getAttack();
     int scaleSum = (strenght*eq_weap->getScalingStr()/10)+(dexterity*eq_weap->getScalingDex()/10)+(aim*eq_weap->getScalingAim()/10);
     return (atk+scaleSum);
 }
 
+//Metodo che effettua il calcolo della difesa
 int Character::defense() const{
     int def = 0;
     for (auto i = eq_armor.begin(); i != eq_armor.end(); i++){
@@ -222,6 +234,8 @@ int Character::defense() const{
     return (def+vitality/10);
 }
 
+
+//Metodo che ritorna la stringa con i dati del personaggio per l'esportazione
 std::string Character::exp() const{
     std::string s = "<Character>";
     s += "<NameBuild>" + name_build + "</NameBuild>";

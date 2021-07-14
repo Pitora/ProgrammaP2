@@ -6,7 +6,7 @@ Weapon::Weapon(int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s
 
 Weapon::Weapon(int i, std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim) : Obj(i,n), weight(w), cost(c), rarity(r), raw_attack_value(rav), critical_chance(cc), scaling_str(s_str), scaling_dex(s_dex), scaling_aim(s_aim){}
 
-Weapon::Weapon(std::string imported) : Obj(imported){     
+Weapon::Weapon(std::string imported) : Obj(imported){     //costruttore che, data la stringa ottenuta da un file xml, ricostruisce l'oggetto
     if (sm::checkKW(imported,"<Weapon>", "</Weapon>"))
     {
         weight = stoi(sm::substring(imported,"<Weight>","</Weight>"));
@@ -33,11 +33,12 @@ Weapon::Weapon(std::string imported) : Obj(imported){
 
 
 Weapon::~Weapon(){
-    std::cout<<"Cancellata arma"<<std::endl;
+    //std::cout<<"Cancellata arma"<<std::endl;
 }
 
 Weapon* Weapon::clone() const {return new Weapon(*this);}
 
+//Metodo per output
 void Weapon::print(std::ostream& os) const{
     Obj::print(os);
     os<<"Weight : "<<weight<<std::endl;
@@ -50,6 +51,7 @@ void Weapon::print(std::ostream& os) const{
     os<<"Scaling Aim : "<<scaling_aim<<std::endl;
 }
 
+//Metodo che ritorna la stringa con le informazioni da esportare
 std::string Weapon::exp() const{     
     std::string s = "<Weapon>";
     s += Obj::exp();
@@ -65,6 +67,7 @@ std::string Weapon::exp() const{
     return s;
 }
 
+//Metodo che ritorna una stringa con le informazioni dell'oggetto (dove non è possibile usare print)
 std::string Weapon::getInfo() const{
     std::string s = Obj::getInfo();
     s += "Weight : " + std::to_string(weight) + "\n";
@@ -80,7 +83,7 @@ std::string Weapon::getInfo() const{
 }
 
 
-//Get
+//metodi per il get di vari valori di weapon
 int Weapon::getAttack() const {return raw_attack_value;}
 int Weapon::getScalingStr() const {return scaling_str;}
 int Weapon::getScalingDex() const {return scaling_dex;}

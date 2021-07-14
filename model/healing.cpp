@@ -15,7 +15,7 @@ Healing::Healing(std::string imported) : Consumable(imported){
 } 
 
 Healing::~Healing() {
-    std::cout<<"Cura cancellata"<<std::endl;
+    //std::cout<<"Cura cancellata"<<std::endl;
 }
 
 Healing* Healing::clone() const {return new Healing(*this);}

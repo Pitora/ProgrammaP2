@@ -26,7 +26,7 @@ public:
 
     virtual ~Ranged();
 
-	virtual Ranged* clone() const {return new Ranged(*this);}
+    virtual Ranged* clone() const;
 
     void print(std::ostream& os) const;
 

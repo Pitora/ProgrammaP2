@@ -6,7 +6,7 @@
 
 namespace sm{
 
-std::string substring(std::string s, std::string w1, std::string w2);
+std::string substring(std::string s, std::string kw1, std::string kw2);
 
 bool checkKW(std::string s, std::string kw1, std::string kw2);
 

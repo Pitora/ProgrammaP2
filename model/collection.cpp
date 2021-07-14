@@ -1,11 +1,15 @@
 #include "collection.h"
 
-Collection::Collection() : list(), chara(){
+Collection::Collection() : list(), chara(), nextId(){       //costruttore standard, si occupa anche dell'apertura del file di salvataggio e popolazione lista
     try {
         std::string s = readFile("data.xml");
         if (s != ""){
             if (sm::checkKW(s , "<Data>","</Data>")){
                 std::cout<<"Sto leggendo"<<std::endl;
+                if (sm::checkKW(s, "<NextId>", "</NextId>"))
+                {
+                    nextId = std::stoi(sm::substring(s, "<NextId>", "</NextId>"));
+                }
                 int i = 0;
                 while(sm::checkKW(s, "<Item" + std::to_string(i) + '>', "</Item" + std::to_string(i) + '>'))
                 {
@@ -54,6 +58,7 @@ Collection::~Collection(){
     catch(err_fileNotCreated){std::cout<<"Non è stato possibile salvare il database"<<std::endl;}
 }
 
+//Metodo che si occupa di inizializzare collection(in caso di problemi, ricrea gli oggetti di default)
 void Collection::initialize(){
     std::cout<<"Sono stati generati i valori default"<<std::endl;
     if (!checkId(0)){
@@ -65,6 +70,7 @@ void Collection::initialize(){
         add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
+        nextId = 8;
     }
     chara = DeepPtr<Character>(new Character());
     modifyCharName("Default build");
@@ -82,10 +88,12 @@ void Collection::initialize(){
     setCharVit(15);
 }
 
+//Metodo che si occupa di salvare il contenuto di collection (meno il character)
 void Collection::save() const{
     
     std::cout<<"Sto salvando...";
     std::string s = "<Data>";
+    s += "<NextId>" + std::to_string(nextId) + "</NextId>";
     int i = 0;
     for (C<DeepPtr<Obj>>::const_iterator iter = list.begin(); iter != list.end(); ++iter )
     {
@@ -104,43 +112,43 @@ void Collection::save() const{
     }else throw err_fileNotCreated();
 }
 
-int Collection::generateId() const{
-    int max = -1;
-    for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
-    {
-        if ((*i)->getId()>max)
-        {
-            max = (*i)->getId();
-        }  
-    }
-    return max+1;
+//Metodo che ritorna il prossimo id utlizzabile e aumenta la variabile che ne tiene conto
+int Collection::getNewId(){
+    nextId++;
+    return nextId-1;
 }
 
+//Metodo che, dati i valori di un pezzo d'armatura, aggiunge un pezzo di armatura alla lista con quei valori
 void Collection::add(std::string n, std::string a_t, std::string r, int d_v, int d){
-    int id = generateId();
+    int id = getNewId();
     list.insertBack(DeepPtr<Obj>(new Armor(id, n, a_t, r, d_v, d)));
 }
 
+//Metodo che, dati i valori di un arma melee, aggiunge un arma melee alla lista con quei valori
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d){
-    int id = generateId();
+    int id = getNewId();
     list.insertBack(DeepPtr<Obj>(new Melee(id,n,w,c,r,rav,cc,s_str,s_dex,s_aim,a_t,a_e,d)));
 }
 
+//Metodo che, dati i valori di un arma ranged, aggiunge un arma ranged alla lista con quei valori
 void Collection::add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m){
-    int id = generateId();
+    int id = getNewId();
     list.insertBack(DeepPtr<Obj>(new Ranged(id,n,w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m)));
 }
 
+//Metodo che,dati i valori di un consumabile potenziante (Buff), aggiunge alla lista un buff con quei valori
 void Collection::add(std::string n, std::string e, int p, int d){
-    int id = generateId();
+    int id = getNewId();
     list.insertBack(DeepPtr<Obj>(new Buff(id,n,e,p,d)));
 }
 
+//Metodo che, dati i valori di un consumabile curativo (Healing), aggiunge alla lista un Healing con quei valori
 void Collection::add(std::string n, std::string a_v, int p){
-    int id = generateId();
+    int id = getNewId();
     list.insertBack(DeepPtr<Obj>(new Healing(id,n,a_v,p)));
 }
 
+//Metodo che, dato un id, ritorna un iteratore costante all'oggetto con quel id presente nella lista
 C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
     C<DeepPtr<Obj>>::const_iterator i = list.begin();
     bool found = false;
@@ -157,6 +165,7 @@ C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
     return i;
 }
 
+//Metodo che, dato un id, rimuove dalla lista l'oggetto con quel id
 void Collection::remove(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     try {
@@ -170,6 +179,7 @@ void Collection::remove(int id){
 
 }
 
+//Metodo che, dato un id, stampa in console il contenuto dell'oggetto con quel id
 void Collection::show(int id) const{
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     try{
@@ -184,6 +194,8 @@ void Collection::show(int id) const{
     catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
 }
 
+
+//Metodo che dato una stringa che indica un tipo di oggetto, ritorna una lista con gli oggetti di list che sono di quel tipo
 C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) const{
     C<DeepPtr<Obj>> l;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
@@ -210,6 +222,8 @@ C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) 
     return l;
 }
 
+
+//Metodo che, dato un id, ritorna una stringa con tutte le informazioni dell'oggetto in lista con quel id
 std::string Collection::getInfoObj(int id) const {
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     if (i != list.end())
@@ -219,14 +233,15 @@ std::string Collection::getInfoObj(int id) const {
     return "Placeholder : se sei qui, bravo.";
 }
 
+//Metodo che ritorna tutta la lista costante (non usato)
 const C<DeepPtr<Obj>> Collection::getAllObj() const{
     return list;
 }
 
 
 
-
-std::string Collection::readFile(std::string filename)          //ritorna tutto il file sottoforma di stringa
+//Metodo che, dato un percorso di memoria a un file .xml, ritorna tutto il file .xml in stringa
+std::string Collection::readFile(std::string filename)
 {
     std::string file;
     std::ifstream in(filename, std::ios::in | std::ios::binary);
@@ -242,6 +257,7 @@ std::string Collection::readFile(std::string filename)          //ritorna tutto 
     else throw err_fileNotReadable();
 }
 
+//Metodo booleano che, dato un id, ritorna vero se tale id è già in uso, falso altrimenti
 bool Collection::checkId(const int id) const{
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i )
     {
@@ -254,8 +270,8 @@ bool Collection::checkId(const int id) const{
 }
 
 
-
-bool Collection::importObj(std::string filename){
+//Metodo che, dato un un percorso di memoria, si occupa dell'importazione di un oggetto
+void Collection::importObj(std::string filename){
     try{
         std::string file = readFile(filename);
         if(sm::checkKW(file, "<Id>", "</Id>"))
@@ -286,27 +302,24 @@ bool Collection::importObj(std::string filename){
                 }
                 else{
                     throw err_file();
-                    return false;
                 }
-                return true;
-                
+
             }else{
                 throw err_notNew();
-                return false;
             }
         }else{
             throw err_file();
-            return false;
         }
     }
-    catch(err_file){std::cout<<"Il file non è corretto"<<std::endl; return false;}
+    catch(err_file){std::cout<<"Il file non è corretto"<<std::endl; }
     catch(err_fileNotReadable){std::cout<<"Il file non esiste"<<std::endl;}
     catch(err_import){std::cout<<"Il file non esiste"<<std::endl;}
-    catch(err_notNew){std::cout<<"L'oggetto è già presente"<<std::endl; return false;}
+    catch(err_notNew){std::cout<<"L'oggetto è già presente"<<std::endl; }
     catch(err_sub){std::cout<<"Substring ha fallito : valori mancanti"<<std::endl;}
 
 }
 
+//Metodo che, dato un percorso di memoria, si occupa dell'esportazione di un oggetto
 void Collection::exportObj(int id, std::string filename){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     
@@ -328,6 +341,7 @@ void Collection::exportObj(int id, std::string filename){
 
 }
 
+//Metodo che, dato un percorso di memoria, si occupa dell'importazione di un personaggio. Aggiunge in lista gli oggetti del character importato che non sono in lista.
 void Collection::importChara(std::string filename){
     try{
         std::string file = readFile(filename);
@@ -379,6 +393,7 @@ void Collection::importChara(std::string filename){
     
 }
 
+//Metodo che, dato un percorso di memoria, si occupa dell'esportazione di un character
 void Collection::exportChara(std::string filename){
     std::string ex = chara->exp();
 
@@ -395,9 +410,10 @@ void Collection::exportChara(std::string filename){
 }
 
 
-
+//Metodo che, data ua stringa, modifica il nome del character
 void Collection::modifyCharName(std::string s){ chara->setName(s);}
 
+//Metodo che, dato un id, prende dalla lista l'oggetto con quel id e lo equipaggia al character
 void Collection::modifyCharWeap(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     try {
@@ -406,6 +422,7 @@ void Collection::modifyCharWeap(int id){
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
 }
 
+//Metodo che, dati due id, rimuove dal character il pezzo d'armatura con il secondo id e equipaggia quello con il primo id
 void Collection::modifyCharArmor(int id1, int id2){
     try{
         if (id1 != id2){
@@ -423,7 +440,8 @@ void Collection::modifyCharArmor(int id1, int id2){
     catch(err_sameObject){std::cout<<"L'oggetto che si vuole rimuovere è lo stesso che si vuole aggiungere."<<std::endl;}
 }
 
-void Collection::modifyCharArmorAlt(int id)//metodo per chiamare la versione alternativa del metodo che cambia l'armatura, (usa solo l'id)
+//Alternativo : Metodo che, dato un id, aggiunge il pezzo d'armatura in lista con quel id al character
+void Collection::modifyCharArmorAlt(int id)
 {
     try{
         if (checkId(id) && !chara->isRemovingEq(id))
@@ -434,6 +452,8 @@ void Collection::modifyCharArmorAlt(int id)//metodo per chiamare la versione alt
     }catch(err_sameObject){std::cout<<"L'oggetto è gia equipaggiato."<<std::endl;}
 }
 
+
+//Metodo che, dati due id, rimuove dal character il consumable con il secondo id e equipaggia quello con il primo id
 void Collection::modifyCharInv(int id1, int id2){
     try{
         if (id1 != id2){
@@ -452,6 +472,7 @@ void Collection::modifyCharInv(int id1, int id2){
 
 }
 
+//Metodo che, dato un id, rimuove dai pezzi equipaggiati del personaggio l'oggetto con quel id (No weapon, solo armor e consumable)
 void Collection::removeCharEq(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     if ((i != list.end()) && (dynamic_cast<Healing*>(&(*(*i)))  ||  dynamic_cast<Buff*>(&(*(*i))) || dynamic_cast<Armor*>(&(*(*i)))))
@@ -460,12 +481,15 @@ void Collection::removeCharEq(int id){
     }else throw err_wrongType();
 }
 
+//Metodi per cambiare le statistiche al personaggio
 void Collection::setCharVit(int x){chara->setVit(x);}
 void Collection::setCharStr(int x){chara->setStr(x);}
 void Collection::setCharDex(int x){chara->setDex(x);}
 void Collection::setCharAim(int x){chara->setAim(x);}
 
-void Collection::checkEq(int id){ //metodo che reimposta l'equipaggiamento di default in caso di cancellazione
+
+//metodo che, dato l'id di un oggetto che sta per essere rimosso, riequipaggia l'equipaggiamento di default
+void Collection::checkEq(int id){
     if (chara->isRemovingEq(id))
     {
         C<DeepPtr<Obj>>::const_iterator i = getIter(id);
@@ -504,7 +528,7 @@ void Collection::checkEq(int id){ //metodo che reimposta l'equipaggiamento di de
 
 
 
-
+//Metodi vari per ottenere informazioni di character
 std::string Collection::getCharName() const {return chara->getName();}
 C<int> Collection::getCharStats() const { return chara->getStats();}
 DeepPtr<Weapon> Collection::getCharWeapon() const {return chara->getEqWeap();}

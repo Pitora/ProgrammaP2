@@ -18,6 +18,8 @@ private:
     
 public:
 
+    Armor();
+
 	Armor(std::string a_t, std::string r, int d_v, int d);
 
     Armor(int i, std::string n, std::string a_t, std::string r, int d_v, int d);

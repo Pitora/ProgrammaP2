@@ -5,7 +5,7 @@ Buff::Buff(std::string e, unsigned int p, unsigned int d) : effect(e), percentag
 
 Buff::Buff(int i, std::string n, std::string e, unsigned int p, unsigned int d) : Consumable(i,n), effect(e), percentage(p), duration(d) {}
 
-Buff::Buff(std::string imported) : Consumable(imported){
+Buff::Buff(std::string imported) : Consumable(imported){        //import
     if (sm::checkKW(imported,"<Buff>","</Buff>"))
     {
         effect = sm::substring(imported, "<Effect>", "</Effect>"); //Attenzione : length legge bytes di lunghezza e quindi non sempre corrispondono
@@ -18,7 +18,7 @@ Buff::Buff(std::string imported) : Consumable(imported){
 } 
 
 Buff::~Buff(){
-    std::cout<<"Cancellato un buff"<<std::endl;
+    //std::cout<<"Cancellato un buff"<<std::endl;
 }
 
 Buff* Buff::clone() const {return new Buff(*this);}
@@ -30,7 +30,7 @@ void Buff::print(std::ostream& os) const{
     os<<"Duration : "<<duration<<std::endl;
 }
 
-std::string Buff::exp() const{
+std::string Buff::exp() const{          //export
     std::string s = "<Buff>";
     s += Consumable::exp();
     s += "<Effect>" + effect + "</Effect>";

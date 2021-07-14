@@ -20,7 +20,7 @@ Ranged::Ranged(std::string imported) : Weapon(imported){
 } 
 
 Ranged::~Ranged(){
-    std::cout<<"Cancellata Ranged"<<std::endl;
+    //std::cout<<"Cancellata Ranged"<<std::endl;
 }
 
 Ranged* Ranged::clone() const {return new Ranged(*this);}

@@ -14,8 +14,16 @@ Obj::Obj(std::string imported){
 }
 
 Obj::~Obj() {
-    std::cout<<"Distruttore virtuale puro chiamato"<<std::endl;
+    //std::cout<<"Distruttore virtuale puro chiamato"<<std::endl;
 }
+
+bool Obj::operator== (const Obj& x) const {return id == x.id;}
+
+std::ostream& operator<<(std::ostream& s, const Obj& o) {
+        o.print(s);
+        return s;
+}
+
 
 std::string Obj::exp() const{       //Esempio di export?
     std::string s = "<Obj>";
@@ -25,14 +33,16 @@ std::string Obj::exp() const{       //Esempio di export?
     return s;
 }
 
+void Obj::print(std::ostream& os) const {os<<"Id : "<<(*this).id<<" Nome : "<<(*this).name<<std::endl;}
+
 std::string Obj::getInfo() const{
     return "Id : " + std::to_string(id) + "\n" + "Nome : " + name + "\n";
 }
 
-std::ostream& operator<<(std::ostream& s, const Obj& o) {
-        o.print(s);
-        return s;
-}
+
+int Obj::getId() const {return id;}
+
+std::string Obj::getName() const {return name;}
 
 
 

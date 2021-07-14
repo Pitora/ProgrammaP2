@@ -21,6 +21,7 @@ private:
 
     C<DeepPtr<Obj>> list;
     DeepPtr<Character> chara;
+    unsigned int nextId;
     
 public:
 
@@ -33,7 +34,7 @@ void initialize();
 void save() const;
 
 //metodi per aggiungere nuovi oggetti
-int generateId() const;
+int getNewId();
 void add(std::string n, std::string a_t, std::string r, int d_v, int d);   //Armor
 void add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d); //Melee
 void add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m); //Ranged
@@ -52,7 +53,7 @@ const C<DeepPtr<Obj>> getAllObj() const;
 //metodi di import/export
 std::string readFile(std::string filename);
 bool checkId(const int id) const;
-bool importObj(std::string filename);
+void importObj(std::string filename);
 void exportObj(int i, std::string filename);
 void importChara(std::string filename);
 void exportChara(std::string filename);

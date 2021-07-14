@@ -251,7 +251,7 @@ void Controller::importChar()  //per importare
         col->importChara(path.toStdString());
         refreshWindow();
     } catch (std::runtime_error exc) {
-        //window->showWarning(exc.what());
+        std::cout<<"Errore prima dell'importazione"<<std::endl;
 
     }
 }
@@ -263,7 +263,7 @@ void Controller::importObj()  //per importare
         col->importObj(path.toStdString());
         codex->refreshCodex(getItemsNames());
     } catch (std::runtime_error exc) {
-        //view->showWarning(exc.what());
+        std::cout<<"Errore prima dell'importazione"<<std::endl;
     }
 
 }
@@ -274,12 +274,12 @@ void Controller::exportChar()  //per esportare
         QString path = window->exportCharDialog();
         col->exportChara(path.toStdString());
     } catch (std::runtime_error exc) {
-        //view->showWarning(exc.what());
+        std::cout<<"Errore prima dell'esportazione"<<std::endl;
     }
 
 }
 
-void Controller::exportObj()  //per edportare
+void Controller::exportObj()  //per esportare
 {
     try {
         QString path = codex->showExpDialog();
@@ -288,7 +288,7 @@ void Controller::exportObj()  //per edportare
         int id = subString.toInt();
         col->exportObj(id,path.toStdString());
     } catch (std::runtime_error exc) {
-        //view->showWarning(exc.what());
+        std::cout<<"Errore prima dell'esportazione"<<std::endl;
     }
 
 }

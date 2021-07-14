@@ -19,7 +19,7 @@ Melee::Melee(std::string imported) : Weapon(imported){
 } 
 
 Melee::~Melee(){
-    std::cout<<"Cancellata Melee"<<std::endl;
+    //std::cout<<"Cancellata Melee"<<std::endl;
 }
 
 Melee* Melee::clone() const {return new Melee(*this);}

@@ -1,10 +1,12 @@
 #include "armor.h"
 
+Armor::Armor(){}
+
 Armor::Armor(std::string a_t, std::string r, int d_v, int d) : armor_type(a_t), resistance(r), defense_value(d_v), durability(d) {}
 
 Armor::Armor(int i, std::string n, std::string a_t, std::string r, int d_v, int d) : Obj(i,n), armor_type(a_t), resistance(r), defense_value(d_v), durability(d) {}
 
-Armor::Armor(std::string imported) : Obj(imported){
+Armor::Armor(std::string imported) : Obj(imported){     //import
     if (sm::checkKW(imported,"<Armor>","</Armor>"))
     {
         armor_type = sm::substring(imported, "<ArmorType>", "</ArmorType>");
@@ -30,7 +32,7 @@ void Armor::print(std::ostream& os) const{
     os<<"Durability : "<<durability<<std::endl;
 }
 
-std::string Armor::exp() const{
+std::string Armor::exp() const{         //export
     std::string s = "<Armor>";
     s += Obj::exp();
     s += "<ArmorType>" + armor_type + "</ArmorType>";
