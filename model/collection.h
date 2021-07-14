@@ -73,11 +73,11 @@ void setCharDex(int x);
 void setCharAim(int x);
 void checkEq(int id);
 //get
-std::string getCharName() const;
-C<int> getCharStats() const;
-DeepPtr<Weapon> getCharWeapon() const;
-C<DeepPtr<Armor>> getCharArmor() const;
-C<DeepPtr<Consumable>> getCharCons() const;
+const std::string getCharName() const;
+const C<int> getCharStats() const;
+const DeepPtr<Weapon> getCharWeapon() const;
+const C<DeepPtr<Armor>> getCharArmor() const;
+const C<DeepPtr<Consumable>> getCharCons() const;
 int getCharAtk() const;
 int getCharDef() const;
 const DeepPtr<Character> getChar() const;

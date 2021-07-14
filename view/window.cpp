@@ -3,6 +3,7 @@
 #include <string>
 #include<iostream>
 
+//aggiunge la barra dei menu  e setta i comandi relativi
 void Window::addMenu(QVBoxLayout *layout){
 
     QMenuBar* menu_bar = new QMenuBar(this);
@@ -19,6 +20,7 @@ void Window::addMenu(QVBoxLayout *layout){
     layout->setMenuBar(menu_bar);
 }
 
+//aggiunge e setta le combobox
 void Window::addCommand(QVBoxLayout *layout){
 
     QHBoxLayout* hLayout = new QHBoxLayout;
@@ -39,7 +41,6 @@ void Window::addCommand(QVBoxLayout *layout){
     item1_box = new QComboBox();
     item2_box = new QComboBox();
     item3_box = new QComboBox();
-
 
     weapon_box->setFixedWidth(250);
     helm_box->setFixedWidth(250);
@@ -64,6 +65,7 @@ void Window::addCommand(QVBoxLayout *layout){
     addLabel(hLayout);
 }
 
+//aggiunge e setta le label e le textbox
 void Window::addLabel(QHBoxLayout* layout){
 
     QFormLayout* midLayout = new QFormLayout;
@@ -141,6 +143,7 @@ void Window::addLabel(QHBoxLayout* layout){
 
 }
 
+//aggiunge e setta i bottoni
 void Window::addButton(QVBoxLayout *layout){
 
     QHBoxLayout* hLayout = new QHBoxLayout;
@@ -156,6 +159,7 @@ void Window::addButton(QVBoxLayout *layout){
     hLayout->addWidget(save);
 }
 
+//setta la view
 Window::Window(QWidget *parent) : QWidget(parent){
 
     setWindowTitle("Build Creator");
@@ -168,6 +172,7 @@ Window::Window(QWidget *parent) : QWidget(parent){
 
 }
 
+//setta il controller
 void Window::setController(Controller *c){
     controller = c;
 
@@ -198,11 +203,13 @@ void Window::setController(Controller *c){
 
 }
 
+//imposta l'attacco e la difesa
 void Window::calcDmgDef(int a,int d){
     atk_lbl->setText("ATK : " + QString::number(a) );
     def_lbl->setText("DEF : " + QString::number(d));
 }
 
+//carica le combobox
 void Window::loadBox(QList<QString> n,int i)
 {
     switch (i) {
@@ -239,11 +246,13 @@ void Window::loadBox(QList<QString> n,int i)
     }
 }
 
+//imposta il nome della build caricata
 void Window::setBuildName(QString s)
 {
     build_name->setText(s);
 }
 
+//imposta le stat della build caricata
 void Window::setStats(QList<QString> l)
 {
     vit_text->setText(l[0]);
@@ -252,11 +261,13 @@ void Window::setStats(QList<QString> l)
     aim_text->setText(l[3]);
 }
 
+//imposta l'arma della build caricata
 void Window::setWeapon(QString s)
 {
     weapon_box->setCurrentIndex(weapon_box->findText(s));
 }
 
+//imposta i pezzi di equipaggiamento della build quando caricata
 void Window::setArmor(QList<QString> l)
 {
     for(auto i = l.begin(); i != l.end(); ++i){
@@ -275,6 +286,7 @@ void Window::setArmor(QList<QString> l)
     }
 }
 
+//imposta gli oggetti della build quando caricata
 void Window::setItems(QList<QString> l)
 {
     item1_box->setCurrentIndex(item1_box->findText(l[0]));
@@ -282,6 +294,7 @@ void Window::setItems(QList<QString> l)
     item3_box->setCurrentIndex(item3_box->findText(l[2]));
 }
 
+//finestra di dialogo per l'import di una build
 QString Window::importCharDialog()
 {
     QString fileName = QFileDialog::getOpenFileName(
@@ -291,6 +304,7 @@ QString Window::importCharDialog()
     return fileName;
 }
 
+//finestra di dialogo per l'export di una build
 QString Window::exportCharDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(

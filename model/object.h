@@ -11,7 +11,7 @@ class Obj {
 
 private:
 
-    unsigned int id;        //si presume UNICO per oggetto
+    unsigned int id;
     std::string name;
     
 public:

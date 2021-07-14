@@ -5,21 +5,21 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 }
 
+//setta le variabili di controller
 void Controller::setWindow(Window* w){ window = w;
                                      refreshWindow();}
-
 void Controller::setCollection(Collection* c){ col = c;}
-
 void Controller::setCodex(Codex* co){codex = co;}
-
 void Controller::setAddItem(AddItem* a){ add = a;}
 
+//refresha la main window
 void Controller::refreshWindow()
 {
     getBoxItems();
     setWindowChar();
 }
 
+//restituisce una lista con i nomi degli oggetti
 QList<QString> Controller::getItemsNames()
 {
    C<DeepPtr<Obj>> a;
@@ -31,7 +31,8 @@ QList<QString> Controller::getItemsNames()
    return names;
 }
 
-void Controller::calc() const {
+//calcola i valori di attacco e def
+void Controller::calc() {
 
     int atk = col->getCharAtk();
     int def = col->getCharDef();
@@ -39,6 +40,7 @@ void Controller::calc() const {
     window->calcDmgDef(atk,def);
 }
 
+//ottiene i dati per popolare le combobox
 void Controller::getBoxItems()
 {
     C<DeepPtr<Obj>> a;
@@ -86,37 +88,50 @@ void Controller::getBoxItems()
 
 }
 
+//mostra la finestra di creazione di Weapon
 void Controller::createWeaponDialog() {
     add = new AddItem(1,this);
     add->exec();
 }
 
+//mostra la finestra di creazione di Armor
 void Controller::createArmorDialog() {
     add = new AddItem(2,this);
     add->exec();
 }
 
+//mostra la finestra di creazione di Consumable
 void Controller::createConsumableDialog(){
     add = new AddItem(3,this);
     add->exec();
 }
 
+//passa i dati per creare una Melee Weapon
 void Controller::createMelee(QString n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, QString a_t, QString a_e, int d){
     col->add(n.toStdString(),w,c,r,rav,cc,s_str,s_dex,s_aim,a_t.toStdString(),a_e.toStdString(),d);
 }
+
+//passa i dati per creare una Ranged Weapon
 void Controller::createRanged(QString n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m){
     col->add(n.toStdString(),w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m);
 }
+
+//passa i dati per creare un Armor
 void Controller::createArmor(QString n, QString a_t, QString r, int d_v, int d){
     col->add(n.toStdString(), a_t.toStdString(), r.toStdString(), d_v, d);
 }
+
+//passa i dati per creare un Healing Consumable
 void Controller::createHealing(QString n, QString a_v, int p){
     col->add(n.toStdString(),a_v.toStdString(),p);
 }
+
+//passa i dati per creare un Buff Consumable
 void Controller::createBuff(QString n, QString e, int p, int d){
     col->add(n.toStdString(),e.toStdString(),p,d);
 }
 
+//passa i dati per eliminare un oggetto
 void Controller::eliminateObj(){
     QString s = codex->getSelectedItem();
     if(!s.isNull()){
@@ -127,6 +142,7 @@ void Controller::eliminateObj(){
     }
 }
 
+//imposta la view quando si carica una build(anche quella di default)
 void Controller::setWindowChar(){
     QString name = QString::fromStdString(col->getCharName());
     window->setBuildName(name);
@@ -182,7 +198,7 @@ void Controller::setAim(QString x){
     calc();
 }
 
-
+//Metodi per cambiare l'equipaggiamento del Character e il nome della build
 void Controller::changeName(QString s){
     if(s.isEmpty()){
         s = "Build Name";
@@ -201,7 +217,6 @@ void Controller::changeArmor(QString s){
     col->modifyCharArmorAlt(id);
     calc();
 }
-
 void Controller::changeItem1(QString s)
 {
     QString subString = s.mid(0,s.indexOf(')'));
@@ -209,7 +224,6 @@ void Controller::changeItem1(QString s)
     col->modifyCharInv(id,prevId[0]);
     prevId[0] = id;
 }
-
 void Controller::changeItem2(QString s)
 {
     QString subString = s.mid(0,s.indexOf(')'));
@@ -217,7 +231,6 @@ void Controller::changeItem2(QString s)
     col->modifyCharInv(id,prevId[1]);
     prevId[1] = id;
 }
-
 void Controller::changeItem3(QString s)
 {
     QString subString = s.mid(0,s.indexOf(')'));
@@ -226,6 +239,7 @@ void Controller::changeItem3(QString s)
     prevId[2] = id;
 }
 
+//restituisce i dettagli di un oggettp
 void Controller::getInfoObj(QListWidgetItem *item)
 {
     QString s = item->text();
@@ -235,7 +249,7 @@ void Controller::getInfoObj(QListWidgetItem *item)
     codex->showDetails(s);
 }
 
-
+//mostra la schermata codex
 void Controller::showCodex()
 {
     codex = new Codex(this,getItemsNames());

@@ -69,7 +69,7 @@ public:
 signals:
 
 public slots:
-    void enableBox() const;
+    void enableBox();
     void changeItem();
     void getArmorData();
     void getWeaponData();

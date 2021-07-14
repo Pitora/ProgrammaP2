@@ -39,7 +39,7 @@ public:
 signals:
 
 public slots:
-    void calc() const;
+    void calc();
     void getBoxItems();
     void createWeaponDialog();
     void createArmorDialog();

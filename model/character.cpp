@@ -70,7 +70,7 @@ Character::Character(const Character& x) : name_build(x.name_build), eq_weap(x.e
 
 
 Character::~Character(){
-    std::cout<<"Cancellazione personaggio"<<std::endl;
+    //std::cout<<"Cancellazione personaggio"<<std::endl;
 }
 
 //Metodi get

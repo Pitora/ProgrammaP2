@@ -1,5 +1,6 @@
 #include "codex.h"
 
+//setta la view
 Codex::Codex(Controller *cont,QList<QString> list, QWidget *parent) : QDialog(parent)
 {
     controller = cont;
@@ -11,6 +12,7 @@ Codex::Codex(Controller *cont,QList<QString> list, QWidget *parent) : QDialog(pa
 
 }
 
+//setta la scroll area e la textbox per i dettagli
 void Codex::addScrollArea(QList<QString> l)
 {
     cont = new QListWidget(this);
@@ -33,6 +35,7 @@ void Codex::addScrollArea(QList<QString> l)
     connect(cont,SIGNAL(itemClicked(QListWidgetItem*)),controller,SLOT(getInfoObj(QListWidgetItem*)));
 }
 
+//setta i bottoni
 void Codex::addControls()
 {
     remove_item = new QPushButton("Remove",this);
@@ -52,6 +55,7 @@ void Codex::addControls()
 
 }
 
+//refresha la view
 void Codex::refreshCodex(QList<QString> l)
 {
     remove_item->setEnabled(false);
@@ -62,11 +66,13 @@ void Codex::refreshCodex(QList<QString> l)
     controller->refreshWindow();
 }
 
+//ritorna l'oggetto selezionato
 QString Codex::getSelectedItem()
 {
     return cont->currentItem()->text();
 }
 
+//mostra il dialog per l'esportazione
 QString Codex::showExpDialog()
 {
     QString fileName = QFileDialog::getSaveFileName(
@@ -76,6 +82,7 @@ QString Codex::showExpDialog()
         return fileName;
 }
 
+//mostra il dialog per l'importazione
 QString Codex::showImportDialog()
 {
     QString fileName = QFileDialog::getOpenFileName(
@@ -85,6 +92,7 @@ QString Codex::showImportDialog()
         return fileName;
 }
 
+//imposta i dettagli dell'oggetto
 void Codex::showDetails(QString s)
 {
     remove_item->setEnabled(true);

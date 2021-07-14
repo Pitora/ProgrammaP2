@@ -12,7 +12,6 @@ class Consumable : public Obj {
 
 private:
 
-    //string s; 
     
 public:
 

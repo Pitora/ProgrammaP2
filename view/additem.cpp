@@ -1,6 +1,6 @@
 #include "additem.h"
 
-
+//aggiunge e setta i controlli per la view di creazione di un oggetto di tipo Weapon
 void AddItem::addControlsWeapon(QFormLayout *layout)
 {
      type = new QComboBox;
@@ -93,6 +93,7 @@ void AddItem::addControlsWeapon(QFormLayout *layout)
      connect(save,SIGNAL(clicked()),this,SLOT(getWeaponData()));
 }
 
+//aggiunge e setta i controlli per la view di creazione di un oggetto di tipo Armor
 void AddItem::addControlsArmor(QFormLayout *layout)
 {
     defense = new QLineEdit;
@@ -127,6 +128,7 @@ void AddItem::addControlsArmor(QFormLayout *layout)
 
 }
 
+//aggiunge e setta i controlli per la view di creazione di un oggetto di tipo Consumable
 void AddItem::addControlsConsumable(QFormLayout *layout)
 {
     name = new QLineEdit;
@@ -168,6 +170,7 @@ void AddItem::addControlsConsumable(QFormLayout *layout)
     connect(save,SIGNAL(clicked()),this,SLOT(getConsumableData()));
 }
 
+//setta la combobox effect per Weapon e Armor
 void AddItem::addEffect()
 {
     effect->addItem("NO EFFECT");
@@ -181,6 +184,7 @@ void AddItem::addEffect()
     effect->addItem("WIND");
 }
 
+//setta la combobox effect per Consumable
 void AddItem::addItemEffect(QString s)
 {
     if (s == "BUFF"){
@@ -206,6 +210,7 @@ void AddItem::addItemEffect(QString s)
     }
 }
 
+//setta il controller e il layout e decide quale controlli aggiungere alla finestra
 AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
 
     c = cont;
@@ -228,7 +233,8 @@ AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
     }
 }
 
-void AddItem::enableBox() const
+//gestisce le combobox di Weapon
+void AddItem::enableBox()
 {
     if(type->currentIndex() == 0){
         recoil->setEnabled(false);
@@ -251,6 +257,7 @@ void AddItem::enableBox() const
     magazine->clear();
 }
 
+//gestisce le combobox di Consumable
 void AddItem::changeItem() {
     if(type->currentIndex() == 0){
         effect->clear();
@@ -268,6 +275,7 @@ void AddItem::changeItem() {
     }
 }
 
+//invia i dati per creare un' Armor
 void AddItem::getArmorData()
 {
     if(!name->text().isEmpty()){
@@ -282,6 +290,7 @@ void AddItem::getArmorData()
     }
 }
 
+//invia i dati per creare una Weapon
 void AddItem::getWeaponData()
 {
     if(!name->text().isEmpty()){
@@ -312,6 +321,7 @@ void AddItem::getWeaponData()
 
 }
 
+//invia i dati per creare un Consumable
 void AddItem::getConsumableData()
 {
     if(!name->text().isEmpty()){

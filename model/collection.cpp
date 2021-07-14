@@ -51,7 +51,7 @@ Collection::Collection() : list(), chara(), nextId(){       //costruttore standa
 }
 
 Collection::~Collection(){
-    std::cout<<"Cancellazione collection"<<std::endl;
+    //std::cout<<"Cancellazione collection"<<std::endl;
     try{
         save();
     }
@@ -169,7 +169,7 @@ C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
 void Collection::remove(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     try {
-        if (i != list.end() && id > 7)          //7 oggetti di default intoccabili
+        if (i != list.end() && id > 7)          //8 oggetti di default intoccabili
         {
             checkEq(id);
             list.remove(*i);
@@ -200,11 +200,11 @@ C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) 
     C<DeepPtr<Obj>> l;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
     {
-        if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))    //Ampliabile
+        if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))
         {
             l.insertBack(*i);
         }
-        else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))   //Ampliabile
+        else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))
         {
             l.insertBack(*i);
         }
@@ -230,7 +230,7 @@ std::string Collection::getInfoObj(int id) const {
     {
         return (*i)->getInfo();
     }
-    return "Placeholder : se sei qui, bravo.";
+    return "Placeholder : se sei qui, bravo, ti sei messo di impegno.";
 }
 
 //Metodo che ritorna tutta la lista costante (non usato)
@@ -349,7 +349,7 @@ void Collection::importChara(std::string filename){
         chara = DeepPtr<Character>( new Character(file));
 
         DeepPtr<Weapon> w = chara->getEqWeap();
-        std::cout<<w<<std::endl;
+
         if(!checkId(w->getId()))
         {           
             if (Melee* m = dynamic_cast<Melee*>(&(*w)))
@@ -529,11 +529,11 @@ void Collection::checkEq(int id){
 
 
 //Metodi vari per ottenere informazioni di character
-std::string Collection::getCharName() const {return chara->getName();}
-C<int> Collection::getCharStats() const { return chara->getStats();}
-DeepPtr<Weapon> Collection::getCharWeapon() const {return chara->getEqWeap();}
-C<DeepPtr<Armor>> Collection::getCharArmor()const {return chara->getEqArmor();}
-C<DeepPtr<Consumable>> Collection::getCharCons() const {return chara->getInv();}
+const std::string Collection::getCharName() const {return chara->getName();}
+const C<int> Collection::getCharStats() const { return chara->getStats();}
+const DeepPtr<Weapon> Collection::getCharWeapon() const {return chara->getEqWeap();}
+const C<DeepPtr<Armor>> Collection::getCharArmor()const {return chara->getEqArmor();}
+const C<DeepPtr<Consumable>> Collection::getCharCons() const {return chara->getInv();}
 int Collection::getCharAtk() const {return chara->damage();}
 int Collection::getCharDef() const {return chara->defense();}
 const DeepPtr<Character> Collection::getChar() const {return chara;}
