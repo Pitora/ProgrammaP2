@@ -26,7 +26,7 @@ public:
 
     virtual ~Armor();
 
-    virtual Armor* clone() const {return new Armor(*this);}
+    virtual Armor* clone() const;
 
     virtual void print(std::ostream& os) const;
 

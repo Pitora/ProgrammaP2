@@ -31,15 +31,11 @@ private:
 public:
 
     Character();
-
 	Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a); 
-
-    Character(std::string imported);        //import
-
-    ~Character();
-
+    Character(std::string imported);        
     Character(const Character& x);
-
+    ~Character();
+    
     Character* clone() const {return new Character(*this);}
 
     //get
@@ -51,22 +47,20 @@ public:
     
     //set
     void setName(std::string s);
-    void setWeap(const DeepPtr<Obj>& w);
-    void disequip(const DeepPtr<Obj>& r);
+    void setWeap(const DeepPtr<Obj>& w);  
     void addArmor(const DeepPtr<Obj>& a);
     void changeArmorEq(const DeepPtr<Obj>& a);
     void addConsum(const DeepPtr<Obj>& c);
+    void disequip(const DeepPtr<Obj>& r);
     void setVit(int x);
     void setStr(int x);
     void setDex(int x);
     void setAim(int x);
 
+    //Metodi vari
     bool isRemovingEq(int id) const;
-
     int damage() const;
-
     int defense() const;
-
     std::string exp() const;
 
 

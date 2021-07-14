@@ -23,6 +23,8 @@ Ranged::~Ranged(){
     std::cout<<"Cancellata Ranged"<<std::endl;
 }
 
+Ranged* Ranged::clone() const {return new Ranged(*this);}
+
 void Ranged::print(std::ostream& os) const{
     Weapon::print(os);
     os<<"Recoil : "<<recoil<<std::endl;

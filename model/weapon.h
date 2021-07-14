@@ -15,7 +15,6 @@ private:
     unsigned int cost;
     unsigned int rarity;
     unsigned int raw_attack_value;
-    //unsigned int elem_attack_value;
     unsigned int critical_chance;
     unsigned int scaling_str;
     unsigned int scaling_dex;

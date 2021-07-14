@@ -2,8 +2,8 @@
 
 namespace sm{
 
-
-std::string substring(std::string s, std::string w1, std::string w2)
+//Data una stringa e due parole chiave contenute in tale stringa, ritorna come stringa il contenuto tra le due parole
+std::string substring(std::string s, std::string w1, std::string w2)   
 {
     size_t pos1 = s.find(w1);
     size_t pos2 = s.find(w2);
@@ -17,7 +17,8 @@ std::string substring(std::string s, std::string w1, std::string w2)
 
 }
 
-bool checkKW(std::string s, std::string kw1, std::string kw2)
+//Data una stringa e due parole chiave, ritorna vero se tali parole sono presenti nella stringa, falso altrimenti
+bool checkKW(std::string s, std::string kw1, std::string kw2)  
 {
     if (s.find(kw1) != size_t(-1) && s.find(kw2) != size_t(-1))
     {

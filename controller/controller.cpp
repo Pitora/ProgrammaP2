@@ -42,7 +42,7 @@ void Controller::calc() const {
 void Controller::getBoxItems()
 {
     C<DeepPtr<Obj>> a;
-    a = col->getObjType("Weapon","");
+    a = col->getObjPerType("Weapon","");
     QList<QString> names;
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
@@ -50,35 +50,35 @@ void Controller::getBoxItems()
     window->loadBox(names,1);
 
     names.clear();
-    a = col->getObjType("Armor","HELM");
+    a = col->getObjPerType("Armor","HELM");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,2);
 
     names.clear();
-    a = col->getObjType("Armor","CHEST");
+    a = col->getObjPerType("Armor","CHEST");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,3);
 
     names.clear();
-    a = col->getObjType("Armor","GLOVES");
+    a = col->getObjPerType("Armor","GLOVES");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,4);
 
     names.clear();
-    a = col->getObjType("Armor","BOOTS");
+    a = col->getObjPerType("Armor","BOOTS");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
     }
     window->loadBox(names,5);
 
     names.clear();
-    a = col->getObjType("Consumable","");
+    a = col->getObjPerType("Consumable","");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
     }
@@ -103,11 +103,9 @@ void Controller::createConsumableDialog(){
 
 void Controller::createMelee(QString n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, QString a_t, QString a_e, int d){
     col->add(n.toStdString(),w,c,r,rav,cc,s_str,s_dex,s_aim,a_t.toStdString(),a_e.toStdString(),d);
-    //metodo che ricarica la view principale
 }
 void Controller::createRanged(QString n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m){
     col->add(n.toStdString(),w,c,r,rav,cc,s_str,s_dex,s_aim,rec,rel,m);
-    //metodo che ricarica la view principale e le combobox
 }
 void Controller::createArmor(QString n, QString a_t, QString r, int d_v, int d){
     col->add(n.toStdString(), a_t.toStdString(), r.toStdString(), d_v, d);
@@ -130,9 +128,7 @@ void Controller::eliminateObj(){
 }
 
 void Controller::setWindowChar(){
-    //per reimpostare dopo refresh
     QString name = QString::fromStdString(col->getCharName());
-    //metodo che setta nome sulla view
     window->setBuildName(name);
 
     C<int> stats = col->getCharStats();
@@ -141,11 +137,9 @@ void Controller::setWindowChar(){
     {
         statsQ.append(QString::number(*i));
     }
-    //metodo che setta le statistiche
     window->setStats(statsQ);
 
     DeepPtr<Weapon> w = col->getCharWeapon();
-    //elaborazione e metodo che setta sulla window l'oggetto equipaggiato
     QString s = (QString::number(w->getId())+ ')' + QString::fromStdString(w->getName()));
     window->setWeapon(s);
 
@@ -155,7 +149,6 @@ void Controller::setWindowChar(){
     {
         ls.append((QString::number((*i)->getId())+ ')' + QString::fromStdString((*i)->getName())));
     }
-    //stessa cosa ma più complicato
     window->setArmor(ls);
 
     prevId.clear();
@@ -168,7 +161,6 @@ void Controller::setWindowChar(){
     }
     window->setItems(x);
     calc();
-    //stessa cosa ma leggermente più complicato
 
 
 }
@@ -258,7 +250,6 @@ void Controller::importChar()  //per importare
         QString path = window->importCharDialog();
         col->importChara(path.toStdString());
         refreshWindow();
-        //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //window->showWarning(exc.what());
 
@@ -282,7 +273,6 @@ void Controller::exportChar()  //per esportare
     try {
         QString path = window->exportCharDialog();
         col->exportChara(path.toStdString());
-        //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //view->showWarning(exc.what());
     }
@@ -297,7 +287,6 @@ void Controller::exportObj()  //per edportare
         QString subString = s.mid(0,s.indexOf(')'));
         int id = subString.toInt();
         col->exportObj(id,path.toStdString());
-        //metodo/i che refreshano la finestra
     } catch (std::runtime_error exc) {
         //view->showWarning(exc.what());
     }

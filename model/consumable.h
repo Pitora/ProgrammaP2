@@ -22,11 +22,11 @@ public:
 
 	Consumable(std::string imported);
 
-    ~Consumable();
+    virtual ~Consumable();
 
-    virtual Consumable* clone() const {return new Consumable(*this);}
+    virtual Consumable* clone() const;
 
-    void print(std::ostream& os) const { Obj::print(os);}
+    void print(std::ostream& os) const;
 
     virtual std::string exp() const;
 

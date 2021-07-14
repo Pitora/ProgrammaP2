@@ -23,9 +23,9 @@ public:
 
     Buff(std::string imported);
 
-    ~Buff();
+    virtual ~Buff();
 
-    virtual Buff* clone() const {return new Buff(*this);}
+    virtual Buff* clone() const;
 
     virtual void print(std::ostream& os) const;
 

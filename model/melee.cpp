@@ -22,6 +22,7 @@ Melee::~Melee(){
     std::cout<<"Cancellata Melee"<<std::endl;
 }
 
+Melee* Melee::clone() const {return new Melee(*this);}
 
 void Melee::print(std::ostream& os) const{
     Weapon::print(os);

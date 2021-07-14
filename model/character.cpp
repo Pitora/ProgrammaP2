@@ -65,28 +65,18 @@ Character::Character(std::string imported){
     }else throw err_import();
 }
 
+Character::Character(const Character& x) : name_build(x.name_build), eq_weap(x.eq_weap), eq_armor(x.eq_armor), inventory(x.inventory), vitality(x.vitality), strenght(x.strenght), dexterity(x.dexterity), aim(x.aim) {}
+
+
 Character::~Character(){
     std::cout<<"Cancellazione personaggio"<<std::endl;
 }
 
-Character::Character(const Character& x) : name_build(x.name_build), eq_weap(x.eq_weap), eq_armor(x.eq_armor), inventory(x.inventory), vitality(x.vitality), strenght(x.strenght), dexterity(x.dexterity), aim(x.aim) {}
 
-std::string Character::getName() const {
-    return name_build;
-}
-
-DeepPtr<Weapon> Character::getEqWeap() const {
-    return eq_weap;
-}
-
-C<DeepPtr<Armor>> Character::getEqArmor() const{
-    return eq_armor;
-}
-
-C<DeepPtr<Consumable>> Character::getInv() const{
-    return inventory;
-}
-
+std::string Character::getName() const { return name_build;}
+DeepPtr<Weapon> Character::getEqWeap() const { return eq_weap;}
+C<DeepPtr<Armor>> Character::getEqArmor() const{ return eq_armor;}
+C<DeepPtr<Consumable>> Character::getInv() const{ return inventory;}
 C<int> Character::getStats() const {
     C<int> l;
     l.insertBack(vitality);
@@ -96,14 +86,54 @@ C<int> Character::getStats() const {
     return l;
 }
 
-void Character::setName(std::string s) {
-    name_build = s;
-}
+void Character::setName(std::string s) { name_build = s;}
 
 void Character::setWeap(const DeepPtr<Obj>& w) {
     if (dynamic_cast<Weapon*>(&(*w)))
     {
         eq_weap = DeepPtr<Weapon>(dynamic_cast<Weapon*>(w->clone()));
+    }else throw err_wrongType();
+}
+
+void Character::addArmor(const DeepPtr<Obj>& a) {
+    if (dynamic_cast<Armor*>(&(*a)))
+    {
+        eq_armor.insertBack(DeepPtr<Armor>(dynamic_cast<Armor*>(a->clone())));
+    }else throw err_wrongType();
+}
+
+void Character::changeArmorEq(const DeepPtr<Obj>& a){
+    if(dynamic_cast<Armor*>(&(*a)))
+    {
+        Armor* a2 = dynamic_cast<Armor*>(&(*a));
+        C<DeepPtr<Armor>>::const_iterator i = eq_armor.begin();
+        bool found = false;
+        while(i != eq_armor.end() && !found)
+        {
+            if((*i)->getArmorType() == a2->getArmorType())
+            {
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+        if (found)
+        {
+            eq_armor.remove(*i);
+            addArmor(a);
+        }else throw err_notFound();
+    }
+}
+
+void Character::addConsum(const DeepPtr<Obj>& c) {
+    if (Buff* b = dynamic_cast<Buff*>(&(*c)))
+    {
+        inventory.insertBack(DeepPtr<Consumable>(new Buff(*b)));  
+    }
+    else if (Healing* h = dynamic_cast<Healing*>(&(*c)))
+    {
+        inventory.insertBack(DeepPtr<Consumable>(new Healing(*h)));
     }else throw err_wrongType();
 }
 
@@ -147,55 +177,11 @@ void Character::disequip(const DeepPtr<Obj>& r){
     }else throw err_disequip();
 }
 
-void Character::changeArmorEq(const DeepPtr<Obj>& a){
-    if(dynamic_cast<Armor*>(&(*a)))
-    {
-        Armor* a2 = dynamic_cast<Armor*>(&(*a));
-        C<DeepPtr<Armor>>::const_iterator i = eq_armor.begin();
-        bool found = false;
-        while(i != eq_armor.end() && !found)
-        {
-            if((*i)->getArmorType() == a2->getArmorType())
-            {
-                found = true;
-            }
-            else{
-                i++;
-            }
-        }
-        if (found)
-        {
-            eq_armor.remove(*i);
-            addArmor(a);
-        }else throw err_notFound();
-    }
-}
-
-void Character::addArmor(const DeepPtr<Obj>& a) {
-    if (dynamic_cast<Armor*>(&(*a)))
-    {
-        eq_armor.insertBack(DeepPtr<Armor>(dynamic_cast<Armor*>(a->clone())));
-    }else throw err_wrongType();
-}
-
-void Character::addConsum(const DeepPtr<Obj>& c) {
-    if (Buff* b = dynamic_cast<Buff*>(&(*c)))
-    {
-        inventory.insertBack(DeepPtr<Consumable>(new Buff(*b)));  
-    }
-    else if (Healing* h = dynamic_cast<Healing*>(&(*c)))
-    {
-        inventory.insertBack(DeepPtr<Consumable>(new Healing(*h)));
-    }else throw err_wrongType();
-}
-
 void Character::setVit(int x){vitality = x;}
-
 void Character::setStr(int x){strenght = x;}
-
 void Character::setDex(int x){dexterity = x;}
-
 void Character::setAim(int x){aim = x;}
+
 
 bool Character::isRemovingEq(int id) const
 {
@@ -270,6 +256,3 @@ std::string Character::exp() const{
     return s;
 }
 
-//void Character::import(string imported){       
-
-//} 

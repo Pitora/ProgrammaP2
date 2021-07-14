@@ -31,16 +31,12 @@ Weapon::Weapon(std::string imported) : Obj(imported){
     }
 } 
 
-int Weapon::getAttack() const {return raw_attack_value;}
-int Weapon::getScalingStr() const {return scaling_str;}
-int Weapon::getScalingDex() const {return scaling_dex;}
-int Weapon::getScalingAim() const {return scaling_aim;}
-
-Weapon* Weapon::clone() const {return new Weapon(*this);}
 
 Weapon::~Weapon(){
     std::cout<<"Cancellata arma"<<std::endl;
 }
+
+Weapon* Weapon::clone() const {return new Weapon(*this);}
 
 void Weapon::print(std::ostream& os) const{
     Obj::print(os);
@@ -82,6 +78,13 @@ std::string Weapon::getInfo() const{
     return s;
 
 }
+
+
+//Get
+int Weapon::getAttack() const {return raw_attack_value;}
+int Weapon::getScalingStr() const {return scaling_str;}
+int Weapon::getScalingDex() const {return scaling_dex;}
+int Weapon::getScalingAim() const {return scaling_aim;}
 
 
 

@@ -26,9 +26,9 @@ public:
 
     Melee(std::string imported);
 
-    ~Melee();
+    virtual ~Melee();
 
-    virtual Melee* clone() const {return new Melee(*this);}
+    virtual Melee* clone() const;
 
     void print(std::ostream& os) const;
 

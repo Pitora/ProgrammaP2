@@ -64,20 +64,20 @@ public:
 
   void insertFront(const T& t) {
     first = new nodo(t,nullptr,first);
-    if(first->next==nullptr) { // lista di invocazione era vuota
+    if(first->next==nullptr) { 
       last=first;
     }
-    else { // lista di invocazione NON era vuota
+    else {
       (first->next)->prev=first;
     }
   }
   
   void insertBack(const T& t) {
-    if(last){ // lista non vuota
+    if(last){ 
       last = new nodo(t,last,nullptr);
       (last->prev)->next=last;
     }
-    else // lista vuota
+    else 
       first=last=new nodo(t);
   }
 
@@ -115,10 +115,6 @@ public:
       delete n;     
     }else throw err_nodeNotFound();
   }
-
-    
-
-  
   
   C(unsigned int k, const T& t): first(nullptr), last(nullptr) {
     for(unsigned int j=0; j<k; ++j) insertFront(t);
@@ -127,11 +123,10 @@ public:
   
   class const_iterator {
     friend class C <T>;
-  private: // const_iterator indefinito IFF ptr==nullptr & past_the_end==false
+  private: 
     const nodo* ptr;
     bool past_the_end;
 
-    // convertitore "privato" nodo* => const_iterator 
     const_iterator(nodo* p, bool pte = false): ptr(p), past_the_end(pte) {}
   public:
     
@@ -192,10 +187,6 @@ public:
     const T* operator->() const {
       return &(ptr->info);
     }
-
-    //const T* operator[](int i) const {
-    //  return &((first+i)->info);
-    //}
   };
 
   const_iterator begin() const {
@@ -204,7 +195,7 @@ public:
   
   const_iterator end() const {
     if(!last) return const_iterator();
-    return const_iterator(last+1,true); // attenzione: NON e' past the end
+    return const_iterator(last+1,true); 
   }
   
 };

@@ -11,6 +11,10 @@ Consumable::~Consumable() {
 }
 
 
+Consumable* Consumable::clone() const {return new Consumable(*this);}
+
+void Consumable::print(std::ostream& os) const { Obj::print(os);}
+
 std::string Consumable::exp() const { return Obj::exp(); }
 
 std::string Consumable::getInfo() const {return Obj::getInfo(); }

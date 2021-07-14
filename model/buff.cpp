@@ -21,6 +21,8 @@ Buff::~Buff(){
     std::cout<<"Cancellato un buff"<<std::endl;
 }
 
+Buff* Buff::clone() const {return new Buff(*this);}
+
 void Buff::print(std::ostream& os) const{
     Consumable::print(os);
     os<<"Effect : "<<effect<<std::endl;

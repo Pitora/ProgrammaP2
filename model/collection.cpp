@@ -82,7 +82,7 @@ void Collection::initialize(){
     setCharVit(15);
 }
 
-void Collection::save(){
+void Collection::save() const{
     
     std::cout<<"Sto salvando...";
     std::string s = "<Data>";
@@ -104,7 +104,7 @@ void Collection::save(){
     }else throw err_fileNotCreated();
 }
 
-int Collection::generateId(){
+int Collection::generateId() const{
     int max = -1;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
     {
@@ -141,54 +141,90 @@ void Collection::add(std::string n, std::string a_v, int p){
     list.insertBack(DeepPtr<Obj>(new Healing(id,n,a_v,p)));
 }
 
-bool Collection::remove(int id){
+C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
+    C<DeepPtr<Obj>>::const_iterator i = list.begin();
+    bool found = false;
+
+    while(i!= list.end() && !found)
+    {
+        if ((*i)->getId() == id)
+        {
+            found = true;
+        }else{
+            i++;
+        }
+    }
+    return i;
+}
+
+void Collection::remove(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    try {
+        if (i != list.end() && id > 7)          //7 oggetti di default intoccabili
+        {
+            checkEq(id);
+            list.remove(*i);
+        }
+    }catch(err_nodeNotFound){std::cout<<"Il nodo non esiste."<<std::endl;}
 
-    if (i != list.end() && id > 7)          //7 oggetti di default intoccabili
-    {
-        checkEq(id);
-        list.remove(*i);
-        return true;
-    }
 
-    return false;
 }
 
-void Collection::checkEq(int id)//metodo che reimposta l'equipaggiamento di default in caso di cancellazione
-{
-    if (chara->isRemovingEq(id))
-    {
-        C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-        if (dynamic_cast<Weapon*>(&(*(*i))))
+void Collection::show(int id) const{
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    try{
+        if (i != list.end())
         {
-            modifyCharWeap(4);
+            std::cout<<*i<<std::endl;
         }
-        else if (dynamic_cast<Consumable*>(&(*(*i))))
-        {
-            modifyCharInv(7,id);
-        }
-        else if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))
-        {
-            if(a->getArmorType() == "HELM")
-            {
-                modifyCharArmor(0,id);
-            }
-            else if(a->getArmorType() == "CHEST")
-            {
-                modifyCharArmor(1,id);
-            }
-            else if(a->getArmorType() == "GLOVES")
-            {
-                modifyCharArmor(2, id);
-            }
-            else if(a->getArmorType() == "BOOTS")
-            {
-                modifyCharArmor(3,id);
-            }
-
+        else{
+            throw err_notFound();
         }
     }
+    catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
 }
+
+C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) const{
+    C<DeepPtr<Obj>> l;
+    for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
+    {
+        if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))    //Ampliabile
+        {
+            l.insertBack(*i);
+        }
+        else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))   //Ampliabile
+        {
+            l.insertBack(*i);
+        }
+        else if (type == "Armor")
+        {
+            if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))          
+            {
+                if (a->getArmorType() == type2)
+                {
+                    l.insertBack(*i);
+                }
+            }
+        }
+    }
+    return l;
+}
+
+std::string Collection::getInfoObj(int id) const {
+    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+    if (i != list.end())
+    {
+        return (*i)->getInfo();
+    }
+    return "Placeholder : se sei qui, bravo.";
+}
+
+const C<DeepPtr<Obj>> Collection::getAllObj() const{
+    return list;
+}
+
+
+
 
 std::string Collection::readFile(std::string filename)          //ritorna tutto il file sottoforma di stringa
 {
@@ -217,21 +253,7 @@ bool Collection::checkId(const int id) const{
     return false;
 }
 
-C<DeepPtr<Obj>>::const_iterator Collection::getIter(int id) const{
-    C<DeepPtr<Obj>>::const_iterator i = list.begin();
-    bool found = false;
 
-    while(i!= list.end() && !found)
-    {
-        if ((*i)->getId() == id)
-        {
-            found = true;
-        }else{
-            i++;
-        }
-    }
-    return i;
-}
 
 bool Collection::importObj(std::string filename){
     try{
@@ -372,20 +394,7 @@ void Collection::exportChara(std::string filename){
     catch(err_fileNotCreated){std::cout<<"Il file non è stato creato"<<std::endl;}
 }
 
-void Collection::show(int id){
-    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-    try{
-        if (i != list.end())
-        {
-            std::cout<<*i<<std::endl;
-        }
-        else{
-            throw err_notFound();
-        }
-    }
-    catch(err_notFound){std::cout<<"L'oggetto non esiste"<<std::endl;}
 
-}
 
 void Collection::modifyCharName(std::string s){ chara->setName(s);}
 
@@ -452,64 +461,60 @@ void Collection::removeCharEq(int id){
 }
 
 void Collection::setCharVit(int x){chara->setVit(x);}
-
 void Collection::setCharStr(int x){chara->setStr(x);}
-
 void Collection::setCharDex(int x){chara->setDex(x);}
-
 void Collection::setCharAim(int x){chara->setAim(x);}
 
-std::string Collection::getCharName(){return chara->getName();}
+void Collection::checkEq(int id){ //metodo che reimposta l'equipaggiamento di default in caso di cancellazione
+    if (chara->isRemovingEq(id))
+    {
+        C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+        if (dynamic_cast<Weapon*>(&(*(*i))))
+        {
+            modifyCharWeap(4);
+        }
+        else if (dynamic_cast<Consumable*>(&(*(*i))))
+        {
+            modifyCharInv(7,id);
+        }
+        else if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))
+        {
+            if(a->getArmorType() == "HELM")
+            {
+                modifyCharArmor(0,id);
+            }
+            else if(a->getArmorType() == "CHEST")
+            {
+                modifyCharArmor(1,id);
+            }
+            else if(a->getArmorType() == "GLOVES")
+            {
+                modifyCharArmor(2, id);
+            }
+            else if(a->getArmorType() == "BOOTS")
+            {
+                modifyCharArmor(3,id);
+            }
 
-C<int> Collection::getCharStats(){ return chara->getStats();}
+        }
+    }
+}
 
-DeepPtr<Weapon> Collection::getCharWeapon(){return chara->getEqWeap();}
 
-C<DeepPtr<Armor>> Collection::getCharArmor(){return chara->getEqArmor();}
 
-C<DeepPtr<Consumable>> Collection::getCharCons(){return chara->getInv();}
 
-int Collection::getCharAtk(){return chara->damage();}
 
-int Collection::getCharDef(){return chara->defense();}
 
+std::string Collection::getCharName() const {return chara->getName();}
+C<int> Collection::getCharStats() const { return chara->getStats();}
+DeepPtr<Weapon> Collection::getCharWeapon() const {return chara->getEqWeap();}
+C<DeepPtr<Armor>> Collection::getCharArmor()const {return chara->getEqArmor();}
+C<DeepPtr<Consumable>> Collection::getCharCons() const {return chara->getInv();}
+int Collection::getCharAtk() const {return chara->damage();}
+int Collection::getCharDef() const {return chara->defense();}
 const DeepPtr<Character> Collection::getChar() const {return chara;}
 
- C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2 ) const{
-    C<DeepPtr<Obj>> l;
-    for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
-    {
-        if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))    //Ampliabile
-        {
-            l.insertBack(*i);
-        }
-        else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))   //Ampliabile
-        {
-            l.insertBack(*i);
-        }
-        else if (type == "Armor")
-        {
-            if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))          
-            {
-                if (a->getArmorType() == type2)
-                {
-                    l.insertBack(*i);
-                }
-            }
-        }
-    }
-    return l;
-}
 
-const C<DeepPtr<Obj>> Collection::getAllObj() const{
-    return list;
-}
 
-std::string Collection::getInfoObj(int id) const {
-    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-    if (i != list.end())
-    {
-        return (*i)->getInfo();
-    }
-    return "Placeholder : se sei qui, bravo.";
-}
+
+

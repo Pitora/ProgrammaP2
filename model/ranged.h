@@ -24,7 +24,7 @@ public:
 
 	Ranged(std::string imported);
 
-    ~Ranged();
+    virtual ~Ranged();
 
 	virtual Ranged* clone() const {return new Ranged(*this);}
 

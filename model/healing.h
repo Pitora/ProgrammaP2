@@ -23,9 +23,9 @@ public:
 
     Healing(std::string imported);
 
-    ~Healing();
+    virtual ~Healing();
 
-    virtual Healing* clone() const {return new Healing(*this);}
+    virtual Healing* clone() const;
 
     virtual void print(std::ostream& os) const;
 

@@ -28,45 +28,38 @@ Collection();
 
 ~Collection();
 
+//metodi per lettura/salvataggio
 void initialize();
+void save() const;
 
-void save();
-
+//metodi per aggiungere nuovi oggetti
+int generateId() const;
 void add(std::string n, std::string a_t, std::string r, int d_v, int d);   //Armor
-
 void add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, std::string a_t, std::string a_e, int d); //Melee
-
 void add(std::string n, int w, int c, int r, int rav, int cc, int s_str, int s_dex, int s_aim, int rec, int rel, int m); //Ranged
-
 void add(std::string n, std::string e, int p, int d); //Buff
-
 void add(std::string n, std::string a_v, int p);   //Healing
 
 
+//Metodi usati per l'interazione con gli oggetti
+C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
+void remove(int id);
+void show(int id) const;
+C<DeepPtr<Obj>> getObjPerType(std::string type, std::string type2) const;
+std::string getInfoObj(int id) const;
+const C<DeepPtr<Obj>> getAllObj() const;
 
-bool remove(int id);
-
-void checkEq(int id);
-
-
-//getinfo
-
+//metodi di import/export
 std::string readFile(std::string filename);
-
 bool checkId(const int id) const;
-
 bool importObj(std::string filename);
-
 void exportObj(int i, std::string filename);
-
 void importChara(std::string filename);
-
 void exportChara(std::string filename);
 
-void show(int id);
 
-int generateId();
-
+//metodi per interagire con character
+//set
 void modifyCharName(std::string s);
 void modifyCharWeap(int id);
 void modifyCharArmor(int id1, int id2);
@@ -77,21 +70,21 @@ void setCharVit(int x);
 void setCharStr(int x);
 void setCharDex(int x);
 void setCharAim(int x);
-
-std::string getCharName();
-C<int> getCharStats();
-DeepPtr<Weapon> getCharWeapon();
-C<DeepPtr<Armor>> getCharArmor();
-C<DeepPtr<Consumable>> getCharCons();
-int getCharAtk();
-int getCharDef();
-
+void checkEq(int id);
+//get
+std::string getCharName() const;
+C<int> getCharStats() const;
+DeepPtr<Weapon> getCharWeapon() const;
+C<DeepPtr<Armor>> getCharArmor() const;
+C<DeepPtr<Consumable>> getCharCons() const;
+int getCharAtk() const;
+int getCharDef() const;
 const DeepPtr<Character> getChar() const;
 
-C<DeepPtr<Obj>>::const_iterator getIter(int id) const;
-C<DeepPtr<Obj>> getObjType(std::string type, std::string type2) const;
-const C<DeepPtr<Obj>> getAllObj() const;
-std::string getInfoObj(int id) const;
+
+
+
+
 
 
 };

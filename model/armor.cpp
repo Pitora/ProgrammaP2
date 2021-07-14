@@ -19,9 +19,8 @@ Armor::~Armor() {
     //std::cout<<"Distrutta armatura"<<std::endl;
 }
 
-int Armor::getDefense() const {return defense_value;}
+Armor* Armor::clone() const {return new Armor(*this);}
 
-std::string Armor::getArmorType() const{return armor_type;}
 
 void Armor::print(std::ostream& os) const{
     Obj::print(os);
@@ -51,6 +50,8 @@ std::string Armor::getInfo() const{
     return s;
 }
 
+int Armor::getDefense() const {return defense_value;}
 
+std::string Armor::getArmorType() const{return armor_type;}
 
 

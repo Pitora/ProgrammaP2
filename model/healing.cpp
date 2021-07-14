@@ -18,6 +18,8 @@ Healing::~Healing() {
     std::cout<<"Cura cancellata"<<std::endl;
 }
 
+Healing* Healing::clone() const {return new Healing(*this);}
+
 void Healing::print(std::ostream& os) const{
     Consumable::print(os);
     os<<"affected value : "<<affected_value<<std::endl;
