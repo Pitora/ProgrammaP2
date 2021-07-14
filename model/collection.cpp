@@ -66,15 +66,16 @@ void Collection::initialize(){
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
     }
+    chara = DeepPtr<Character>(new Character());
     modifyCharName("Default build");
     modifyCharWeap(4);
     modifyCharArmor(0,-1);
     modifyCharArmor(1,-1);
     modifyCharArmor(2,-1);
     modifyCharArmor(3,-1);
-    modifyCharInv(7,-1);
-    modifyCharInv(7,-1);
-    modifyCharInv(7,-1);
+    modifyCharInv(6,-1);
+    modifyCharInv(6,-1);
+    modifyCharInv(6,-1);
     setCharAim(15);
     setCharDex(15);
     setCharStr(15);
@@ -155,7 +156,7 @@ bool Collection::remove(int id){
 
 void Collection::checkEq(int id)//metodo che reimposta l'equipaggiamento di default in caso di cancellazione
 {
-    if (chara.isRemovingEq(id))
+    if (chara->isRemovingEq(id))
     {
         C<DeepPtr<Obj>>::const_iterator i = getIter(id);
         if (dynamic_cast<Weapon*>(&(*(*i))))
@@ -309,9 +310,9 @@ void Collection::importChara(std::string filename){
     try{
         std::string file = readFile(filename);
 
-        chara = Character(file);
+        chara = DeepPtr<Character>( new Character(file));
 
-        DeepPtr<Weapon> w = chara.getEqWeap();
+        DeepPtr<Weapon> w = chara->getEqWeap();
         std::cout<<w<<std::endl;
         if(!checkId(w->getId()))
         {           
@@ -325,7 +326,7 @@ void Collection::importChara(std::string filename){
             }
         }
 
-        C<DeepPtr<Armor>> a = chara.getEqArmor();
+        C<DeepPtr<Armor>> a = chara->getEqArmor();
         for (C<DeepPtr<Armor>>::const_iterator i = a.begin(); i != a.end(); ++i)
         {
             if(!checkId((*i)->getId()))
@@ -334,7 +335,7 @@ void Collection::importChara(std::string filename){
             }
         }
 
-        C<DeepPtr<Consumable>> c = chara.getInv();
+        C<DeepPtr<Consumable>> c = chara->getInv();
         for (C<DeepPtr<Consumable>>::const_iterator i = c.begin(); i != c.end(); ++i)
         {
             if(!checkId((*i)->getId()))
@@ -357,7 +358,7 @@ void Collection::importChara(std::string filename){
 }
 
 void Collection::exportChara(std::string filename){
-    std::string ex = chara.exp();
+    std::string ex = chara->exp();
 
     try{
         std::ofstream out(filename + ".xml");
@@ -386,12 +387,12 @@ void Collection::show(int id){
 
 }
 
-void Collection::modifyCharName(std::string s){ chara.setName(s);}
+void Collection::modifyCharName(std::string s){ chara->setName(s);}
 
 void Collection::modifyCharWeap(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     try {
-        chara.setWeap(*i);
+        chara->setWeap(*i);
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
 }
@@ -404,7 +405,7 @@ void Collection::modifyCharArmor(int id1, int id2){
                     removeCharEq(id2);
                 }
                 C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-                chara.addArmor(*i);
+                chara->addArmor(*i);
         }else throw err_sameObject();
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
@@ -416,10 +417,10 @@ void Collection::modifyCharArmor(int id1, int id2){
 void Collection::modifyCharArmorAlt(int id)//metodo per chiamare la versione alternativa del metodo che cambia l'armatura, (usa solo l'id)
 {
     try{
-        if (checkId(id) && !chara.isRemovingEq(id))
+        if (checkId(id) && !chara->isRemovingEq(id))
         {
               C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-              chara.changeArmorEq(*i);
+              chara->changeArmorEq(*i);
         }else throw err_sameObject();
     }catch(err_sameObject){std::cout<<"L'oggetto è gia equipaggiato."<<std::endl;}
 }
@@ -427,12 +428,12 @@ void Collection::modifyCharArmorAlt(int id)//metodo per chiamare la versione alt
 void Collection::modifyCharInv(int id1, int id2){
     try{
         if (id1 != id2){
-            if (id2 != -1)        //7 oggetti di default
+            if (id2 != -1)
             {
                 removeCharEq(id2);
             }
             C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-            chara.addConsum(*i);
+            chara->addConsum(*i);
         }else throw err_sameObject();
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono."<<std::endl;}
@@ -446,33 +447,33 @@ void Collection::removeCharEq(int id){
     C<DeepPtr<Obj>>::const_iterator i = getIter(id);
     if ((i != list.end()) && (dynamic_cast<Healing*>(&(*(*i)))  ||  dynamic_cast<Buff*>(&(*(*i))) || dynamic_cast<Armor*>(&(*(*i)))))
     {
-        chara.disequip(*i);
+        chara->disequip(*i);
     }else throw err_wrongType();
 }
 
-void Collection::setCharVit(int x){chara.setVit(x);}
+void Collection::setCharVit(int x){chara->setVit(x);}
 
-void Collection::setCharStr(int x){chara.setStr(x);}
+void Collection::setCharStr(int x){chara->setStr(x);}
 
-void Collection::setCharDex(int x){chara.setDex(x);}
+void Collection::setCharDex(int x){chara->setDex(x);}
 
-void Collection::setCharAim(int x){chara.setAim(x);}
+void Collection::setCharAim(int x){chara->setAim(x);}
 
-std::string Collection::getCharName(){return chara.getName();}
+std::string Collection::getCharName(){return chara->getName();}
 
-C<int> Collection::getCharStats(){ return chara.getStats();}
+C<int> Collection::getCharStats(){ return chara->getStats();}
 
-DeepPtr<Weapon> Collection::getCharWeapon(){return chara.getEqWeap();}
+DeepPtr<Weapon> Collection::getCharWeapon(){return chara->getEqWeap();}
 
-C<DeepPtr<Armor>> Collection::getCharArmor(){return chara.getEqArmor();}
+C<DeepPtr<Armor>> Collection::getCharArmor(){return chara->getEqArmor();}
 
-C<DeepPtr<Consumable>> Collection::getCharCons(){return chara.getInv();}
+C<DeepPtr<Consumable>> Collection::getCharCons(){return chara->getInv();}
 
-int Collection::getCharAtk(){return chara.damage();}
+int Collection::getCharAtk(){return chara->damage();}
 
-int Collection::getCharDef(){return chara.defense();}
+int Collection::getCharDef(){return chara->defense();}
 
-const DeepPtr<Character> Collection::getChar() const {return DeepPtr<Character>(&chara);}
+const DeepPtr<Character> Collection::getChar() const {return chara;}
 
  C<DeepPtr<Obj>> Collection::getObjType(std::string type, std::string type2 ) const{
     C<DeepPtr<Obj>> l;

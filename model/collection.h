@@ -20,7 +20,7 @@ class Collection {
 private:
 
     C<DeepPtr<Obj>> list;
-    Character chara;      
+    DeepPtr<Character> chara;
     
 public:
 

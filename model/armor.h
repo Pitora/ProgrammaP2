@@ -24,7 +24,7 @@ public:
 
     Armor(std::string imported);
 
-    ~Armor();
+    virtual ~Armor();
 
     virtual Armor* clone() const {return new Armor(*this);}
 

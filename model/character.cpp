@@ -1,23 +1,23 @@
 #include "character.h"
 
-Character::Character(){}//:name_build("Default build"), vitality(10), strenght(10), dexterity(10), aim(10){}
+Character::Character(){}
 
 Character::Character(std::string n, DeepPtr<Weapon> wp, C<DeepPtr<Armor>> armor, C<DeepPtr<Consumable>> inv, int v, int s, int d, int a) : name_build(n),eq_weap(wp),eq_armor(armor),inventory(inv),vitality(v),strenght(s),dexterity(d),aim(a) {}
 
 Character::Character(std::string imported){
-    if (imported.find("<Character>") != size_t(-1) && imported.find("</Character>") != size_t(-1))
+    if (sm::checkKW(imported, "<Character>","</Character>"))
     {
-        if (imported.find("<NameBuild>") != size_t(-1) && imported.find("</NameBuild>") != size_t(-1))
+        if (sm::checkKW(imported, "<NameBuild>","</NameBuild>"))
         {
             name_build = sm::substring(imported, "<NameBuild>", "</NameBuild>");
         }else throw err_import();
-        if (imported.find("<EqWeap>") != size_t(-1) && imported.find("</EqWeap>") != size_t(-1))
+        if (sm::checkKW(imported, "<EqWeap>","</EqWeap>"))
         {
-            if (imported.find("<Melee>") != size_t(-1) && imported.find("</Melee>") != size_t(-1))
+            if (sm::checkKW(imported, "<Melee>", "</Melee>"))
             {
                 eq_weap = DeepPtr<Weapon>(new Melee(sm::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
-            else if (imported.find("<Ranged>") != size_t(-1) && imported.find("</Ranged>") != size_t(-1))
+            else if (sm::checkKW(imported, "<Ranged>", "</Ranged>"))
             {
                 eq_weap = DeepPtr<Weapon>(new Ranged(sm::substring(imported, "<EqWeap>", "</EqWeap>")));
             }
@@ -26,7 +26,7 @@ Character::Character(std::string imported){
         std::string s = sm::substring(imported, "<EqArmor>", "</EqArmor>");
         Armor* a; 
         int i = 0;
-        while (s.find("<ArmorP" + std::to_string(i) + '>') != size_t(-1) && s.find("</ArmorP" + std::to_string(i) + '>') != size_t(-1) )
+        while (sm::checkKW(s, "<ArmorP" + std::to_string(i) + '>',"</ArmorP" + std::to_string(i) + '>'))
         {   
             a = new Armor(sm::substring(s, "<ArmorP" + std::to_string(i) + '>', "</ArmorP" + std::to_string(i) + '>'));
             eq_armor.insertBack(DeepPtr<Armor>(a));
@@ -37,15 +37,15 @@ Character::Character(std::string imported){
         Consumable* c;
         i = 0;
         std::string s2;
-        while (s.find("<Consum" + std::to_string(i) + '>') != -1 && s.find("</Consum" + std::to_string(i) + '>') != -1 )
+        while (sm::checkKW(s, "<Consum" + std::to_string(i) + '>', "</Consum" + std::to_string(i) + '>'))
         {   
             s2 = sm::substring(s,"<Consum" + std::to_string(i) + '>',"</Consum" + std::to_string(i) + '>');
 
-            if (s2.find("<Healing>") != -1 && s2.find("</Healing>") != -1)
+            if (sm::checkKW(s2, "<Healing>", "</Healing>"))
             {
                 c = new Healing(s2);
             }
-            else if (s2.find("<Buff>") != -1 && s2.find("</Buff>") != -1)
+            else if (sm::checkKW(s2, "<Buff>", "</Buff>"))
             {
                 c = new Buff(s2);
             }
@@ -54,12 +54,13 @@ Character::Character(std::string imported){
         }
         delete c;
 
-        if(imported.find("<Stats>") != -1 && imported.find("</Stats>") != -1)
+        if(sm::checkKW(imported, "<Stats>", "</Stats>"))
         {
-            vitality = stoi(sm::substring(imported,"<Vit>","</Vit>"));
-            strenght = stoi(sm::substring(imported,"<Str>","</Str>"));
-            dexterity = stoi(sm::substring(imported,"<Dex>","</Dex>"));
-            aim = stoi(sm::substring(imported,"<Aim>","</Aim>"));
+            s = sm::substring(imported, "<Stats>","</Stats>");
+            vitality = stoi(sm::substring(s,"<Vit>","</Vit>"));
+            strenght = stoi(sm::substring(s,"<Str>","</Str>"));
+            dexterity = stoi(sm::substring(s,"<Dex>","</Dex>"));
+            aim = stoi(sm::substring(s,"<Aim>","</Aim>"));
         }else throw err_import();
     }else throw err_import();
 }
@@ -68,7 +69,7 @@ Character::~Character(){
     std::cout<<"Cancellazione personaggio"<<std::endl;
 }
 
-Character::Character(const Character& x) : name_build(x.name_build), eq_weap(x.eq_weap), eq_armor(x.eq_armor), inventory(x.inventory) {}
+Character::Character(const Character& x) : name_build(x.name_build), eq_weap(x.eq_weap), eq_armor(x.eq_armor), inventory(x.inventory), vitality(x.vitality), strenght(x.strenght), dexterity(x.dexterity), aim(x.aim) {}
 
 std::string Character::getName() const {
     return name_build;

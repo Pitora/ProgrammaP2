@@ -34,7 +34,7 @@ public:
 
     ~Weapon();
 
-    virtual Weapon* clone() const {return new Weapon(*this);}
+    virtual Weapon* clone() const;
 
     virtual void print(std::ostream& os) const;
 

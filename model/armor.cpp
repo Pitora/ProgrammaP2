@@ -16,14 +16,12 @@ Armor::Armor(std::string imported) : Obj(imported){
 } 
 
 Armor::~Armor() {
-    std::cout<<"Distrutta armatura"<<std::endl;
+    //std::cout<<"Distrutta armatura"<<std::endl;
 }
 
 int Armor::getDefense() const {return defense_value;}
 
-std::string Armor::getArmorType() const{
-    return armor_type;
-}
+std::string Armor::getArmorType() const{return armor_type;}
 
 void Armor::print(std::ostream& os) const{
     Obj::print(os);

@@ -36,6 +36,8 @@ int Weapon::getScalingStr() const {return scaling_str;}
 int Weapon::getScalingDex() const {return scaling_dex;}
 int Weapon::getScalingAim() const {return scaling_aim;}
 
+Weapon* Weapon::clone() const {return new Weapon(*this);}
+
 Weapon::~Weapon(){
     std::cout<<"Cancellata arma"<<std::endl;
 }
