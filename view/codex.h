@@ -6,9 +6,6 @@
 
 #include <QWidget>
 #include <QPushButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QScrollArea>
 #include <QTextEdit>
 #include <QList>
 #include <QListWidget>
@@ -22,7 +19,6 @@ class Codex : public QDialog
     Q_OBJECT
 private:
     Controller* controller;
-    QScrollArea* container;
     QListWidget* cont;
     QTextEdit* details;
     QPushButton* remove_item;
