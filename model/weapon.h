@@ -41,6 +41,8 @@ public:
 
     virtual std::string getInfo() const;
 
+    //virtual int calcAttack(int str, int dex, int aim) const;
+
     int getAttack() const;
     int getScalingStr() const;
     int getScalingDex() const;

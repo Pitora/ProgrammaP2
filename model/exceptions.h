@@ -9,6 +9,8 @@ class err_disequip{};
 
 class err_nodeNotFound{};
 
+class err_outOfBounds{};
+
 class err_notFound{};
 
 class err_wrongType{};

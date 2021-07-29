@@ -197,6 +197,21 @@ public:
     if(!last) return const_iterator();
     return const_iterator(last+1,true); 
   }
+
+  //Metodo che ritorna un iteratore che punta all'elemento in posizione i
+  const_iterator position(int i) const {
+      const_iterator c = begin();
+      const_iterator c2 = end();
+      for (int i2 = 0; i2 < i; i2++)
+      {
+          if (c != c2){
+          c++;
+          }
+          else throw err_outOfBounds();
+      }
+      return c;
+  }
+
   
 };
 
