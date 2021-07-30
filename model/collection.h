@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<string>
+#include<vector>
 #include<fstream>
 #include "object.h"
 #include "melee.h"
@@ -20,7 +21,8 @@ class Collection {
 private:
 
     C<DeepPtr<Obj>> list;
-    DeepPtr<Character> chara;
+    std::vector<DeepPtr<Character>> charas;
+    unsigned int totalCharas;
     unsigned int nextId;
     
 public:
@@ -56,31 +58,31 @@ bool checkId(const int id) const;
 void importObj(std::string filename);
 void exportObj(int i, std::string filename);
 void importChara(std::string filename);
-void exportChara(std::string filename);
+void exportChara(int i, std::string filename);
 
 
 //metodi per interagire con character
 //set
-void modifyCharName(std::string s);
-void modifyCharWeap(int id);
-void modifyCharArmor(int id1, int id2);
-void modifyCharArmorAlt(int id);
-void modifyCharInv(int id1, int id2);
-void removeCharEq(int id);
-void setCharVit(int x);
-void setCharStr(int x);
-void setCharDex(int x);
-void setCharAim(int x);
+void modifyCharName(int i, std::string s);
+void modifyCharWeap(int i, int id);
+void modifyCharArmor(int i, int id1, int id2);
+void modifyCharArmorAlt(int i, int id);
+void modifyCharInv(int i, int id1, int id2);
+void removeCharEq(int i , int id);
+void setCharVit(int i, int x);
+void setCharStr(int i, int x);
+void setCharDex(int i, int x);
+void setCharAim(int i ,int x);
 void checkEq(int id);
 //get
-const std::string getCharName() const;
-const C<int> getCharStats() const;
-const DeepPtr<Weapon> getCharWeapon() const;
-const C<DeepPtr<Armor>> getCharArmor() const;
-const C<DeepPtr<Consumable>> getCharCons() const;
-int getCharAtk() const;
-int getCharDef() const;
-const DeepPtr<Character> getChar() const;
+const std::string getCharName(int i) const;
+const C<int> getCharStats(int i) const;
+const DeepPtr<Weapon> getCharWeapon(int i) const;
+const C<DeepPtr<Armor>> getCharArmor(int i) const;
+const C<DeepPtr<Consumable>> getCharCons(int i) const;
+int getCharAtk(int i) const;
+int getCharDef(int i) const;
+const DeepPtr<Character> getChar(int i) const;
 
 
 

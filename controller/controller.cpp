@@ -34,8 +34,8 @@ QList<QString> Controller::getItemsNames()
 //calcola i valori di attacco e def
 void Controller::calc() {
 
-    int atk = col->getCharAtk();
-    int def = col->getCharDef();
+    int atk = col->getCharAtk(0);
+    int def = col->getCharDef(0);
 
     window->calcDmgDef(atk,def);
 }
@@ -144,10 +144,10 @@ void Controller::eliminateObj(){
 
 //imposta la view quando si carica una build(anche quella di default)
 void Controller::setWindowChar(){
-    QString name = QString::fromStdString(col->getCharName());
+    QString name = QString::fromStdString(col->getCharName(0));
     window->setBuildName(name);
 
-    C<int> stats = col->getCharStats();
+    C<int> stats = col->getCharStats(0);
     QList<QString> statsQ;
     for (auto i = stats.begin(); i != stats.end(); ++i)
     {
@@ -155,11 +155,11 @@ void Controller::setWindowChar(){
     }
     window->setStats(statsQ);
 
-    DeepPtr<Weapon> w = col->getCharWeapon();
+    DeepPtr<Weapon> w = col->getCharWeapon(0);
     QString s = (QString::number(w->getId())+ ')' + QString::fromStdString(w->getName()));
     window->setWeapon(s);
 
-    C<DeepPtr<Armor>> a = col->getCharArmor();
+    C<DeepPtr<Armor>> a = col->getCharArmor(0);
     QList<QString> ls;
     for (auto i = a.begin(); i != a.end(); ++i)
     {
@@ -168,7 +168,7 @@ void Controller::setWindowChar(){
     window->setArmor(ls);
 
     prevId.clear();
-    C<DeepPtr<Consumable>> inv = col->getCharCons();
+    C<DeepPtr<Consumable>> inv = col->getCharCons(0);
     QList<QString> x;
     for (auto i = inv.begin(); i != inv.end(); ++i)
     {
@@ -182,19 +182,19 @@ void Controller::setWindowChar(){
 }
 
 void Controller::setVitality(QString x) {
-    col->setCharVit(x.toInt());
+    col->setCharVit(0,x.toInt());
     calc();
 }
 void Controller::setStrenght(QString x){
-    col->setCharStr(x.toInt());
+    col->setCharStr(0,x.toInt());
     calc();
 }
 void Controller::setDexterity(QString x){
-    col->setCharDex(x.toInt());
+    col->setCharDex(0,x.toInt());
     calc();
 }
 void Controller::setAim(QString x){
-    col->setCharAim(x.toInt());
+    col->setCharAim(0,x.toInt());
     calc();
 }
 
@@ -203,39 +203,39 @@ void Controller::changeName(QString s){
     if(s.isEmpty()){
         s = "Build Name";
     }
-    col->modifyCharName(s.toStdString());
+    col->modifyCharName(0,s.toStdString());
 }
 void Controller::changeWeapon(QString s){
     QString subString = s.mid(0,s.indexOf(')'));
     int id = subString.toInt();
-    col->modifyCharWeap(id);
+    col->modifyCharWeap(0,id);
     calc();
 }
 void Controller::changeArmor(QString s){
     QString subString = s.mid(0,s.indexOf(')'));
     int id = subString.toInt();
-    col->modifyCharArmorAlt(id);
+    col->modifyCharArmorAlt(0,id);
     calc();
 }
 void Controller::changeItem1(QString s)
 {
     QString subString = s.mid(0,s.indexOf(')'));
     int id = subString.toInt();
-    col->modifyCharInv(id,prevId[0]);
+    col->modifyCharInv(0,id,prevId[0]);
     prevId[0] = id;
 }
 void Controller::changeItem2(QString s)
 {
     QString subString = s.mid(0,s.indexOf(')'));
     int id = subString.toInt();
-    col->modifyCharInv(id,prevId[1]);
+    col->modifyCharInv(0,id,prevId[1]);
     prevId[1] = id;
 }
 void Controller::changeItem3(QString s)
 {
     QString subString = s.mid(0,s.indexOf(')'));
     int id = subString.toInt();
-    col->modifyCharInv(id,prevId[2]);
+    col->modifyCharInv(0,id,prevId[2]);
     prevId[2] = id;
 }
 
@@ -286,7 +286,7 @@ void Controller::exportChar()  //per esportare
 {
     try {
         QString path = window->exportCharDialog();
-        col->exportChara(path.toStdString());
+        col->exportChara(0, path.toStdString());
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'esportazione"<<std::endl;
     }

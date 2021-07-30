@@ -1,6 +1,6 @@
 #include "collection.h"
 
-Collection::Collection() : list(), chara(), nextId(){       //costruttore standard, si occupa anche dell'apertura del file di salvataggio e popolazione lista
+Collection::Collection() : list(), charas(), nextId(){       //costruttore standard, si occupa anche dell'apertura del file di salvataggio e popolazione lista
     try {
         std::string s = readFile("data.xml");
         if (s != ""){
@@ -72,20 +72,21 @@ void Collection::initialize(){
         add("Broken glass of water", "HP", 1);
         nextId = 8;
     }
-    chara = DeepPtr<Character>(new Character());
-    modifyCharName("Default build");
-    modifyCharWeap(4);
-    modifyCharArmor(0,-1);
-    modifyCharArmor(1,-1);
-    modifyCharArmor(2,-1);
-    modifyCharArmor(3,-1);
-    modifyCharInv(6,-1);
-    modifyCharInv(6,-1);
-    modifyCharInv(6,-1);
-    setCharAim(15);
-    setCharDex(15);
-    setCharStr(15);
-    setCharVit(15);
+    charas.push_back(DeepPtr<Character> (new Character()));
+    modifyCharName(0 ,"Default build");
+    modifyCharWeap(0, 4);
+    modifyCharArmor(0,0,-1);
+    modifyCharArmor(0,1,-1);
+    modifyCharArmor(0,2,-1);
+    modifyCharArmor(0,3,-1);
+    modifyCharInv(0,6,-1);
+    modifyCharInv(0,6,-1);
+    modifyCharInv(0,6,-1);
+    setCharAim(0,15);
+    setCharDex(0,15);
+    setCharStr(0,15);
+    setCharVit(0,15);
+    totalCharas = 1;
 }
 
 //Metodo che si occupa di salvare il contenuto di collection (meno il character)
@@ -346,9 +347,9 @@ void Collection::importChara(std::string filename){
     try{
         std::string file = readFile(filename);
 
-        chara = DeepPtr<Character>( new Character(file));
+        charas.push_back(DeepPtr<Character>( new Character(file)));
 
-        DeepPtr<Weapon> w = chara->getEqWeap();
+        DeepPtr<Weapon> w = charas[charas.size()-1]->getEqWeap();
 
         if(!checkId(w->getId()))
         {           
@@ -362,7 +363,7 @@ void Collection::importChara(std::string filename){
             }
         }
 
-        C<DeepPtr<Armor>> a = chara->getEqArmor();
+        C<DeepPtr<Armor>> a = charas[charas.size()-1]->getEqArmor();
         for (C<DeepPtr<Armor>>::const_iterator i = a.begin(); i != a.end(); ++i)
         {
             if(!checkId((*i)->getId()))
@@ -371,7 +372,7 @@ void Collection::importChara(std::string filename){
             }
         }
 
-        C<DeepPtr<Consumable>> c = chara->getInv();
+        C<DeepPtr<Consumable>> c = charas[charas.size()-1]->getInv();
         for (C<DeepPtr<Consumable>>::const_iterator i = c.begin(); i != c.end(); ++i)
         {
             if(!checkId((*i)->getId()))
@@ -394,8 +395,8 @@ void Collection::importChara(std::string filename){
 }
 
 //Metodo che, dato un percorso di memoria, si occupa dell'esportazione di un character
-void Collection::exportChara(std::string filename){
-    std::string ex = chara->exp();
+void Collection::exportChara(int i, std::string filename){
+    std::string ex = charas[i]->exp();
 
     try{
         std::ofstream out(filename + ".xml");
@@ -411,27 +412,27 @@ void Collection::exportChara(std::string filename){
 
 
 //Metodo che, data ua stringa, modifica il nome del character
-void Collection::modifyCharName(std::string s){ chara->setName(s);}
+void Collection::modifyCharName(int i, std::string s){ charas[i]->setName(s);}
 
 //Metodo che, dato un id, prende dalla lista l'oggetto con quel id e lo equipaggia al character
-void Collection::modifyCharWeap(int id){
-    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
+void Collection::modifyCharWeap(int i, int id){
+    C<DeepPtr<Obj>>::const_iterator it = getIter(id);
     try {
-        chara->setWeap(*i);
+        charas[i]->setWeap(*it);
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
 }
 
 //Metodo che, dati due id, rimuove dal character il pezzo d'armatura con il secondo id e equipaggia quello con il primo id
-void Collection::modifyCharArmor(int id1, int id2){
+void Collection::modifyCharArmor(int i, int id1, int id2){
     try{
         if (id1 != id2){
                 if (id2 != -1)
                 {
-                    removeCharEq(id2);
+                    removeCharEq(i, id2);
                 }
-                C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-                chara->addArmor(*i);
+                C<DeepPtr<Obj>>::const_iterator it = getIter(id1);
+                charas[i]->addArmor(*it);
         }else throw err_sameObject();
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono"<<std::endl;}
@@ -441,28 +442,28 @@ void Collection::modifyCharArmor(int id1, int id2){
 }
 
 //Alternativo : Metodo che, dato un id, aggiunge il pezzo d'armatura in lista con quel id al character
-void Collection::modifyCharArmorAlt(int id)
+void Collection::modifyCharArmorAlt(int i, int id)
 {
     try{
-        if (checkId(id) && !chara->isRemovingEq(id))
+        if (checkId(id) && !charas[i]->isRemovingEq(id))
         {
-              C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-              chara->changeArmorEq(*i);
+              C<DeepPtr<Obj>>::const_iterator it = getIter(id);
+              charas[i]->changeArmorEq(*it);
         }else throw err_sameObject();
     }catch(err_sameObject){std::cout<<"L'oggetto è gia equipaggiato."<<std::endl;}
 }
 
 
 //Metodo che, dati due id, rimuove dal character il consumable con il secondo id e equipaggia quello con il primo id
-void Collection::modifyCharInv(int id1, int id2){
+void Collection::modifyCharInv(int i, int id1, int id2){
     try{
         if (id1 != id2){
             if (id2 != -1)
             {
-                removeCharEq(id2);
+                removeCharEq(i , id2);
             }
-            C<DeepPtr<Obj>>::const_iterator i = getIter(id1);
-            chara->addConsum(*i);
+            C<DeepPtr<Obj>>::const_iterator it = getIter(id1);
+            charas[i]->addConsum(*it);
         }else throw err_sameObject();
     }
     catch(err_wrongType){std::cout<<"L'oggetto è di un tipo non consono."<<std::endl;}
@@ -473,53 +474,56 @@ void Collection::modifyCharInv(int id1, int id2){
 }
 
 //Metodo che, dato un id, rimuove dai pezzi equipaggiati del personaggio l'oggetto con quel id (No weapon, solo armor e consumable)
-void Collection::removeCharEq(int id){
-    C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-    if ((i != list.end()) && (dynamic_cast<Healing*>(&(*(*i)))  ||  dynamic_cast<Buff*>(&(*(*i))) || dynamic_cast<Armor*>(&(*(*i)))))
+void Collection::removeCharEq(int i, int id){
+    C<DeepPtr<Obj>>::const_iterator it = getIter(id);
+    if ((it != list.end()) && (dynamic_cast<Healing*>(&(*(*it)))  ||  dynamic_cast<Buff*>(&(*(*it))) || dynamic_cast<Armor*>(&(*(*it)))))
     {
-        chara->disequip(*i);
+        charas[i]->disequip(*it);
     }else throw err_wrongType();
 }
 
 //Metodi per cambiare le statistiche al personaggio
-void Collection::setCharVit(int x){chara->setVit(x);}
-void Collection::setCharStr(int x){chara->setStr(x);}
-void Collection::setCharDex(int x){chara->setDex(x);}
-void Collection::setCharAim(int x){chara->setAim(x);}
+void Collection::setCharVit(int i, int x){charas[i]->setVit(x);}
+void Collection::setCharStr(int i, int x){charas[i]->setStr(x);}
+void Collection::setCharDex(int i, int x){charas[i]->setDex(x);}
+void Collection::setCharAim(int i, int x){charas[i]->setAim(x);}
 
 
 //metodo che, dato l'id di un oggetto che sta per essere rimosso, riequipaggia l'equipaggiamento di default
 void Collection::checkEq(int id){
-    if (chara->isRemovingEq(id))
+    for (unsigned int i = 0; i < charas.size(); i++)
     {
-        C<DeepPtr<Obj>>::const_iterator i = getIter(id);
-        if (dynamic_cast<Weapon*>(&(*(*i))))
+        if (charas[i]->isRemovingEq(id))
         {
-            modifyCharWeap(4);
-        }
-        else if (dynamic_cast<Consumable*>(&(*(*i))))
-        {
-            modifyCharInv(7,id);
-        }
-        else if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))
-        {
-            if(a->getArmorType() == "HELM")
+            C<DeepPtr<Obj>>::const_iterator it = getIter(id);
+            if (dynamic_cast<Weapon*>(&(*(*it))))
             {
-                modifyCharArmor(0,id);
+                modifyCharWeap(i,4);
             }
-            else if(a->getArmorType() == "CHEST")
+            else if (dynamic_cast<Consumable*>(&(*(*it))))
             {
-                modifyCharArmor(1,id);
+                modifyCharInv(i,7,id);
             }
-            else if(a->getArmorType() == "GLOVES")
+            else if (Armor* a = dynamic_cast<Armor*>(&(*(*it))))
             {
-                modifyCharArmor(2, id);
-            }
-            else if(a->getArmorType() == "BOOTS")
-            {
-                modifyCharArmor(3,id);
-            }
+                if(a->getArmorType() == "HELM")
+                {
+                    modifyCharArmor(i,0,id);
+                }
+                else if(a->getArmorType() == "CHEST")
+                {
+                    modifyCharArmor(i,1,id);
+                }
+                else if(a->getArmorType() == "GLOVES")
+                {
+                    modifyCharArmor(i,2, id);
+                }
+                else if(a->getArmorType() == "BOOTS")
+                {
+                    modifyCharArmor(i,3,id);
+                }
 
+            }
         }
     }
 }
@@ -529,14 +533,14 @@ void Collection::checkEq(int id){
 
 
 //Metodi vari per ottenere informazioni di character
-const std::string Collection::getCharName() const {return chara->getName();}
-const C<int> Collection::getCharStats() const { return chara->getStats();}
-const DeepPtr<Weapon> Collection::getCharWeapon() const {return chara->getEqWeap();}
-const C<DeepPtr<Armor>> Collection::getCharArmor()const {return chara->getEqArmor();}
-const C<DeepPtr<Consumable>> Collection::getCharCons() const {return chara->getInv();}
-int Collection::getCharAtk() const {return chara->damage();}
-int Collection::getCharDef() const {return chara->defense();}
-const DeepPtr<Character> Collection::getChar() const {return chara;}
+const std::string Collection::getCharName(int i) const {return charas[i]->getName();}
+const C<int> Collection::getCharStats(int i) const { return charas[i]->getStats();}
+const DeepPtr<Weapon> Collection::getCharWeapon(int i) const {return charas[i]->getEqWeap();}
+const C<DeepPtr<Armor>> Collection::getCharArmor(int i)const {return charas[i]->getEqArmor();}
+const C<DeepPtr<Consumable>> Collection::getCharCons(int i) const {return charas[i]->getInv();}
+int Collection::getCharAtk(int i) const {return charas[i]->damage();}
+int Collection::getCharDef(int i) const {return charas[i]->defense();}
+const DeepPtr<Character> Collection::getChar(int i) const {return charas[i];}
 
 
 
