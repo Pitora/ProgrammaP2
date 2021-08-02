@@ -50,6 +50,11 @@ std::string Ranged::getInfo() const{
     return s;
 }
 
+int Ranged::calcAttack(int cStr, int cDex, int cAim) const
+{
+
+}
+
 
 
 

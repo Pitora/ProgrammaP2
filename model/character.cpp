@@ -87,6 +87,21 @@ C<int> Character::getStats() const {
     return l;
 }
 
+int Character::getStr() const
+{
+    return strenght;
+}
+
+int Character::getDex() const
+{
+    return dexterity;
+}
+
+int Character::getAim() const
+{
+    return aim;
+}
+
 
 
 //Metodi set

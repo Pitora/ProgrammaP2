@@ -71,22 +71,9 @@ void Collection::initialize(){
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
         nextId = 8;
+        createDefaultChar();
     }
-    charas.push_back(DeepPtr<Character> (new Character()));
-    modifyCharName(0 ,"Default build");
-    modifyCharWeap(0, 4);
-    modifyCharArmor(0,0,-1);
-    modifyCharArmor(0,1,-1);
-    modifyCharArmor(0,2,-1);
-    modifyCharArmor(0,3,-1);
-    modifyCharInv(0,6,-1);
-    modifyCharInv(0,6,-1);
-    modifyCharInv(0,6,-1);
-    setCharAim(0,15);
-    setCharDex(0,15);
-    setCharStr(0,15);
-    setCharVit(0,15);
-    totalCharas = 1;
+    createDefaultChar(); //rimuovere dopo aver implementato salvataggio
 }
 
 //Metodo che si occupa di salvare il contenuto di collection (meno il character)
@@ -410,6 +397,35 @@ void Collection::exportChara(int i, std::string filename){
     catch(err_fileNotCreated){std::cout<<"Il file non è stato creato"<<std::endl;}
 }
 
+void Collection::createDefaultChar()
+{
+    charas.push_back(DeepPtr<Character> (new Character()));
+    modifyCharName(charas.size() - 1 ,"Default build");
+    modifyCharWeap(charas.size() - 1, 4);
+    modifyCharArmor(charas.size() - 1,0,-1);
+    modifyCharArmor(charas.size() - 1,1,-1);
+    modifyCharArmor(charas.size() - 1,2,-1);
+    modifyCharArmor(charas.size() - 1,3,-1);
+    modifyCharInv(charas.size() - 1,6,-1);
+    modifyCharInv(charas.size() - 1,6,-1);
+    modifyCharInv(charas.size() - 1,6,-1);
+    setCharAim(charas.size() - 1,15);
+    setCharDex(charas.size() - 1,15);
+    setCharStr(charas.size() - 1,15);
+    setCharVit(charas.size() - 1,15);
+}
+
+//Metodo che elimina il chara scelto
+void Collection::deleteChar(int i)
+{
+    if (i > 0)      //Non è possibile cancellare il primo chara
+    {
+        charas.erase(charas.begin() + i);
+    }
+}
+
+
+
 
 //Metodo che, data ua stringa, modifica il nome del character
 void Collection::modifyCharName(int i, std::string s){ charas[i]->setName(s);}
@@ -489,7 +505,7 @@ void Collection::setCharDex(int i, int x){charas[i]->setDex(x);}
 void Collection::setCharAim(int i, int x){charas[i]->setAim(x);}
 
 
-//metodo che, dato l'id di un oggetto che sta per essere rimosso, riequipaggia l'equipaggiamento di default
+//metodo che, dato l'id di un oggetto che sta per essere rimosso, se è equipaggiato, riequipaggia l'equipaggiamento di default al suo posto
 void Collection::checkEq(int id){
     for (unsigned int i = 0; i < charas.size(); i++)
     {
@@ -528,11 +544,76 @@ void Collection::checkEq(int id){
     }
 }
 
+void Collection::maxAtk(int i)
+{
+    DeepPtr<Weapon> w = charas[i]->getEqWeap();
+    int str = charas[i]->getStr();
+    int dex = charas[i]->getDex();
+    int aim = charas[i]->getAim();
+    int max = w->calcAttack(str, dex, aim);
+    for(C<DeepPtr<Obj>>::const_iterator it = list.begin(); it != list.end(); it++)
+    {
+        if (Weapon* w2 = dynamic_cast<Weapon*>(&(*(*it))))
+        {
+            if (max < w2->calcAttack(str,dex,aim))
+            {
+                charas[i]->setWeap(*it);
+                max = w2->calcAttack(str,dex,aim);
+            }
+        }
+    }
+}
+
+void Collection::maxDefense(int i)
+{
+    C<DeepPtr<Armor>> eqA = charas[i]->getEqArmor();
+    int p1,p2,p3,p4;
+    p1 = p2 = p3 = p4 = -1;
+    for (C<DeepPtr<Obj>>::const_iterator it = list.begin(); it != list.end(); it++) //possibile modifica : interazione diretta con il character piuttosto del metodo secondario
+    {
+        if (Armor* a = dynamic_cast<Armor*>(&(*(*it))))
+        {
+            if(a->getArmorType() == "HELM" && p1 < a->getDefense())
+            {
+                modifyCharArmorAlt(i, a->getId());
+                p1 = a->getDefense();
+            }
+            else if (a->getArmorType() == "CHEST" && p2 < a->getDefense())
+            {
+                modifyCharArmorAlt(i, a->getId());
+                p2 = a->getDefense();
+            }
+            else if(a->getArmorType() == "GLOVES" && p3 < a->getDefense())
+            {
+                modifyCharArmorAlt(i, a->getId());
+                p3 = a->getDefense();
+            }
+            else if(a->getArmorType() == "BOOTS" &&  p4 < a->getDefense())
+            {
+                modifyCharArmorAlt(i, a->getId());
+                p4 = a->getDefense();
+            }
+        }
+    }
+}
 
 
 
 
-//Metodi vari per ottenere informazioni di character
+
+const C<std::string> Collection::getCharsName() const
+{
+    C<std::string> l;
+    for (unsigned int i = 0; i < charas.size(); i++)
+    {
+        l.insertBack(charas[i]->getName());
+    }
+    return l;
+}
+
+
+
+//Metodi vari per ottenere informazioni di uno specifico character
 const std::string Collection::getCharName(int i) const {return charas[i]->getName();}
 const C<int> Collection::getCharStats(int i) const { return charas[i]->getStats();}
 const DeepPtr<Weapon> Collection::getCharWeapon(int i) const {return charas[i]->getEqWeap();}

@@ -34,6 +34,8 @@ public:
 
     virtual std::string getInfo() const;
 
+    virtual int calcAttack(int cStr, int cDex, int cAim) const;
+
 };
 
 #endif

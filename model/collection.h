@@ -63,6 +63,8 @@ void exportChara(int i, std::string filename);
 
 //metodi per interagire con character
 //set
+void createDefaultChar();
+void deleteChar(int i);
 void modifyCharName(int i, std::string s);
 void modifyCharWeap(int i, int id);
 void modifyCharArmor(int i, int id1, int id2);
@@ -74,7 +76,12 @@ void setCharStr(int i, int x);
 void setCharDex(int i, int x);
 void setCharAim(int i ,int x);
 void checkEq(int id);
+
+void maxAtk(int i);
+void maxDefense(int i);
+
 //get
+const C<std::string> getCharsName() const;
 const std::string getCharName(int i) const;
 const C<int> getCharStats(int i) const;
 const DeepPtr<Weapon> getCharWeapon(int i) const;

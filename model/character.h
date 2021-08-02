@@ -44,6 +44,9 @@ public:
     C<DeepPtr<Armor>> getEqArmor() const;
     C<DeepPtr<Consumable>> getInv() const;
     C<int> getStats() const;
+    int getStr() const;
+    int getDex() const;
+    int getAim() const;
     
     //set
     void setName(std::string s);

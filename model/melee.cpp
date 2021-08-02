@@ -49,5 +49,10 @@ std::string Melee::getInfo() const{
     return s;
 }
 
+int Melee::calcAttack(int cStr, int cDex, int cAim) const
+{
+
+}
+
 
 

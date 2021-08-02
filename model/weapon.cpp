@@ -82,6 +82,11 @@ std::string Weapon::getInfo() const{
 
 }
 
+int Weapon::calcAttack(int cStr, int cDex, int cAim) const
+{
+
+}
+
 
 //metodi per il get di vari valori di weapon
 int Weapon::getAttack() const {return raw_attack_value;}
