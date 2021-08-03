@@ -36,8 +36,14 @@ Collection::Collection() : list(), charas(), nextId(){       //costruttore stand
                     }
                     i++;
                 }
+                i = 0;
+                while(sm::checkKW(s, "<Chara" + std::to_string(i) + '>', "</Chara" + std::to_string(i) + '>'))
+                {
+                    std::string chara = sm::substring(s,"<Chara" + std::to_string(i) +'>' ,"</Chara" + std::to_string(i) +'>');
+                    charas.push_back(DeepPtr<Character>(new Character(chara)));
+                    i++;
+                }
                 std::cout<<"Database letto"<<std::endl;
-                initialize();
             }else throw err_file();
         }else{
             throw err_fileNotReadable();
@@ -73,7 +79,6 @@ void Collection::initialize(){
         nextId = 8;
         createDefaultChar();
     }
-    createDefaultChar(); //rimuovere dopo aver implementato salvataggio
 }
 
 //Metodo che si occupa di salvare il contenuto di collection (meno il character)
@@ -89,6 +94,12 @@ void Collection::save() const{
         s += (*iter)->exp();
         s += "</Item" + std::to_string(i) + '>';
         i++;
+    }
+    for(unsigned int j = 0; j < charas.size(); j++)
+    {
+        s += "<Chara" + std::to_string(j) + '>';
+        s += charas[j]->exp();
+        s += "</Chara" + std::to_string(j) + '>';
     }
     s += "</Data>";
     std::ofstream out("data.xml");
