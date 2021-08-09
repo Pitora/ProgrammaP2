@@ -56,4 +56,6 @@ int Armor::getDefense() const {return defense_value;}
 
 std::string Armor::getArmorType() const{return armor_type;}
 
+std::string Armor::getArmorRes() const{return resistance;}
+
 

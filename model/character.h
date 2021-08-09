@@ -47,6 +47,8 @@ public:
     int getStr() const;
     int getDex() const;
     int getAim() const;
+
+    std::string getInfo() const;
     
     //set
     void setName(std::string s);

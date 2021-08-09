@@ -78,7 +78,7 @@ void setCharAim(int i ,int x);
 void checkEq(int id);
 
 void maxAtk(int i);
-void maxDefense(int i);
+void maxDefense(int i, std::string s);
 
 //get
 const C<std::string> getCharsName() const;

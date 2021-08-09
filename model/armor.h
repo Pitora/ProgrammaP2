@@ -40,6 +40,8 @@ public:
 
     std::string getArmorType() const;
 
+    std::string getArmorRes() const;
+
 };
 
 #endif

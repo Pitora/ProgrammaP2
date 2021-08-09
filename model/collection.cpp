@@ -555,6 +555,7 @@ void Collection::checkEq(int id){
     }
 }
 
+//Metodo che cambia l'arma del chara i perché abbia il più alto attacco
 void Collection::maxAtk(int i)
 {
     DeepPtr<Weapon> w = charas[i]->getEqWeap();
@@ -575,40 +576,41 @@ void Collection::maxAtk(int i)
     }
 }
 
-void Collection::maxDefense(int i)
+//Metodo che cambia l'armatura del chara i perché abbia la più alta difesa. E' possibile specificare un tipo di resistenza per poter avere tutta l'armatura con quella resistenza (se possibile)
+void Collection::maxDefense(int i,std::string s)
 {
-    C<DeepPtr<Armor>> eqA = charas[i]->getEqArmor();
     int p1,p2,p3,p4;
     p1 = p2 = p3 = p4 = -1;
     for (C<DeepPtr<Obj>>::const_iterator it = list.begin(); it != list.end(); it++) //possibile modifica : interazione diretta con il character piuttosto del metodo secondario
     {
         if (Armor* a = dynamic_cast<Armor*>(&(*(*it))))
         {
-            if(a->getArmorType() == "HELM" && p1 < a->getDefense())
+            if (a->getArmorRes() == s || s == "MAXIMIXE")
             {
-                modifyCharArmorAlt(i, a->getId());
-                p1 = a->getDefense();
-            }
-            else if (a->getArmorType() == "CHEST" && p2 < a->getDefense())
-            {
-                modifyCharArmorAlt(i, a->getId());
-                p2 = a->getDefense();
-            }
-            else if(a->getArmorType() == "GLOVES" && p3 < a->getDefense())
-            {
-                modifyCharArmorAlt(i, a->getId());
-                p3 = a->getDefense();
-            }
-            else if(a->getArmorType() == "BOOTS" &&  p4 < a->getDefense())
-            {
-                modifyCharArmorAlt(i, a->getId());
-                p4 = a->getDefense();
+                if(a->getArmorType() == "HELM" && p1 < a->getDefense())
+                {
+                    modifyCharArmorAlt(i, a->getId());
+                    p1 = a->getDefense();
+                }
+                else if (a->getArmorType() == "CHEST" && p2 < a->getDefense())
+                {
+                    modifyCharArmorAlt(i, a->getId());
+                    p2 = a->getDefense();
+                }
+                else if(a->getArmorType() == "GLOVES" && p3 < a->getDefense())
+                {
+                    modifyCharArmorAlt(i, a->getId());
+                    p3 = a->getDefense();
+                }
+                else if(a->getArmorType() == "BOOTS" &&  p4 < a->getDefense())
+                {
+                    modifyCharArmorAlt(i, a->getId());
+                    p4 = a->getDefense();
+                }
             }
         }
     }
 }
-
-
 
 
 
