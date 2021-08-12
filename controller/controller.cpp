@@ -44,7 +44,7 @@ void Controller::calc() {
 void Controller::getBoxItems()
 {
     C<DeepPtr<Obj>> a;
-    a = col->getObjPerType("Weapon","");
+    a = col->getObjPerType("Weapon","all");
     QList<QString> names;
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
@@ -80,7 +80,7 @@ void Controller::getBoxItems()
     window->loadBox(names,5);
 
     names.clear();
-    a = col->getObjPerType("Consumable","");
+    a = col->getObjPerType("Consumable","all");
     for(auto i = a.begin(); i != a.end();++i){
         names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
     }

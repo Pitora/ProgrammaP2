@@ -79,6 +79,8 @@ void checkEq(int id);
 
 void maxAtk(int i);
 void maxDefense(int i, std::string s);
+C<char> compareChara(int i1, int i2);
+char compareValue(int x, int y);
 
 //get
 const C<std::string> getCharsName() const;

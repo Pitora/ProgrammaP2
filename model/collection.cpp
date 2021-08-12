@@ -201,17 +201,48 @@ C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) 
     {
         if (type == "Weapon" && dynamic_cast<Weapon*>(&(*(*i))))
         {
-            l.insertBack(*i);
+            if (type2 == "all")
+            {
+                l.insertBack(*i);
+            }
+            else {
+                if (type2 == "Melee" && dynamic_cast<Melee*>(&(*(*i))))
+                {
+                    l.insertBack(*i);
+                }
+                else if (type2 == "Ranged" && dynamic_cast<Ranged*>(&(*(*i))))
+                {
+                    l.insertBack(*i);
+                }
+            }
+
         }
         else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))
         {
-            l.insertBack(*i);
+            if (type2 == "all")
+            {
+                l.insertBack(*i);
+            }
+            else{
+                if (type2 == "Buff" && dynamic_cast<Buff*>(&(*(*i))))
+                {
+                    l.insertBack(*i);
+                }
+                else if (type2 == "Healing" && dynamic_cast<Healing*>(&(*(*i))))
+                {
+                    l.insertBack(*i);
+                }
+            }
         }
         else if (type == "Armor")
         {
             if (Armor* a = dynamic_cast<Armor*>(&(*(*i))))          
             {
-                if (a->getArmorType() == type2)
+                if (type2 == "all")
+                {
+                    l.insertBack(*i);
+                }
+                else if (a->getArmorType() == type2)
                 {
                     l.insertBack(*i);
                 }
@@ -610,6 +641,38 @@ void Collection::maxDefense(int i,std::string s)
             }
         }
     }
+}
+
+C<char> Collection::compareChara(int i1, int i2)
+{
+    C<char> comp;
+    C<int> s1 = charas[i1]->getStats();
+    C<int> s2 = charas[i2]->getStats();
+    C<int>::const_iterator it1 = s1.begin();
+    C<int>::const_iterator it2 = s2.begin();
+    for (int i = 0; i < 5; ++i)
+    {
+        comp.insertBack(compareValue(*it1, *it2));
+        it1++;
+        it2++;
+    }
+    comp.insertBack(compareValue(charas[i1]->damage(), charas[i2]->damage()));
+    comp.insertBack(compareValue(charas[i1]->defense(), charas[i2]->defense()));
+
+    return comp;
+
+}
+
+char Collection::compareValue(int x, int y)
+{
+    if (x < y)
+    {
+        return '<';
+    }
+    else if (x > y)
+    {
+        return '>';
+    }else return '=';
 }
 
 

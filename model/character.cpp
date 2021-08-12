@@ -87,20 +87,10 @@ C<int> Character::getStats() const {
     return l;
 }
 
-int Character::getStr() const
-{
-    return strenght;
-}
-
-int Character::getDex() const
-{
-    return dexterity;
-}
-
-int Character::getAim() const
-{
-    return aim;
-}
+int Character::getVit() const{return vitality;}
+int Character::getStr() const{return strenght;}
+int Character::getDex() const{return dexterity;}
+int Character::getAim() const{return aim;}
 
 std::string Character::getInfo() const
 {
