@@ -51,7 +51,8 @@ std::string Melee::getInfo() const{
 
 int Melee::calcAttack(int cStr, int cDex, int cAim) const
 {
-
+    int scaleSum = (cStr*getScalingStr()/10)+(cDex*getScalingDex()/10)+(cAim*getScalingAim()/10);
+    return (getAttack()+scaleSum);
 }
 
 

@@ -268,9 +268,7 @@ bool Character::isRemovingEq(int id) const
 
 //Metodo che effettua il calcolo dell'attacco
 int Character::damage() const{
-    int atk = eq_weap->getAttack();
-    int scaleSum = (strenght*eq_weap->getScalingStr()/10)+(dexterity*eq_weap->getScalingDex()/10)+(aim*eq_weap->getScalingAim()/10);
-    return (atk+scaleSum);
+    return eq_weap->calcAttack(strenght,dexterity,aim);
 }
 
 //Metodo che effettua il calcolo della difesa
