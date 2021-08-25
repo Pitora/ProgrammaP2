@@ -16,6 +16,7 @@
 #include <QSpacerItem>
 #include <QFileDialog>
 #include <utility>
+#include "smartcombobox.h"
 
 class Controller;
 
@@ -30,14 +31,14 @@ private:
     QPushButton* import;
     QPushButton* save;
 
-    QComboBox* weapon_box;
-    QComboBox* helm_box;
-    QComboBox* chest_box;
-    QComboBox* gloves_box;
-    QComboBox* boots_box;
-    QComboBox* item1_box;
-    QComboBox* item2_box;
-    QComboBox* item3_box;
+    SmartComboBox* weapon_box;
+    SmartComboBox* helm_box;
+    SmartComboBox* chest_box;
+    SmartComboBox* gloves_box;
+    SmartComboBox* boots_box;
+    SmartComboBox* item1_box;
+    SmartComboBox* item2_box;
+    SmartComboBox* item3_box;
 
     QLineEdit* build_name;
     QLabel* atk_lbl;
@@ -68,12 +69,12 @@ public:
     QString importCharDialog();
     void setController(Controller *c);
     void calcDmgDef(int a, int d);
-    void loadBox(QList<QString> n, int i);
+    void loadBox(QList<QString> n, QList<int> id, int i);
     void setBuildName(QString s);
     void setStats(QList<QString> l);
-    void setWeapon(QString s);
-    void setArmor(QList<QString> l);
-    void setItems(QList<QString> l);
+    void setWeapon(int s);
+    void setArmor(QList<int> l);
+    void setItems(QList<int> l);
 
     ~Window();
 

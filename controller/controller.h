@@ -36,6 +36,7 @@ public:
     void refreshWindow();
 
     QList<QString> getItemsNames();
+    QList<int> getItemsId();
 signals:
 
 public slots:
@@ -57,12 +58,12 @@ public slots:
     void setDexterity(QString x);
     void setAim(QString x);
     void changeName(QString s);
-    void changeWeapon(QString s);
-    void changeArmor(QString s);
+    void changeWeapon(QVariant id);
+    void changeArmor(QVariant id);
 
-    void changeItem1(QString s);
-    void changeItem2(QString s);
-    void changeItem3(QString s);
+    void changeItem1(QVariant id);
+    void changeItem2(QVariant id);
+    void changeItem3(QVariant id);
 
     void getInfoObj(QListWidgetItem *item);
 

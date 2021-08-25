@@ -26,14 +26,14 @@ private:
     QPushButton* export_item;
 
 public:
-    explicit Codex(Controller* cont, QList<QString> list, QWidget *parent = nullptr);
+    explicit Codex(Controller* cont, QList<QString> list, QList<int> id, QWidget *parent = nullptr);
 
-    void addScrollArea(QList<QString> l);
+    void addScrollArea(QList<QString> l, QList<int> id);
     void addControls();
 
-    void refreshCodex(QList<QString> l);
+    void refreshCodex(QList<QString> l, QList<int> id);
 
-    QString getSelectedItem();
+    QListWidgetItem *getSelectedItem();
 
     QString showExpDialog();
     QString showImportDialog();

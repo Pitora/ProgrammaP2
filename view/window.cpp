@@ -33,14 +33,14 @@ void Window::addCommand(QVBoxLayout *layout){
     form->setVerticalSpacing(10);
     form->setContentsMargins(11,20,0,0);
 
-    weapon_box = new QComboBox();
-    helm_box = new QComboBox();
-    chest_box = new QComboBox();
-    gloves_box = new QComboBox();
-    boots_box = new QComboBox();
-    item1_box = new QComboBox();
-    item2_box = new QComboBox();
-    item3_box = new QComboBox();
+    weapon_box = new SmartComboBox(this);
+    helm_box = new SmartComboBox(this);
+    chest_box = new SmartComboBox(this);
+    gloves_box = new SmartComboBox(this);
+    boots_box = new SmartComboBox(this);
+    item1_box = new SmartComboBox(this);
+    item2_box = new SmartComboBox(this);
+    item3_box = new SmartComboBox(this);
 
     weapon_box->setFixedWidth(250);
     helm_box->setFixedWidth(250);
@@ -168,7 +168,7 @@ Window::Window(QWidget *parent) : QWidget(parent){
     addCommand(main);
     addButton(main);
     setLayout(main);
-    setFixedSize(1024,600);
+    setMinimumSize(1024,600);
 
 }
 
@@ -192,14 +192,14 @@ void Window::setController(Controller *c){
 
     connect(build_name,SIGNAL(textChanged(QString)),controller,SLOT(changeName(QString)));
 
-    connect(weapon_box,SIGNAL(activated(QString)),controller,SLOT(changeWeapon(QString)));
-    connect(helm_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
-    connect(chest_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
-    connect(gloves_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
-    connect(boots_box,SIGNAL(activated(QString)),controller,SLOT(changeArmor(QString)));
-    connect(item1_box,SIGNAL(activated(QString)),controller,SLOT(changeItem1(QString)));
-    connect(item2_box,SIGNAL(activated(QString)),controller,SLOT(changeItem2(QString)));
-    connect(item3_box,SIGNAL(activated(QString)),controller,SLOT(changeItem3(QString)));
+    connect(weapon_box,SIGNAL(activated(QVariant)),controller,SLOT(changeWeapon(QVariant)));
+    connect(helm_box,SIGNAL(activated(QVariant)),controller,SLOT(changeArmor(QVariant)));
+    connect(chest_box,SIGNAL(activated(QVariant)),controller,SLOT(changeArmor(QVariant)));
+    connect(gloves_box,SIGNAL(activated(QVariant)),controller,SLOT(changeArmor(QVariant)));
+    connect(boots_box,SIGNAL(activated(QVariant)),controller,SLOT(changeArmor(QVariant)));
+    connect(item1_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem1(QVariant)));
+    connect(item2_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem2(QVariant)));
+    connect(item3_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem3(QVariant)));
 
 }
 
@@ -210,40 +210,53 @@ void Window::calcDmgDef(int a,int d){
 }
 
 //carica le combobox
-void Window::loadBox(QList<QString> n,int i)
+void Window::loadBox(QList<QString> n, QList<int> id,int i)
 {
     switch (i) {
     case 1:
         weapon_box->clear();
-        weapon_box->addItems(n);
+        for(int j = 0; j< n.size(); j++){
+            weapon_box->addItem(n.at(j),id.at(j));
+        }
         break;
     case 2:
         helm_box->clear();
-        helm_box->addItems(n);
+        for(int j = 0; j< n.size(); j++){
+            helm_box->addItem(n.at(j),id.at(j));
+        }
         break;
     case 3:
         chest_box->clear();
-        chest_box->addItems(n);
+        for(int j = 0; j< n.size(); j++){
+            chest_box->addItem(n.at(j),id.at(j));
+        }
         break;
     case 4:
         gloves_box->clear();
-        gloves_box->addItems(n);
+        for(int j = 0; j< n.size(); j++){
+            gloves_box->addItem(n.at(j),id.at(j));
+        }
         break;
     case 5:
         boots_box->clear();
-        boots_box->addItems(n);
+        for(int j = 0; j< n.size(); j++){
+            boots_box->addItem(n.at(j),id.at(j));
+        }
         break;
     case 6:
         item1_box->clear();
         item2_box->clear();
         item3_box->clear();
-        item1_box->addItems(n);
-        item2_box->addItems(n);
-        item3_box->addItems(n);
+        for(int j = 0; j< n.size(); j++){
+            item1_box->addItem(n.at(j),id.at(j));
+            item2_box->addItem(n.at(j),id.at(j));
+            item3_box->addItem(n.at(j),id.at(j));
+        }
         break;
     default:
         break;
     }
+    std::cout<<"caricate"<<std::endl;
 }
 
 //imposta il nome della build caricata
@@ -262,36 +275,39 @@ void Window::setStats(QList<QString> l)
 }
 
 //imposta l'arma della build caricata
-void Window::setWeapon(QString s)
+void Window::setWeapon(int s)
 {
-    weapon_box->setCurrentIndex(weapon_box->findText(s));
+    weapon_box->setCurrentIndex(weapon_box->findData(s));
 }
 
 //imposta i pezzi di equipaggiamento della build quando caricata
-void Window::setArmor(QList<QString> l)
+void Window::setArmor(QList<int> l)
 {
     for(auto i = l.begin(); i != l.end(); ++i){
-        if(helm_box->findText(*i) != -1){
-            helm_box->setCurrentIndex(helm_box->findText(*i));
+        if(helm_box->findData(*i) != -1){
+            helm_box->setCurrentIndex(helm_box->findData(*i));
         }
-        if(chest_box->findText(*i) != -1){
-            chest_box->setCurrentIndex(chest_box->findText(*i));
+        if(chest_box->findData(*i) != -1){
+            chest_box->setCurrentIndex(chest_box->findData(*i));
         }
-        if(gloves_box->findText(*i) != -1){
-            gloves_box->setCurrentIndex(gloves_box->findText(*i));
+        if(gloves_box->findData(*i) != -1){
+            gloves_box->setCurrentIndex(gloves_box->findData(*i));
         }
-        if(boots_box->findText(*i) != -1){
-            boots_box->setCurrentIndex(boots_box->findText(*i));
+        if(boots_box->findData(*i) != -1){
+            boots_box->setCurrentIndex(boots_box->findData(*i));
         }
     }
 }
 
 //imposta gli oggetti della build quando caricata
-void Window::setItems(QList<QString> l)
-{
-    item1_box->setCurrentIndex(item1_box->findText(l[0]));
-    item2_box->setCurrentIndex(item2_box->findText(l[1]));
-    item3_box->setCurrentIndex(item3_box->findText(l[2]));
+void Window::setItems(QList<int> l)
+{ 
+    std::cout<< "l 0 : " + std::to_string(l[0]) <<std::endl;
+    std::cout<<"l 1 : " + std::to_string(l[1]) <<std::endl;
+    std::cout<<"l 2 : " + std::to_string(l[2]) <<std::endl;
+    item1_box->setCurrentIndex(item1_box->findData(l[0]));
+    item2_box->setCurrentIndex(item2_box->findData(l[1]));
+    item3_box->setCurrentIndex(item3_box->findData(l[2]));
 }
 
 //finestra di dialogo per l'import di una build

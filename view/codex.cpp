@@ -1,19 +1,19 @@
 #include "codex.h"
 
 //setta la view
-Codex::Codex(Controller *cont,QList<QString> list, QWidget *parent) : QDialog(parent)
+Codex::Codex(Controller *cont,QList<QString> list,QList<int> id, QWidget *parent) : QDialog(parent)
 {
     controller = cont;
     setWindowTitle("Codex");
     setFixedSize(500,600);
 
-    addScrollArea(list);
+    addScrollArea(list,id);
     addControls();
 
 }
 
 //setta la scroll area e la textbox per i dettagli
-void Codex::addScrollArea(QList<QString> l)
+void Codex::addScrollArea(QList<QString> l,QList<int> id)
 {
     cont = new QListWidget(this);
     cont->clear();
@@ -22,7 +22,13 @@ void Codex::addScrollArea(QList<QString> l)
     QPalette pal = cont->palette();
     pal.setColor(QPalette::Base,pal.color(QPalette::Window));
     cont->setPalette(pal);
-    cont->addItems(l);
+
+    for(int i = 0; i < l.size();i++){
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(l[i]);
+        item->setData(Qt::UserRole,id[i]);
+        cont->addItem(item);
+    }
 
     details = new QTextEdit(this);
     details->setGeometry(250,20,220,500);
@@ -56,20 +62,25 @@ void Codex::addControls()
 }
 
 //refresha la view
-void Codex::refreshCodex(QList<QString> l)
+void Codex::refreshCodex(QList<QString> l,QList<int> id)
 {
     remove_item->setEnabled(false);
     export_item->setEnabled(false);
     cont->clear();
-    cont->addItems(l);
+    for(int i = 0; i < l.size();i++){
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(l[i]);
+        item->setData(Qt::UserRole,id[i]);
+        cont->addItem(item);
+    }
     details->clear();
     controller->refreshWindow();
 }
 
 //ritorna l'oggetto selezionato
-QString Codex::getSelectedItem()
+QListWidgetItem* Codex::getSelectedItem()
 {
-    return cont->currentItem()->text();
+    return cont->currentItem();
 }
 
 //mostra il dialog per l'esportazione

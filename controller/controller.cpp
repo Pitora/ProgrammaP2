@@ -16,7 +16,9 @@ void Controller::setAddItem(AddItem* a){ add = a;}
 void Controller::refreshWindow()
 {
     getBoxItems();
+    std::cout<<"fatto il get box"<<std::endl;
     setWindowChar();
+    std::cout<<"settato il char"<<std::endl;
 }
 
 //restituisce una lista con i nomi degli oggetti
@@ -26,11 +28,21 @@ QList<QString> Controller::getItemsNames()
    a = col->getAllObj();
    QList<QString> names;
    for(auto i = a.begin(); i != a.end(); ++i){
-       names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+       names.append(QString::fromStdString((*i)->getName()));
    }
    return names;
 }
 
+QList<int> Controller::getItemsId()
+{
+   C<DeepPtr<Obj>> a;
+   a = col->getAllObj();
+   QList<int> id;
+   for(auto i = a.begin(); i != a.end(); ++i){
+       id.append((*i)->getId());
+   }
+   return id;
+}
 //calcola i valori di attacco e def
 void Controller::calc() {
 
@@ -46,46 +58,59 @@ void Controller::getBoxItems()
     C<DeepPtr<Obj>> a;
     a = col->getObjPerType("Weapon","all");
     QList<QString> names;
+    QList<int> id;
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
+        names.append( QString::fromStdString((*i)->getName()));
+        id.append((*i)->getId());
     }
-    window->loadBox(names,1);
+    window->loadBox(names,id,1);
 
     names.clear();
+    id.clear();
     a = col->getObjPerType("Armor","HELM");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
+        names.append( QString::fromStdString((*i)->getName()));
+        id.append((*i)->getId());
     }
-    window->loadBox(names,2);
+    window->loadBox(names,id,2);
 
     names.clear();
+    id.clear();
     a = col->getObjPerType("Armor","CHEST");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
+        names.append( QString::fromStdString((*i)->getName()));
+        id.append((*i)->getId());
     }
-    window->loadBox(names,3);
+    window->loadBox(names,id,3);
 
     names.clear();
+    id.clear();
     a = col->getObjPerType("Armor","GLOVES");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
+        names.append( QString::fromStdString((*i)->getName()));
+        id.append((*i)->getId());
     }
-    window->loadBox(names,4);
+    window->loadBox(names,id,4);
 
     names.clear();
+    id.clear();
     a = col->getObjPerType("Armor","BOOTS");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ')' + QString::fromStdString((*i)->getName()));
+        names.append( QString::fromStdString((*i)->getName()));
+        id.append((*i)->getId());
     }
-    window->loadBox(names,5);
+    window->loadBox(names,id,5);
 
     names.clear();
+    id.clear();
     a = col->getObjPerType("Consumable","all");
     for(auto i = a.begin(); i != a.end();++i){
-        names.append(QString::number((*i)->getId()) + ")" + QString::fromStdString((*i)->getName()));
+        names.append( QString::fromStdString((*i)->getName()));
+        id.append((*i)->getId());
     }
-    window->loadBox(names,6);
+    window->loadBox(names,id,6);
 
+    std::cout<<"get fatto"<<std::endl;
 }
 
 //mostra la finestra di creazione di Weapon
@@ -133,17 +158,16 @@ void Controller::createBuff(QString n, QString e, int p, int d){
 
 //passa i dati per eliminare un oggetto
 void Controller::eliminateObj(){
-    QString s = codex->getSelectedItem();
-    if(!s.isNull()){
-        QString subString = s.mid(0,s.indexOf(')'));
-        int id = subString.toInt();
-        col->remove(id);
-        codex->refreshCodex(getItemsNames());
+    QVariant id = codex->getSelectedItem()->data(Qt::UserRole);
+    if(!id.isNull()){
+        col->remove(id.toInt());
+        codex->refreshCodex(getItemsNames(),getItemsId());
     }
 }
 
 //imposta la view quando si carica una build(anche quella di default)
 void Controller::setWindowChar(){
+
     QString name = QString::fromStdString(col->getCharName(0));
     window->setBuildName(name);
 
@@ -156,23 +180,23 @@ void Controller::setWindowChar(){
     window->setStats(statsQ);
 
     DeepPtr<Weapon> w = col->getCharWeapon(0);
-    QString s = (QString::number(w->getId())+ ')' + QString::fromStdString(w->getName()));
-    window->setWeapon(s);
+    int id = w->getId();
+    window->setWeapon(id);
 
     C<DeepPtr<Armor>> a = col->getCharArmor(0);
-    QList<QString> ls;
+    QList<int> ls;
     for (auto i = a.begin(); i != a.end(); ++i)
     {
-        ls.append((QString::number((*i)->getId())+ ')' + QString::fromStdString((*i)->getName())));
+        ls.append((*i)->getId());
     }
     window->setArmor(ls);
 
     prevId.clear();
     C<DeepPtr<Consumable>> inv = col->getCharCons(0);
-    QList<QString> x;
+    QList<int> x;
     for (auto i = inv.begin(); i != inv.end(); ++i)
     {
-        x.append((QString::number((*i)->getId())+ ')' + QString::fromStdString((*i)->getName())));
+        x.append((*i)->getId());
         prevId.append((*i)->getId());
     }
     window->setItems(x);
@@ -205,54 +229,43 @@ void Controller::changeName(QString s){
     }
     col->modifyCharName(0,s.toStdString());
 }
-void Controller::changeWeapon(QString s){
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    col->modifyCharWeap(0,id);
+void Controller::changeWeapon(QVariant id){
+    col->modifyCharWeap(0,id.toInt());
     calc();
 }
-void Controller::changeArmor(QString s){
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    col->modifyCharArmorAlt(0,id);
+void Controller::changeArmor(QVariant id){
+    col->modifyCharArmorAlt(0,id.toInt());
     calc();
 }
-void Controller::changeItem1(QString s)
+void Controller::changeItem1(QVariant id)
 {
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    col->modifyCharInv(0,id,prevId[0]);
-    prevId[0] = id;
+    std::cout<< QString(id.toString()).toStdString() <<std::endl;
+    col->modifyCharInv(0,prevId[0],id.toInt());
+    prevId[0] = id.toInt();
 }
-void Controller::changeItem2(QString s)
+void Controller::changeItem2(QVariant id)
 {
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    col->modifyCharInv(0,id,prevId[1]);
-    prevId[1] = id;
+    col->modifyCharInv(0,prevId[1],id.toInt());
+    prevId[1] = id.toInt();
 }
-void Controller::changeItem3(QString s)
+void Controller::changeItem3(QVariant id)
 {
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    col->modifyCharInv(0,id,prevId[2]);
-    prevId[2] = id;
+    col->modifyCharInv(0,prevId[2],id.toInt());
+    prevId[2] = id.toInt();
 }
 
-//restituisce i dettagli di un oggettp
+//restituisce i dettagli di un oggetto
 void Controller::getInfoObj(QListWidgetItem *item)
 {
-    QString s = item->text();
-    QString subString = s.mid(0,s.indexOf(')'));
-    int id = subString.toInt();
-    s = QString::fromStdString(col->getInfoObj(id));
+    int id = item->data(Qt::UserRole).toInt();
+    QString s = QString::fromStdString(col->getInfoObj(id));
     codex->showDetails(s);
 }
 
 //mostra la schermata codex
 void Controller::showCodex()
 {
-    codex = new Codex(this,getItemsNames());
+    codex = new Codex(this,getItemsNames(),getItemsId());
     codex->exec();
 }
 
@@ -275,7 +288,7 @@ void Controller::importObj()  //per importare
     try {
         QString path = codex->showImportDialog();
         col->importObj(path.toStdString());
-        codex->refreshCodex(getItemsNames());
+        codex->refreshCodex(getItemsNames(),getItemsId());
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'importazione"<<std::endl;
     }
@@ -297,9 +310,7 @@ void Controller::exportObj()  //per esportare
 {
     try {
         QString path = codex->showExpDialog();
-        QString s = codex->getSelectedItem();
-        QString subString = s.mid(0,s.indexOf(')'));
-        int id = subString.toInt();
+        int id = codex->getSelectedItem()->data(Qt::UserRole).toInt();
         col->exportObj(id,path.toStdString());
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'esportazione"<<std::endl;
