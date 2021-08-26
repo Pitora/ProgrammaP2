@@ -560,7 +560,14 @@ void Collection::checkEq(int id){
             }
             else if (dynamic_cast<Consumable*>(&(*(*it))))
             {
-                modifyCharInv(i,7,id);
+                C<DeepPtr<Consumable>> inv = charas[i]->getInv();
+                for (auto it = inv.begin(); it != inv.end(); ++it)
+                {
+                    if ((*it)->getId() == id)
+                    {
+                        modifyCharInv(i,7,id);
+                    }
+                }
             }
             else if (Armor* a = dynamic_cast<Armor*>(&(*(*it))))
             {

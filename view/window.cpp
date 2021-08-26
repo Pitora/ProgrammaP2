@@ -256,7 +256,6 @@ void Window::loadBox(QList<QString> n, QList<int> id,int i)
     default:
         break;
     }
-    std::cout<<"caricate"<<std::endl;
 }
 
 //imposta il nome della build caricata
@@ -301,10 +300,7 @@ void Window::setArmor(QList<int> l)
 
 //imposta gli oggetti della build quando caricata
 void Window::setItems(QList<int> l)
-{ 
-    std::cout<< "l 0 : " + std::to_string(l[0]) <<std::endl;
-    std::cout<<"l 1 : " + std::to_string(l[1]) <<std::endl;
-    std::cout<<"l 2 : " + std::to_string(l[2]) <<std::endl;
+{
     item1_box->setCurrentIndex(item1_box->findData(l[0]));
     item2_box->setCurrentIndex(item2_box->findData(l[1]));
     item3_box->setCurrentIndex(item3_box->findData(l[2]));

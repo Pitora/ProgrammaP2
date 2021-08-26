@@ -109,8 +109,6 @@ void Controller::getBoxItems()
         id.append((*i)->getId());
     }
     window->loadBox(names,id,6);
-
-    std::cout<<"get fatto"<<std::endl;
 }
 
 //mostra la finestra di creazione di Weapon
@@ -170,6 +168,7 @@ void Controller::setWindowChar(){
 
     QString name = QString::fromStdString(col->getCharName(0));
     window->setBuildName(name);
+
 
     C<int> stats = col->getCharStats(0);
     QList<QString> statsQ;
@@ -239,18 +238,17 @@ void Controller::changeArmor(QVariant id){
 }
 void Controller::changeItem1(QVariant id)
 {
-    std::cout<< QString(id.toString()).toStdString() <<std::endl;
-    col->modifyCharInv(0,prevId[0],id.toInt());
+    col->modifyCharInv(0,id.toInt(),prevId[0]);
     prevId[0] = id.toInt();
 }
 void Controller::changeItem2(QVariant id)
 {
-    col->modifyCharInv(0,prevId[1],id.toInt());
+    col->modifyCharInv(0,id.toInt(),prevId[1]);
     prevId[1] = id.toInt();
 }
 void Controller::changeItem3(QVariant id)
 {
-    col->modifyCharInv(0,prevId[2],id.toInt());
+    col->modifyCharInv(0,id.toInt(),prevId[2]);
     prevId[2] = id.toInt();
 }
 
