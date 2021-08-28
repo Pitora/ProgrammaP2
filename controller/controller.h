@@ -76,6 +76,7 @@ public slots:
     void addTab(windowtabwidget* t);
     void deleteTab(int index);
     void changeTab(int i);
+    bool isTabOpen(int index);
 
     void getInfoObj(QListWidgetItem *item);
 

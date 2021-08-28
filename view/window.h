@@ -69,6 +69,8 @@ public:
     void setWeapon(int s);
     void setArmor(QList<int> l);
     void setItems(QList<int> l);
+
+    void removeTab(int index);
     void refresh();
 
     ~Window();

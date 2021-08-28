@@ -300,7 +300,21 @@ void Controller::changeTab(int i)
     activeTab = i-1;
     if(activeTab >= 0){
         refreshTab();
+    }else{
+        refreshWindow();
     }
+}
+
+bool Controller::isTabOpen(int index)
+{
+    for (auto i = tabs.begin(); i != tabs.end(); ++i)
+    {
+        if ((*i)->getId() == index)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 //restituisce i dettagli di un oggetto
@@ -325,7 +339,7 @@ void Controller::importChar()  //per importare
     try {
         QString path = window->importCharDialog();
         col->importChara(path.toStdString());
-        refreshTab();
+        refreshWindow();
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'importazione"<<std::endl;
 
@@ -348,7 +362,7 @@ void Controller::exportChar()  //per esportare
 {
     try {
         QString path = window->exportCharDialog();
-        col->exportChara(0, path.toStdString());
+        col->exportChara(window->getIndSelChar(), path.toStdString());
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'esportazione"<<std::endl;
     }
@@ -375,5 +389,24 @@ void Controller::defaultChar()
 
 void Controller::deleteChar()
 {
+    int ind = window->getIndSelChar();
+    bool found = false;
+    int i = 0;
+    while (i < tabs.count() && !found)
+    {
+        if (tabs[i]->getId() == ind)
+        {
+            found = true;
+        }
+        else{
+            i++;
+        }
 
+    }
+    if (found)
+    {
+        window->removeTab(i+1);
+    }
+    col->deleteChar(ind);
+    refreshWindow();
 }

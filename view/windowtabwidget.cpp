@@ -151,12 +151,14 @@ void windowtabwidget::setController(Controller *c)
     connect(item3_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem3(QVariant)));
 }
 
+//imposta l'attacco e la difesa
 void windowtabwidget::calcDmgDef(int a, int d)
 {
     atk_lbl->setText("ATK : " + QString::number(a));
     def_lbl->setText("DEF : " + QString::number(d));
 }
 
+//carica le combobox
 void windowtabwidget::loadBox(QList<QString> n, QList<int> id, int i)
 {
     switch (i) {
@@ -205,8 +207,10 @@ void windowtabwidget::loadBox(QList<QString> n, QList<int> id, int i)
     }
 }
 
+//imposta il nome della build
 void windowtabwidget::setBuildName(QString s){ build_name->setText(s);}
 
+//imposta le stat della build
 void windowtabwidget::setStats(QList<QString> l)
 {
     vit_text->setText(l[0]);
@@ -215,8 +219,10 @@ void windowtabwidget::setStats(QList<QString> l)
     aim_text->setText(l[3]);
 }
 
+//imposta l'arma della build
 void windowtabwidget::setWeapon(int s){weapon_box->setCurrentIndex(weapon_box->findData(s));}
 
+//imposta i pezzi di equipaggiamento della build
 void windowtabwidget::setArmor(QList<int> l)
 {
     for(auto i = l.begin(); i != l.end(); ++i){
@@ -235,6 +241,7 @@ void windowtabwidget::setArmor(QList<int> l)
     }
 }
 
+//imposta gli oggetti della build
 void windowtabwidget::setItems(QList<int> l)
 {
     item1_box->setCurrentIndex(item1_box->findData(l[0]));

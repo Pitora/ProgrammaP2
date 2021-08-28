@@ -25,20 +25,7 @@ void Window::refresh()
     characters->clear();
     characters->addItems(controller->getCharNames());
 }
-/*
-//aggiunge e setta le combobox
-void Window::addCommand(QVBoxLayout *layout){
-}
 
-//aggiunge e setta le label e le textbox
-void Window::addLabel(QHBoxLayout* layout){
-
-}
-
-//aggiunge e setta i bottoni
-void Window::addButton(QVBoxLayout *layout){
-}
-*/
 //setta la view
 Window::Window(QWidget *parent) : QWidget(parent){
 
@@ -75,9 +62,6 @@ Window::Window(QWidget *parent) : QWidget(parent){
     menuB->addWidget(del);
     //-------------------------//
 
-
-    /*addCommand(main);
-    addButton(main);*/
     setLayout(main);
     setMinimumSize(1024,600);
 
@@ -108,51 +92,28 @@ void Window::setController(Controller *c){
 
 int Window::getIndSelChar()
 {
- return characters->currentRow();
-}
-/*
-//imposta l'attacco e la difesa
-void Window::calcDmgDef(int a,int d){
+    return characters->currentRow();
 }
 
-//carica le combobox
-void Window::loadBox(QList<QString> n, QList<int> id,int i)
+void Window::removeTab(int index)
 {
+    if(index != 0){
+        controller->deleteTab(index);
+        tab->removeTab(index);
+    }
 }
-
-//imposta il nome della build caricata
-void Window::setBuildName(QString s)
-{
-}
-
-//imposta le stat della build caricata
-void Window::setStats(QList<QString> l)
-{
-}
-
-//imposta l'arma della build caricata
-void Window::setWeapon(int s)
-{
-}
-
-//imposta i pezzi di equipaggiamento della build quando caricata
-void Window::setArmor(QList<int> l)
-{
-}
-
-//imposta gli oggetti della build quando caricata
-void Window::setItems(QList<int> l)
-{
-}*/
 
 void Window::addTab(QListWidgetItem *i)
 {
-    windowtabwidget* newTab = new windowtabwidget();
     int j = characters->currentRow();
-    newTab->setId(j);
-    newTab->setController(controller);
-    controller->addTab(newTab);
-    tab->addTab(newTab,i->text());
+    if (!controller->isTabOpen(j))
+    {
+        windowtabwidget* newTab = new windowtabwidget();
+        newTab->setId(j);
+        newTab->setController(controller);
+        controller->addTab(newTab);
+        tab->addTab(newTab,i->text());
+    }
 }
 
 void Window::closeTab(int index)
