@@ -74,7 +74,7 @@ void Codex::refreshCodex(QList<QString> l,QList<int> id)
         cont->addItem(item);
     }
     details->clear();
-    controller->refreshWindow();
+    controller->refreshTab();
 }
 
 //ritorna l'oggetto selezionato

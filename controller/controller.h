@@ -7,6 +7,7 @@
 #include "view/window.h"
 #include "view/additem.h"
 #include "view/codex.h"
+#include "view/windowtabwidget.h"
 #include "model/collection.h"
 #include "model/tc.cpp"
 #include "model/tdeep.cpp"
@@ -26,6 +27,8 @@ private:
     Codex* codex;
     AddItem* add;
     QList<int> prevId;
+    QList<windowtabwidget*> tabs;
+    int activeTab;
 
 public:
     explicit Controller(QObject *parent = nullptr);
@@ -33,10 +36,15 @@ public:
     void setCollection(Collection* c);
     void setCodex(Codex* co);
     void setAddItem(AddItem *a);
+    void refreshTab();
     void refreshWindow();
 
     QList<QString> getItemsNames();
     QList<int> getItemsId();
+
+    QList<QString> getCharNames();
+
+
 signals:
 
 public slots:
@@ -65,6 +73,10 @@ public slots:
     void changeItem2(QVariant id);
     void changeItem3(QVariant id);
 
+    void addTab(windowtabwidget* t);
+    void deleteTab(int index);
+    void changeTab(int i);
+
     void getInfoObj(QListWidgetItem *item);
 
     void showCodex();
@@ -73,6 +85,9 @@ public slots:
     void importObj();
     void exportChar();
     void exportObj();
+    void defaultChar();
+    void deleteChar();
+
 };
 
 #endif // CONTROLLER_H

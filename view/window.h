@@ -11,12 +11,15 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QSpacerItem>
 #include <QFileDialog>
 #include <utility>
 #include "smartcombobox.h"
+#include "windowtabwidget.h"
+
 
 class Controller;
 
@@ -29,45 +32,36 @@ private:
     QMenu* create;
 
     QPushButton* import;
-    QPushButton* save;
+    QPushButton* exp;
+    QPushButton* def;
+    QPushButton* del;
 
-    SmartComboBox* weapon_box;
-    SmartComboBox* helm_box;
-    SmartComboBox* chest_box;
-    SmartComboBox* gloves_box;
-    SmartComboBox* boots_box;
-    SmartComboBox* item1_box;
-    SmartComboBox* item2_box;
-    SmartComboBox* item3_box;
-
-    QLineEdit* build_name;
-    QLabel* atk_lbl;
-    QLabel* def_lbl;
-
-    QLabel* vit_lbl;
-    QLabel* str_lbl;
-    QLabel* dex_lbl;
-    QLabel* aim_lbl;
-
-    QLineEdit* vit_text;
-    QLineEdit* str_text;
-    QLineEdit* dex_text;
-    QLineEdit* aim_text;
+    QTabWidget* tab;
+    QListWidget* characters;
 
     Controller* controller;
 
     void addMenu(QVBoxLayout *layout);
+
     void addCommand(QVBoxLayout *layout);
     void addLabel(QHBoxLayout* layout);
     void addButton(QVBoxLayout* layout);
 
+public slots:
+    void addTab(QListWidgetItem* i);
+    void closeTab(int index);
 
 public:
 
     Window(QWidget *parent = 0);
+
     QString exportCharDialog();
     QString importCharDialog();
+
     void setController(Controller *c);
+
+    int getIndSelChar();
+
     void calcDmgDef(int a, int d);
     void loadBox(QList<QString> n, QList<int> id, int i);
     void setBuildName(QString s);
@@ -75,6 +69,7 @@ public:
     void setWeapon(int s);
     void setArmor(QList<int> l);
     void setItems(QList<int> l);
+    void refresh();
 
     ~Window();
 

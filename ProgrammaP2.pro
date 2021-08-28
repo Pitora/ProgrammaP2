@@ -42,7 +42,8 @@ SOURCES += \
     model/tdeep.cpp \
     model/weapon.cpp \
     model/stringm.cpp \
-    view/smartcombobox.cpp
+    view/smartcombobox.cpp \
+    view/windowtabwidget.cpp
 
 
 HEADERS += \
@@ -62,7 +63,8 @@ HEADERS += \
     model/weapon.h \
     model/exceptions.h \
     model/stringm.h \
-    view/smartcombobox.h
+    view/smartcombobox.h \
+    view/windowtabwidget.h
 
 
 DISTFILES += \

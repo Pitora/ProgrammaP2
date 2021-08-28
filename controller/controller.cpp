@@ -6,19 +6,25 @@ Controller::Controller(QObject *parent) : QObject(parent)
 }
 
 //setta le variabili di controller
-void Controller::setWindow(Window* w){ window = w;
-                                     refreshWindow();}
+void Controller::setWindow(Window* w){ window = w;}
 void Controller::setCollection(Collection* c){ col = c;}
 void Controller::setCodex(Codex* co){codex = co;}
 void Controller::setAddItem(AddItem* a){ add = a;}
 
 //refresha la main window
-void Controller::refreshWindow()
+void Controller::refreshTab()
 {
+    if(activeTab >= 0 && !tabs.isEmpty()){
     getBoxItems();
     std::cout<<"fatto il get box"<<std::endl;
     setWindowChar();
     std::cout<<"settato il char"<<std::endl;
+    }
+}
+
+void Controller::refreshWindow()
+{
+    window->refresh();
 }
 
 //restituisce una lista con i nomi degli oggetti
@@ -43,13 +49,25 @@ QList<int> Controller::getItemsId()
    }
    return id;
 }
+
+QList<QString> Controller::getCharNames()
+{
+    C<std::string> names;
+    names = col->getCharsName();
+    QList<QString> a;
+    for(auto i = names.begin(); i != names.end(); ++i){
+        a.append(QString::fromStdString(*i));
+    }
+    return a;
+}
+
 //calcola i valori di attacco e def
 void Controller::calc() {
 
-    int atk = col->getCharAtk(0);
-    int def = col->getCharDef(0);
+    int atk = col->getCharAtk(tabs[activeTab]->getId());
+    int def = col->getCharDef(tabs[activeTab]->getId());
 
-    window->calcDmgDef(atk,def);
+    tabs[activeTab]->calcDmgDef(atk,def);
 }
 
 //ottiene i dati per popolare le combobox
@@ -63,7 +81,7 @@ void Controller::getBoxItems()
         names.append( QString::fromStdString((*i)->getName()));
         id.append((*i)->getId());
     }
-    window->loadBox(names,id,1);
+    tabs[activeTab]->loadBox(names,id,1);
 
     names.clear();
     id.clear();
@@ -72,7 +90,7 @@ void Controller::getBoxItems()
         names.append( QString::fromStdString((*i)->getName()));
         id.append((*i)->getId());
     }
-    window->loadBox(names,id,2);
+    tabs[activeTab]->loadBox(names,id,2);
 
     names.clear();
     id.clear();
@@ -81,7 +99,7 @@ void Controller::getBoxItems()
         names.append( QString::fromStdString((*i)->getName()));
         id.append((*i)->getId());
     }
-    window->loadBox(names,id,3);
+    tabs[activeTab]->loadBox(names,id,3);
 
     names.clear();
     id.clear();
@@ -90,7 +108,7 @@ void Controller::getBoxItems()
         names.append( QString::fromStdString((*i)->getName()));
         id.append((*i)->getId());
     }
-    window->loadBox(names,id,4);
+    tabs[activeTab]->loadBox(names,id,4);
 
     names.clear();
     id.clear();
@@ -99,7 +117,7 @@ void Controller::getBoxItems()
         names.append( QString::fromStdString((*i)->getName()));
         id.append((*i)->getId());
     }
-    window->loadBox(names,id,5);
+    tabs[activeTab]->loadBox(names,id,5);
 
     names.clear();
     id.clear();
@@ -108,7 +126,7 @@ void Controller::getBoxItems()
         names.append( QString::fromStdString((*i)->getName()));
         id.append((*i)->getId());
     }
-    window->loadBox(names,id,6);
+    tabs[activeTab]->loadBox(names,id,6);
 }
 
 //mostra la finestra di creazione di Weapon
@@ -166,58 +184,70 @@ void Controller::eliminateObj(){
 //imposta la view quando si carica una build(anche quella di default)
 void Controller::setWindowChar(){
 
-    QString name = QString::fromStdString(col->getCharName(0));
-    window->setBuildName(name);
+    int idChar = tabs[activeTab]->getId();
+    std::cout<<"char id: "+ std::to_string(idChar)<<std::endl;
+    QString name = QString::fromStdString(col->getCharName(idChar));
+    tabs[activeTab]->setBuildName(name);
 
+    std::cout<<"messo il nome"<<std::endl;
 
-    C<int> stats = col->getCharStats(0);
+    C<int> stats = col->getCharStats(idChar);
     QList<QString> statsQ;
     for (auto i = stats.begin(); i != stats.end(); ++i)
     {
         statsQ.append(QString::number(*i));
     }
-    window->setStats(statsQ);
+    tabs[activeTab]->setStats(statsQ);
 
-    DeepPtr<Weapon> w = col->getCharWeapon(0);
+    std::cout<<"stat"<<std::endl;
+
+    DeepPtr<Weapon> w = col->getCharWeapon(idChar);
     int id = w->getId();
-    window->setWeapon(id);
+    tabs[activeTab]->setWeapon(id);
 
-    C<DeepPtr<Armor>> a = col->getCharArmor(0);
+    std::cout<<"arma"<<std::endl;
+
+    C<DeepPtr<Armor>> a = col->getCharArmor(idChar);
     QList<int> ls;
     for (auto i = a.begin(); i != a.end(); ++i)
     {
         ls.append((*i)->getId());
     }
-    window->setArmor(ls);
+    tabs[activeTab]->setArmor(ls);
+
+    std::cout<<"armor"<<std::endl;
 
     prevId.clear();
-    C<DeepPtr<Consumable>> inv = col->getCharCons(0);
+    C<DeepPtr<Consumable>> inv = col->getCharCons(idChar);
     QList<int> x;
     for (auto i = inv.begin(); i != inv.end(); ++i)
     {
         x.append((*i)->getId());
         prevId.append((*i)->getId());
     }
-    window->setItems(x);
+    tabs[activeTab]->setItems(x);
+
+    std::cout<<"oggetti"<<std::endl;
+
     calc();
 
 
 }
 
 void Controller::setVitality(QString x) {
-    col->setCharVit(0,x.toInt());
+    col->setCharVit(tabs[activeTab]->getId(),x.toInt());
     calc();
 }
 void Controller::setStrenght(QString x){
-    col->setCharStr(0,x.toInt());
+    col->setCharStr(tabs[activeTab]->getId(),x.toInt());
     calc();
 }
 void Controller::setDexterity(QString x){
-    col->setCharDex(0,x.toInt());
+    col->setCharDex(tabs[activeTab]->getId(),x.toInt());
     calc();
 }
 void Controller::setAim(QString x){
-    col->setCharAim(0,x.toInt());
+    col->setCharAim(tabs[activeTab]->getId(),x.toInt());
     calc();
 }
 
@@ -226,30 +256,51 @@ void Controller::changeName(QString s){
     if(s.isEmpty()){
         s = "Build Name";
     }
-    col->modifyCharName(0,s.toStdString());
+    col->modifyCharName(tabs[activeTab]->getId(),s.toStdString());
 }
 void Controller::changeWeapon(QVariant id){
-    col->modifyCharWeap(0,id.toInt());
+    col->modifyCharWeap(tabs[activeTab]->getId(),id.toInt());
     calc();
 }
 void Controller::changeArmor(QVariant id){
-    col->modifyCharArmorAlt(0,id.toInt());
+    col->modifyCharArmorAlt(tabs[activeTab]->getId(),id.toInt());
     calc();
 }
 void Controller::changeItem1(QVariant id)
 {
-    col->modifyCharInv(0,id.toInt(),prevId[0]);
+    col->modifyCharInv(tabs[activeTab]->getId(),id.toInt(),prevId[0]);
     prevId[0] = id.toInt();
 }
 void Controller::changeItem2(QVariant id)
 {
-    col->modifyCharInv(0,id.toInt(),prevId[1]);
+    col->modifyCharInv(tabs[activeTab]->getId(),id.toInt(),prevId[1]);
     prevId[1] = id.toInt();
 }
 void Controller::changeItem3(QVariant id)
 {
-    col->modifyCharInv(0,id.toInt(),prevId[2]);
+    col->modifyCharInv(tabs[activeTab]->getId(),id.toInt(),prevId[2]);
     prevId[2] = id.toInt();
+}
+
+void Controller::addTab(windowtabwidget *t)
+{
+    tabs.append(t);
+}
+
+void Controller::deleteTab(int index)
+{
+    if((index-1) == activeTab){
+        //cose
+    }
+    tabs.removeAt(index-1);
+}
+
+void Controller::changeTab(int i)
+{
+    activeTab = i-1;
+    if(activeTab >= 0){
+        refreshTab();
+    }
 }
 
 //restituisce i dettagli di un oggetto
@@ -274,7 +325,7 @@ void Controller::importChar()  //per importare
     try {
         QString path = window->importCharDialog();
         col->importChara(path.toStdString());
-        refreshWindow();
+        refreshTab();
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'importazione"<<std::endl;
 
@@ -313,5 +364,16 @@ void Controller::exportObj()  //per esportare
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'esportazione"<<std::endl;
     }
+
+}
+
+void Controller::defaultChar()
+{
+    col->createDefaultChar();
+    refreshWindow();
+}
+
+void Controller::deleteChar()
+{
 
 }
