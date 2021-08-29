@@ -282,6 +282,18 @@ void Controller::changeItem3(QVariant id)
     prevId[2] = id.toInt();
 }
 
+void Controller::maxAtt()
+{
+    col->maxAtk(tabs[activeTab]->getId());
+    refreshTab();
+}
+
+void Controller::maxDef()
+{
+    col->maxDefense(tabs[activeTab]->getId(), "MAXIMIXE");
+    refreshTab();
+}
+
 void Controller::addTab(windowtabwidget *t)
 {
     tabs.append(t);
@@ -410,3 +422,5 @@ void Controller::deleteChar()
     col->deleteChar(ind);
     refreshWindow();
 }
+
+

@@ -68,10 +68,11 @@ public slots:
     void changeName(QString s);
     void changeWeapon(QVariant id);
     void changeArmor(QVariant id);
-
     void changeItem1(QVariant id);
     void changeItem2(QVariant id);
     void changeItem3(QVariant id);
+    void maxAtt();
+    void maxDef();
 
     void addTab(windowtabwidget* t);
     void deleteTab(int index);
@@ -86,8 +87,11 @@ public slots:
     void importObj();
     void exportChar();
     void exportObj();
+
     void defaultChar();
     void deleteChar();
+    //void infoChar();
+    //void compareChar();
 
 };
 
