@@ -9,7 +9,7 @@
 #include <QTextEdit>
 #include <QList>
 #include <QListWidget>
-#include <QSignalMapper>
+#include "smartcombobox.h"
 #include <utility>
 
 class Controller;
@@ -24,6 +24,7 @@ private:
     QPushButton* remove_item;
     QPushButton* import_item;
     QPushButton* export_item;
+    SmartComboBox* sort_item;
 
 public:
     explicit Codex(Controller* cont, QList<QString> list, QList<int> id, QWidget *parent = nullptr);

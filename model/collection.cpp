@@ -196,6 +196,9 @@ void Collection::show(int id) const{
 
 //Metodo che dato una stringa che indica un tipo di oggetto, ritorna una lista con gli oggetti di list che sono di quel tipo
 C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) const{
+    if (type == "all"){
+        return list;
+    }
     C<DeepPtr<Obj>> l;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
     {
@@ -215,7 +218,6 @@ C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) 
                     l.insertBack(*i);
                 }
             }
-
         }
         else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))
         {
@@ -623,7 +625,7 @@ void Collection::maxDefense(int i,std::string s)
     {
         if (Armor* a = dynamic_cast<Armor*>(&(*(*it))))
         {
-            if (a->getArmorRes() == s || s == "MAXIMIXE")
+            if (a->getArmorRes() == s || s == "MAXIMIZE")
             {
                 if(a->getArmorType() == "HELM" && p1 < a->getDefense())
                 {
@@ -705,6 +707,8 @@ const C<DeepPtr<Consumable>> Collection::getCharCons(int i) const {return charas
 int Collection::getCharAtk(int i) const {return charas[i]->damage();}
 int Collection::getCharDef(int i) const {return charas[i]->defense();}
 const DeepPtr<Character> Collection::getChar(int i) const {return charas[i];}
+
+std::string Collection::getInfoChar(int i) const {return charas[i]->getInfo();}
 
 
 

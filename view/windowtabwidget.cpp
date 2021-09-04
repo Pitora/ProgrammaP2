@@ -113,10 +113,17 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     midLayout->addWidget(atk_lbl);
     midLayout->addWidget(def_lbl);
 
+    optimize = new QPushButton("Optimize");
+    midLayout->addWidget(optimize);
+
+
+
     vit_lbl->setText("Affect the DEF");
     str_lbl->setText("Affect the ATK with heavy weapons");
     dex_lbl->setText("Affect the ATK with light weapons");
     aim_lbl->setText("Affect the ATK with ranged weapons");
+
+
 
 
     QSpacerItem* space = new QSpacerItem(17,20);
@@ -149,6 +156,8 @@ void windowtabwidget::setController(Controller *c)
     connect(item1_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem1(QVariant)));
     connect(item2_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem2(QVariant)));
     connect(item3_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem3(QVariant)));
+
+    connect(optimize,SIGNAL(clicked()),controller,SLOT(optimize()));
 }
 
 //imposta l'attacco e la difesa

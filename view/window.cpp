@@ -37,7 +37,10 @@ Window::Window(QWidget *parent) : QWidget(parent){
     tab = new QTabWidget();
     QWidget* menu = new QWidget();
     QHBoxLayout* menuL = new QHBoxLayout();
-    QVBoxLayout* menuB = new QVBoxLayout();
+    QVBoxLayout* menuCompare = new QVBoxLayout();
+    QHBoxLayout* compare = new QHBoxLayout();
+    QHBoxLayout* menuB = new QHBoxLayout();
+
     menu->setLayout(menuL);
     tab->addTab(menu,"Menu");
     tab->setTabsClosable(true);
@@ -45,8 +48,21 @@ Window::Window(QWidget *parent) : QWidget(parent){
     main->addWidget(tab);
 
     characters = new QListWidget();
+    characters->setMaximumWidth(300);
     menuL->addWidget(characters);
-    menuL->addLayout(menuB);
+
+
+    menuL->addLayout(menuCompare);
+    menuCompare->addLayout(compare);
+    menuCompare->addLayout(menuB);
+    menuCompare->setAlignment(compare,Qt::AlignLeft);
+    compareBox1 = new QTextEdit();
+    compare->addWidget(compareBox1);
+    compareBox1->setReadOnly(true);
+    compareBox1->setMaximumSize(300,200);
+    compare->setAlignment(compareBox1,Qt::AlignLeft);
+
+
     import = new QPushButton("Import Build");
     exp = new QPushButton("Export Build");
     def = new QPushButton("Default Build");
@@ -78,6 +94,8 @@ void Window::setController(Controller *c){
     connect(create->actions()[3],SIGNAL(triggered()),controller,SLOT(showCodex()));
 
     connect(characters,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(addTab(QListWidgetItem*)));
+    connect(characters,SIGNAL(itemClicked(QListWidgetItem*)),controller,SLOT(getInfoChar(QListWidgetItem*)));
+
     connect(tab,SIGNAL(currentChanged(int)),controller,SLOT(changeTab(int)));
     connect(tab,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
 
@@ -93,6 +111,11 @@ void Window::setController(Controller *c){
 int Window::getIndSelChar()
 {
     return characters->currentRow();
+}
+
+void Window::refreshCompare(QString c1, QString c2, QString op)
+{
+    compareBox1->setText(c1);
 }
 
 void Window::removeTab(int index)

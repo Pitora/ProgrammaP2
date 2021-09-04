@@ -28,10 +28,10 @@ void Controller::refreshWindow()
 }
 
 //restituisce una lista con i nomi degli oggetti
-QList<QString> Controller::getItemsNames()
+QList<QString> Controller::getItemsNames(std::string type , std::string type2)
 {
    C<DeepPtr<Obj>> a;
-   a = col->getAllObj();
+   a = col->getObjPerType(type,type2);
    QList<QString> names;
    for(auto i = a.begin(); i != a.end(); ++i){
        names.append(QString::fromStdString((*i)->getName()));
@@ -39,10 +39,10 @@ QList<QString> Controller::getItemsNames()
    return names;
 }
 
-QList<int> Controller::getItemsId()
+QList<int> Controller::getItemsId(std::string type , std::string type2)
 {
    C<DeepPtr<Obj>> a;
-   a = col->getAllObj();
+   a = col->getObjPerType(type,type2);
    QList<int> id;
    for(auto i = a.begin(); i != a.end(); ++i){
        id.append((*i)->getId());
@@ -177,7 +177,7 @@ void Controller::eliminateObj(){
     QVariant id = codex->getSelectedItem()->data(Qt::UserRole);
     if(!id.isNull()){
         col->remove(id.toInt());
-        codex->refreshCodex(getItemsNames(),getItemsId());
+        codex->refreshCodex(getItemsNames("all",""),getItemsId("all",""));
     }
 }
 
@@ -329,6 +329,19 @@ bool Controller::isTabOpen(int index)
     return false;
 }
 
+void Controller::optimize()
+{
+    col->maxAtk(tabs[activeTab]->getId());
+    col->maxDefense(tabs[activeTab]->getId(),"MAXIMIZE");
+    refreshTab();
+}
+
+void Controller::getInfoChar(QListWidgetItem *i)
+{
+    QString s = QString::fromStdString(col->getInfoChar(window->getIndSelChar()));
+    window->refreshCompare(s,s,s);
+}
+
 //restituisce i dettagli di un oggetto
 void Controller::getInfoObj(QListWidgetItem *item)
 {
@@ -340,7 +353,7 @@ void Controller::getInfoObj(QListWidgetItem *item)
 //mostra la schermata codex
 void Controller::showCodex()
 {
-    codex = new Codex(this,getItemsNames(),getItemsId());
+    codex = new Codex(this,getItemsNames("all",""),getItemsId("all",""));
     codex->exec();
 }
 
@@ -363,7 +376,7 @@ void Controller::importObj()  //per importare
     try {
         QString path = codex->showImportDialog();
         col->importObj(path.toStdString());
-        codex->refreshCodex(getItemsNames(),getItemsId());
+        codex->refreshCodex(getItemsNames("all",""),getItemsId("all",""));
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'importazione"<<std::endl;
     }
@@ -389,6 +402,51 @@ void Controller::exportObj()  //per esportare
         col->exportObj(id,path.toStdString());
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'esportazione"<<std::endl;
+    }
+
+}
+
+void Controller::sortCodex(QVariant i)
+{
+    switch (i.toInt()) {
+    case 0:
+        codex->refreshCodex(getItemsNames("all","all"),getItemsId("all","all"));
+        break;
+    case 1:
+        codex->refreshCodex(getItemsNames("Weapon","all"),getItemsId("Weapon","all"));
+        break;
+    case 2:
+        codex->refreshCodex(getItemsNames("Weapon","Melee"),getItemsId("Weapon","Melee"));
+        break;
+    case 3:
+        codex->refreshCodex(getItemsNames("Weapon","Ranged"),getItemsId("Weapon","Ranged"));
+        break;
+    case 4:
+        codex->refreshCodex(getItemsNames("Armor","all"),getItemsId("Armor","all"));
+        break;
+    case 5:
+        codex->refreshCodex(getItemsNames("Armor","HELM"),getItemsId("Armor","HELM"));
+        break;
+    case 6:
+        codex->refreshCodex(getItemsNames("Armor","CHEST"),getItemsId("Armor","CHEST"));
+        break;
+    case 7:
+        codex->refreshCodex(getItemsNames("Armor","GLOVES"),getItemsId("Armor","GLOVES"));
+        break;
+    case 8:
+        codex->refreshCodex(getItemsNames("Armor","BOOTS"),getItemsId("Armor","BOOST"));
+        break;
+    case 10:
+        codex->refreshCodex(getItemsNames("Consumable","all"),getItemsId("Consumable","all"));
+        break;
+    case 11:
+        codex->refreshCodex(getItemsNames("Consumable","Buff"),getItemsId("Consumable","Buff"));
+        break;
+    case 12:
+        codex->refreshCodex(getItemsNames("Consumable","Healing"),getItemsId("Consumable","Healing"));
+        break;
+    default:
+        break;
     }
 
 }

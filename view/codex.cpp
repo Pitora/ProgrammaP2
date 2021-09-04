@@ -1,9 +1,9 @@
 #include "codex.h"
 
 //setta la view
-Codex::Codex(Controller *cont,QList<QString> list,QList<int> id, QWidget *parent) : QDialog(parent)
+Codex::Codex(Controller *c,QList<QString> list,QList<int> id, QWidget *parent) : QDialog(parent)
 {
-    controller = cont;
+    controller = c;
     setWindowTitle("Codex");
     setFixedSize(500,600);
 
@@ -17,8 +17,25 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
 {
     cont = new QListWidget(this);
     cont->clear();
-    cont->setGeometry(20,20,200,550);
-    cont->setFrameShape(QFrame::NoFrame);
+    cont->setGeometry(20,60,220,490);
+    //cont->setFrameShape(QFrame::NoFrame);
+
+    sort_item = new SmartComboBox(this);
+    sort_item->setGeometry(20,20,200,25);
+    sort_item->addItem("All",QVariant(0));
+    sort_item->addItem("<Weapon>",QVariant(1));
+    sort_item->addItem("__Melee",QVariant(2));
+    sort_item->addItem("__Ranged",QVariant(3));
+    sort_item->addItem("<Armor>",QVariant(4));
+    sort_item->addItem("__Helm",QVariant(5));
+    sort_item->addItem("__Chest",QVariant(7));
+    sort_item->addItem("__Gloves",QVariant(8));
+    sort_item->addItem("__Boots",QVariant(9));
+    sort_item->addItem("<Consumable>",QVariant(10));
+    sort_item->addItem("__Buff",QVariant(11));
+    sort_item->addItem("__Healing",QVariant(12));
+
+
     QPalette pal = cont->palette();
     pal.setColor(QPalette::Base,pal.color(QPalette::Window));
     cont->setPalette(pal);
@@ -31,7 +48,7 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
     }
 
     details = new QTextEdit(this);
-    details->setGeometry(250,20,220,500);
+    details->setGeometry(270,60,220,440);
     details->setReadOnly(true);
     details->setPalette(pal);
 
@@ -39,6 +56,7 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
     details->setFrameShape(QFrame::NoFrame);
 
     connect(cont,SIGNAL(itemClicked(QListWidgetItem*)),controller,SLOT(getInfoObj(QListWidgetItem*)));
+    connect(sort_item,SIGNAL(activated(QVariant)),controller,SLOT(sortCodex(QVariant)));
 }
 
 //setta i bottoni
@@ -48,9 +66,9 @@ void Codex::addControls()
     import_item = new QPushButton("Import",this);
     export_item = new QPushButton("Export",this);
 
-    remove_item->setGeometry(240,520,60,30);
-    import_item->setGeometry(310,520,60,30);
-    export_item->setGeometry(380,520,60,30);
+    remove_item->setGeometry(260,520,60,30);
+    import_item->setGeometry(330,520,60,30);
+    export_item->setGeometry(400,520,60,30);
 
     remove_item->setEnabled(false);
     export_item->setEnabled(false);

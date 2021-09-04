@@ -39,8 +39,8 @@ public:
     void refreshTab();
     void refreshWindow();
 
-    QList<QString> getItemsNames();
-    QList<int> getItemsId();
+    QList<QString> getItemsNames(std::string type, std::string type2);
+    QList<int> getItemsId(std::string type, std::string type2);
 
     QList<QString> getCharNames();
 
@@ -79,6 +79,9 @@ public slots:
     void changeTab(int i);
     bool isTabOpen(int index);
 
+    void optimize();
+    void getInfoChar(QListWidgetItem* i);
+
     void getInfoObj(QListWidgetItem *item);
 
     void showCodex();
@@ -87,6 +90,8 @@ public slots:
     void importObj();
     void exportChar();
     void exportObj();
+
+    void sortCodex(QVariant i);
 
     void defaultChar();
     void deleteChar();

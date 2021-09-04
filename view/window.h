@@ -17,6 +17,7 @@
 #include <QSpacerItem>
 #include <QFileDialog>
 #include <utility>
+#include <QTextEdit>
 #include "smartcombobox.h"
 #include "windowtabwidget.h"
 
@@ -35,6 +36,8 @@ private:
     QPushButton* exp;
     QPushButton* def;
     QPushButton* del;
+
+    QTextEdit* compareBox1;
 
     QTabWidget* tab;
     QListWidget* characters;
@@ -61,6 +64,8 @@ public:
     void setController(Controller *c);
 
     int getIndSelChar();
+
+    void refreshCompare(QString c1, QString c2,QString op);
 
     void calcDmgDef(int a, int d);
     void loadBox(QList<QString> n, QList<int> id, int i);

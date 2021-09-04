@@ -94,12 +94,12 @@ int Character::getAim() const{return aim;}
 
 std::string Character::getInfo() const
 {
-    std::string s = name_build;
+    std::string s = name_build + " \n\n";
     s += "Vitality : " + std::to_string(vitality) + "\n";
     s += "Strenght : " + std::to_string(strenght) + "\n";
     s += "Dexterity : " + std::to_string(dexterity) + "\n";
-    s += "Aim : " + std::to_string(aim) + "\n";
-    s += "Atk : " + std::to_string(damage());
+    s += "Aim : " + std::to_string(aim) + "\n\n";
+    s += "Atk : " + std::to_string(damage())+"\n";
     s += "Def : " + std::to_string(defense());
 //    s += "Weapon : " + eq_weap->getName() + "\n";
 //    std::string a1,a2,a3,a4;

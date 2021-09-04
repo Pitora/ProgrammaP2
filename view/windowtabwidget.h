@@ -58,6 +58,8 @@ private:
     SmartComboBox* item2_box;
     SmartComboBox* item3_box;
 
+    QPushButton* optimize;
+
     QLineEdit* build_name;
     QLabel* atk_lbl;
     QLabel* def_lbl;
