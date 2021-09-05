@@ -16,6 +16,7 @@
 #include <QFormLayout>
 #include <QSpacerItem>
 #include <QFileDialog>
+#include <QSplitter>
 #include <utility>
 #include <QTextEdit>
 #include "smartcombobox.h"
@@ -38,17 +39,16 @@ private:
     QPushButton* del;
 
     QTextEdit* compareBox1;
+    QTextEdit* compareBox2;
 
     QTabWidget* tab;
     QListWidget* characters;
 
     Controller* controller;
 
-    void addMenu(QVBoxLayout *layout);
+    void addMenu(QHBoxLayout *layout);
 
-    void addCommand(QVBoxLayout *layout);
-    void addLabel(QHBoxLayout* layout);
-    void addButton(QVBoxLayout* layout);
+    void addCommand(QHBoxLayout *layout);
 
 public slots:
     void addTab(QListWidgetItem* i);

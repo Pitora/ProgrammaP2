@@ -4,7 +4,7 @@
 #include<iostream>
 
 //aggiunge la barra dei menu  e setta i comandi relativi
-void Window::addMenu(QVBoxLayout *layout){
+void Window::addMenu(QHBoxLayout *layout){
 
     QMenuBar* menu_bar = new QMenuBar(this);
 
@@ -20,48 +20,44 @@ void Window::addMenu(QVBoxLayout *layout){
     layout->setMenuBar(menu_bar);
 }
 
-void Window::refresh()
+void Window::addCommand(QHBoxLayout *main)
 {
-    characters->clear();
-    characters->addItems(controller->getCharNames());
-}
-
-//setta la view
-Window::Window(QWidget *parent) : QWidget(parent){
-
-    setWindowTitle("Build Creator");
-    QVBoxLayout* main = new QVBoxLayout;
-    addMenu(main);
-
-    //-------------------------//
     tab = new QTabWidget();
     QWidget* menu = new QWidget();
-    QHBoxLayout* menuL = new QHBoxLayout();
-    QVBoxLayout* menuCompare = new QVBoxLayout();
-    QHBoxLayout* compare = new QHBoxLayout();
-    QHBoxLayout* menuB = new QHBoxLayout();
-
-    menu->setLayout(menuL);
     tab->addTab(menu,"Menu");
     tab->setTabsClosable(true);
     tab->tabBar()->tabButton(0,QTabBar::RightSide)->setVisible(false);
     main->addWidget(tab);
 
-    characters = new QListWidget();
-    characters->setMaximumWidth(300);
+    QHBoxLayout* menuL = new QHBoxLayout(menu);
+    characters = new QListWidget(this);
+    characters->setMinimumSize(200,500);
+    characters->setMaximumWidth(350);
+    characters->setFont(QFont("Ubuntu",15));
     menuL->addWidget(characters);
 
-
-    menuL->addLayout(menuCompare);
-    menuCompare->addLayout(compare);
-    menuCompare->addLayout(menuB);
-    menuCompare->setAlignment(compare,Qt::AlignLeft);
+    QVBoxLayout* layoutR = new QVBoxLayout();
+    menuL->addLayout(layoutR);
+    QHBoxLayout* layoutCompare = new QHBoxLayout();
+    layoutR->addLayout(layoutCompare);
     compareBox1 = new QTextEdit();
-    compare->addWidget(compareBox1);
-    compareBox1->setReadOnly(true);
-    compareBox1->setMaximumSize(300,200);
-    compare->setAlignment(compareBox1,Qt::AlignLeft);
+    compareBox2 = new QTextEdit();
 
+    compareBox1->setReadOnly(true);
+    compareBox1->setMinimumSize(300,420);
+    compareBox1->setFontPointSize(15);
+
+    compareBox2->setReadOnly(true);
+    compareBox2->setMinimumSize(300,420);
+    compareBox2->setFontPointSize(15);
+
+    layoutCompare->addWidget(compareBox1);
+    layoutCompare->addWidget(compareBox2);
+    layoutCompare->setAlignment(compareBox1,Qt::AlignTop);
+    layoutCompare->setAlignment(compareBox2,Qt::AlignTop);
+
+    QHBoxLayout* layoutButton = new QHBoxLayout();
+    layoutR->addLayout(layoutButton);
 
     import = new QPushButton("Import Build");
     exp = new QPushButton("Export Build");
@@ -72,12 +68,28 @@ Window::Window(QWidget *parent) : QWidget(parent){
     exp->setMaximumWidth(300);
     del->setMaximumWidth(300);
     def->setMaximumWidth(300);
-    menuB->addWidget(import);
-    menuB->addWidget(exp);
-    menuB->addWidget(def);
-    menuB->addWidget(del);
-    //-------------------------//
 
+    layoutButton->addWidget(import);
+    layoutButton->addWidget(exp);
+    layoutButton->addWidget(del);
+    layoutButton->addWidget(def);
+
+
+}
+
+void Window::refresh()
+{
+    characters->clear();
+    characters->addItems(controller->getCharNames());
+}
+
+//setta la view
+Window::Window(QWidget *parent) : QWidget(parent){
+
+    setWindowTitle("Build Creator");
+    QHBoxLayout* main = new QHBoxLayout;
+    addMenu(main);
+    addCommand(main);
     setLayout(main);
     setMinimumSize(1024,600);
 
