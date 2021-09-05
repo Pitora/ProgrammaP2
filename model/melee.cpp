@@ -51,7 +51,11 @@ std::string Melee::getInfo() const{
 
 int Melee::calcAttack(int cStr, int cDex, int cAim) const
 {
-    int scaleSum = (cStr*getScalingStr()/10)+(cDex*getScalingDex()/10)+(cAim*getScalingAim()/10);
+    int scaleSum = (cStr*getScalingStr()*getWeight()/5)*(cStr/getScalingStr())+(cDex*getScalingDex()/5*getWeight())*(cDex*getScalingDex())+(cAim*getScalingAim()/10)*(cAim/getScalingAim());
+    if (added_effect != "NO EFFECT")
+    {
+        scaleSum = scaleSum - (scaleSum*12/100);
+    }
     return (getAttack()+scaleSum);
 }
 

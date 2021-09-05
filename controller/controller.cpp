@@ -338,7 +338,8 @@ void Controller::optimize()
 
 void Controller::getInfoChar(QListWidgetItem *i)
 {
-    QString s = QString::fromStdString(col->getInfoChar(window->getIndSelChar()));
+    std::string s2 = col->getInfoChar(window->getIndSelChar());
+    QString s = QString::fromStdString(s2);
     window->refreshCompare(s,s,s);
 }
 

@@ -72,7 +72,7 @@ void Collection::initialize(){
         add("Broken chest", "CHEST", "NO EFFECT", 10, 50);
         add("Broken gloves", "GLOVES", "NO EFFECT", 4, 50);
         add("Broken boots", "BOOTS", "NO EFFECT", 7, 50);
-        add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "slash", "no effect", 500);
+        add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "slash", "NO EFFECT", 500);
         add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);
@@ -195,9 +195,9 @@ void Collection::show(int id) const{
 
 
 //Metodo che dato una stringa che indica un tipo di oggetto, ritorna una lista con gli oggetti di list che sono di quel tipo
-C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) const{
+C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2) const{
     if (type == "all"){
-        return list;
+            return list;
     }
     C<DeepPtr<Obj>> l;
     for (C<DeepPtr<Obj>>::const_iterator i = list.begin(); i != list.end(); ++i)
@@ -218,6 +218,7 @@ C<DeepPtr<Obj>> Collection::getObjPerType(std::string type, std::string type2 ) 
                     l.insertBack(*i);
                 }
             }
+
         }
         else if (type == "Consumable" && dynamic_cast<Consumable*>(&(*(*i))))
         {
@@ -708,7 +709,7 @@ int Collection::getCharAtk(int i) const {return charas[i]->damage();}
 int Collection::getCharDef(int i) const {return charas[i]->defense();}
 const DeepPtr<Character> Collection::getChar(int i) const {return charas[i];}
 
-std::string Collection::getInfoChar(int i) const {return charas[i]->getInfo();}
+std::string Collection::getInfoChar(int i) const{return charas[i]->getInfo();   }
 
 
 

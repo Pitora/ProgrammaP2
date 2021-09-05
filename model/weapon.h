@@ -47,6 +47,7 @@ public:
     int getScalingStr() const;
     int getScalingDex() const;
     int getScalingAim() const;
+    int getWeight() const;
 
 };
 

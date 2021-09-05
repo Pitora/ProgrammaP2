@@ -93,6 +93,7 @@ int Weapon::getAttack() const {return raw_attack_value;}
 int Weapon::getScalingStr() const {return scaling_str;}
 int Weapon::getScalingDex() const {return scaling_dex;}
 int Weapon::getScalingAim() const {return scaling_aim;}
+int Weapon::getWeight() const{return weight;}
 
 
 

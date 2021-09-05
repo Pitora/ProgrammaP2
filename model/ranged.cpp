@@ -52,7 +52,7 @@ std::string Ranged::getInfo() const{
 
 int Ranged::calcAttack(int cStr, int cDex, int cAim) const
 {
-    int scaleSum = (cStr*getScalingStr()/10)+(cDex*getScalingDex()/10)+(cAim*getScalingAim()/10);
+    int scaleSum = (cStr*getScalingStr()/10)*(cStr/getScalingStr())+(cDex*getScalingDex()/10)*(cDex/getScalingDex())+(cAim*getScalingAim()/5)*(cAim/getScalingAim());
     return (getAttack()+scaleSum);
 }
 
