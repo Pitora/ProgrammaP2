@@ -35,6 +35,7 @@ public:
     void refreshCodex(QList<QString> l, QList<int> id);
 
     QListWidgetItem *getSelectedItem();
+    int getSortInd();
 
     QString showExpDialog();
     QString showImportDialog();

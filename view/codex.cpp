@@ -101,6 +101,8 @@ QListWidgetItem* Codex::getSelectedItem()
     return cont->currentItem();
 }
 
+int Codex::getSortInd(){return sort_item->currentIndex();}
+
 //mostra il dialog per l'esportazione
 QString Codex::showExpDialog()
 {

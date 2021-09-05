@@ -177,7 +177,7 @@ void Controller::eliminateObj(){
     QVariant id = codex->getSelectedItem()->data(Qt::UserRole);
     if(!id.isNull()){
         col->remove(id.toInt());
-        codex->refreshCodex(getItemsNames("all",""),getItemsId("all",""));
+        sortCodex(codex->getSortInd());
     }
 }
 
@@ -377,7 +377,7 @@ void Controller::importObj()  //per importare
     try {
         QString path = codex->showImportDialog();
         col->importObj(path.toStdString());
-        codex->refreshCodex(getItemsNames("all",""),getItemsId("all",""));
+        sortCodex(codex->getSortInd());
     } catch (std::runtime_error exc) {
         std::cout<<"Errore prima dell'importazione"<<std::endl;
     }
