@@ -14,11 +14,11 @@
 #include <QListWidget>
 #include <QVBoxLayout>
 #include <QFormLayout>
-#include <QSpacerItem>
 #include <QFileDialog>
-#include <QSplitter>
+#include <QCheckBox>
 #include <utility>
 #include <QTextEdit>
+#include <QMessageBox>
 #include "smartcombobox.h"
 #include "windowtabwidget.h"
 
@@ -44,6 +44,8 @@ private:
     QTabWidget* tab;
     QListWidget* characters;
 
+    QCheckBox* comp;
+
     Controller* controller;
 
     void addMenu(QHBoxLayout *layout);
@@ -53,6 +55,7 @@ private:
 public slots:
     void addTab(QListWidgetItem* i);
     void closeTab(int index);
+    void lockCompare(bool clicked);
 
 public:
 
@@ -62,10 +65,13 @@ public:
     QString importCharDialog();
 
     void setController(Controller *c);
+    void showMessage(QString wrn);
 
     int getIndSelChar();
+    bool getCheckValue();
 
-    void refreshCompare(QString c1, QString c2,QString op);
+    void refreshCompare(QList<QString> list);
+    void clearCompare();
 
     void calcDmgDef(int a, int d);
     void loadBox(QList<QString> n, QList<int> id, int i);
@@ -75,6 +81,9 @@ public:
     void setArmor(QList<int> l);
     void setItems(QList<int> l);
 
+    void setWithColor(QString s,QColor color);
+
+    void setTabName(QString s);
     void removeTab(int index);
     void refresh();
 

@@ -93,7 +93,7 @@ int getCharAtk(int i) const;
 int getCharDef(int i) const;
 const DeepPtr<Character> getChar(int i) const;
 
-std::string getInfoChar(int i) const;
+C<std::string> getInfoChar(int i) const;
 
 
 

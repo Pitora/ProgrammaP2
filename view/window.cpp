@@ -5,7 +5,6 @@
 
 //aggiunge la barra dei menu  e setta i comandi relativi
 void Window::addMenu(QHBoxLayout *layout){
-
     QMenuBar* menu_bar = new QMenuBar(this);
 
     file = new QMenu("File",menu_bar);
@@ -53,8 +52,16 @@ void Window::addCommand(QHBoxLayout *main)
 
     layoutCompare->addWidget(compareBox1);
     layoutCompare->addWidget(compareBox2);
-    layoutCompare->setAlignment(compareBox1,Qt::AlignTop);
-    layoutCompare->setAlignment(compareBox2,Qt::AlignTop);
+
+    QHBoxLayout* comboLayout = new QHBoxLayout();
+    layoutR->addLayout(comboLayout);
+    comp = new QCheckBox();
+    comboLayout->addWidget(comp);
+    comboLayout->setAlignment(comp,Qt::AlignHCenter);
+    comp->setText("Compare");
+    comp->setMinimumSize(100,80);
+    comp->setMaximumHeight(400);
+    comp->setFont(QFont("Ubuntu",15));
 
     QHBoxLayout* layoutButton = new QHBoxLayout();
     layoutR->addLayout(layoutButton);
@@ -74,6 +81,7 @@ void Window::addCommand(QHBoxLayout *main)
     layoutButton->addWidget(del);
     layoutButton->addWidget(def);
 
+    connect(comp,SIGNAL(clicked(bool)),this,SLOT(lockCompare(bool)));
 
 }
 
@@ -120,14 +128,55 @@ void Window::setController(Controller *c){
 
 }
 
+void Window::showMessage(QString wrn)
+{
+    QMessageBox* warning = new QMessageBox();
+    warning->setText(wrn);
+    warning->setIcon(QMessageBox::Warning);
+    warning->exec();
+}
+
 int Window::getIndSelChar()
 {
     return characters->currentRow();
 }
 
-void Window::refreshCompare(QString c1, QString c2, QString op)
+bool Window::getCheckValue()
 {
-    compareBox1->setText(c1);
+    return comp->isChecked();
+}
+
+void Window::refreshCompare(QList<QString> list)
+{
+    if(!comp->isChecked()){
+        compareBox1->clear();
+        compareBox1->append("Name : " + list[0]+"\n\n");
+        for(int i = 1; i< list.length(); i++){
+            compareBox1->append(list[i]+"\n");
+        }
+    }else{
+        compareBox2->clear();
+        for(int i = 0; i< list.length(); i++){
+            compareBox2->append(list[i]);
+        }
+    }
+}
+
+void Window::clearCompare()
+{
+    compareBox2->clear();
+}
+
+void Window::setWithColor(QString s, QColor color)
+{
+    compareBox2->setTextColor(color);
+    compareBox2->append(s);
+    compareBox2->setTextColor(Qt::black);
+}
+
+void Window::setTabName(QString s)
+{
+    tab->setTabText(tab->currentIndex(),s);
 }
 
 void Window::removeTab(int index)
@@ -156,6 +205,13 @@ void Window::closeTab(int index)
     if(index != 0){
         controller->deleteTab(index);
         delete tab->widget(index);
+    }
+}
+
+void Window::lockCompare(bool clicked)
+{
+    if(!clicked){
+        compareBox2->clear();
     }
 }
 

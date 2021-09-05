@@ -61,6 +61,14 @@ QList<QString> Controller::getCharNames()
     return a;
 }
 
+QColor Controller::colorCompare(char c)
+{
+    if(c == '>'){return Qt::red;}
+    if(c == '='){return Qt::blue;}
+    if(c == '<'){return Qt::green;}
+    return Qt::black;
+}
+
 //calcola i valori di attacco e def
 void Controller::calc() {
 
@@ -257,6 +265,7 @@ void Controller::changeName(QString s){
         s = "Build Name";
     }
     col->modifyCharName(tabs[activeTab]->getId(),s.toStdString());
+    window->setTabName(s);
 }
 void Controller::changeWeapon(QVariant id){
     col->modifyCharWeap(tabs[activeTab]->getId(),id.toInt());
@@ -338,9 +347,25 @@ void Controller::optimize()
 
 void Controller::getInfoChar(QListWidgetItem *i)
 {
-    std::string s2 = col->getInfoChar(window->getIndSelChar());
-    QString s = QString::fromStdString(s2);
-    window->refreshCompare(s,s,s);
+    C<std::string> s = col->getInfoChar(window->getIndSelChar());
+    QList<QString> stats;
+    for(auto i = s.begin();i != s.end(); ++i){
+        stats.append(QString::fromStdString(*i));
+    }
+    if(!window->getCheckValue()){
+        activeChar = window->getIndSelChar();
+        window->refreshCompare(stats);
+    }else{
+        C<char> o = col->compareChara(activeChar,window->getIndSelChar());
+        auto i = o.begin();
+        window->clearCompare();
+        window->setWithColor(("Name : " + stats[0]+"\n\n"),Qt::black);
+        for(int j = 1;j < stats.length(); j++){
+            window->setWithColor((stats[j]+"\n"),colorCompare((*i)));
+            std::cout<<(*i)<<std::endl;
+            i++;
+        }
+    }
 }
 
 //restituisce i dettagli di un oggetto

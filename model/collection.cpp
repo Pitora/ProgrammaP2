@@ -660,7 +660,7 @@ C<char> Collection::compareChara(int i1, int i2)
     C<int> s2 = charas[i2]->getStats();
     C<int>::const_iterator it1 = s1.begin();
     C<int>::const_iterator it2 = s2.begin();
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 4; i++)
     {
         comp.insertBack(compareValue(*it1, *it2));
         it1++;
@@ -675,6 +675,8 @@ C<char> Collection::compareChara(int i1, int i2)
 
 char Collection::compareValue(int x, int y)
 {
+    std::cout<<std::to_string(x)<<std::endl;
+    std::cout<<std::to_string(y)<<std::endl;
     if (x < y)
     {
         return '<';
@@ -682,7 +684,11 @@ char Collection::compareValue(int x, int y)
     else if (x > y)
     {
         return '>';
-    }else return '=';
+    }
+    else
+    {
+        return '=';
+    }
 }
 
 
@@ -709,7 +715,7 @@ int Collection::getCharAtk(int i) const {return charas[i]->damage();}
 int Collection::getCharDef(int i) const {return charas[i]->defense();}
 const DeepPtr<Character> Collection::getChar(int i) const {return charas[i];}
 
-std::string Collection::getInfoChar(int i) const{return charas[i]->getInfo();   }
+C<std::string> Collection::getInfoChar(int i) const{return charas[i]->getInfo();   }
 
 
 

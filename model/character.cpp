@@ -92,15 +92,18 @@ int Character::getStr() const{return strenght;}
 int Character::getDex() const{return dexterity;}
 int Character::getAim() const{return aim;}
 
-std::string Character::getInfo() const
+C<std::string> Character::getInfo() const
 {
-    std::string s = name_build + " \n\n";
-    s += "Vitality : " + std::to_string(vitality) + "\n";
-    s += "Strenght : " + std::to_string(strenght) + "\n";
-    s += "Dexterity : " + std::to_string(dexterity) + "\n";
-    s += "Aim : " + std::to_string(aim) + "\n\n";
-    s += "Atk : " + std::to_string(damage())+"\n";
-    s += "Def : " + std::to_string(defense());
+    C<std::string> s;
+    s.insertBack(name_build);
+    s.insertBack("Vitality : " + std::to_string(vitality));
+    s.insertBack("Strenght : " + std::to_string(strenght));
+    s.insertBack("Dexterity : " + std::to_string(dexterity));
+    s.insertBack("Aim : " + std::to_string(aim));
+    s.insertBack("Atk : " + std::to_string(damage()));
+    s.insertBack("Def : " + std::to_string(defense()));
+
+    return s;
 //    s += "Weapon : " + eq_weap->getName() + "\n";
 //    std::string a1,a2,a3,a4;
 //    a1 = a2 = a3 = a4 = "";
@@ -134,7 +137,6 @@ std::string Character::getInfo() const
 //        s += (*it)->getName();
 //    }
 //    s += "\n";
-    return s;
 }
 
 

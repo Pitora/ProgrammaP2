@@ -49,7 +49,7 @@ public:
     int getDex() const;
     int getAim() const;
 
-    std::string getInfo() const;
+    C<std::string> getInfo() const;
     
     //set
     void setName(std::string s);

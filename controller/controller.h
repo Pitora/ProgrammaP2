@@ -29,6 +29,7 @@ private:
     QList<int> prevId;
     QList<windowtabwidget*> tabs;
     int activeTab;
+    int activeChar;
 
 public:
     explicit Controller(QObject *parent = nullptr);
@@ -43,6 +44,8 @@ public:
     QList<int> getItemsId(std::string type, std::string type2);
 
     QList<QString> getCharNames();
+
+    QColor colorCompare(char c);
 
 
 signals:

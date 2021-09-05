@@ -123,9 +123,6 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     dex_lbl->setText("Affect the ATK with light weapons");
     aim_lbl->setText("Affect the ATK with ranged weapons");
 
-
-
-
     QSpacerItem* space = new QSpacerItem(17,20);
     rightLayout->setContentsMargins(11,20,0,0);
     rightLayout->setSpacing(35);
