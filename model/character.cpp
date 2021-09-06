@@ -104,39 +104,6 @@ C<std::string> Character::getInfo() const
     s.insertBack("Def : " + std::to_string(defense()));
 
     return s;
-//    s += "Weapon : " + eq_weap->getName() + "\n";
-//    std::string a1,a2,a3,a4;
-//    a1 = a2 = a3 = a4 = "";
-//    for (C<DeepPtr<Armor>>::const_iterator it = eq_armor.begin(); it != eq_armor.end(); ++it)
-//    {
-//        if ((*it)->getArmorType() == "HELM")
-//        {
-//            a1 = "Helm : " + (*it)->getName() + "\n";
-//        }
-//        else if ((*it)->getArmorType() == "CHEST")
-//        {
-//            a2 = "Chest : " + (*it)->getName() + "\n";
-//        }
-//        else if ((*it)->getArmorType() == "GLOVES")
-//        {
-//            a3 = "Gloves : " + (*it)->getName() + "\n";
-//        }
-//        else if ((*it)->getArmorType() == "BOOTS")
-//        {
-//            a4 = "Boots : " + (*it)->getName() + "\n";
-//        }
-//    }
-//    s += a1+a2+a3+a4;
-//    s += "Consumable : ";
-//    for (C<DeepPtr<Consumable>>::const_iterator it = inventory.begin(); it != inventory.end(); ++it)
-//    {
-//        if (it != inventory.begin())
-//        {
-//            s += ", ";
-//        }
-//        s += (*it)->getName();
-//    }
-//    s += "\n";
 }
 
 

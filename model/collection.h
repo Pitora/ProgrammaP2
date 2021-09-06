@@ -76,7 +76,7 @@ void setCharStr(int i, int x);
 void setCharDex(int i, int x);
 void setCharAim(int i ,int x);
 void checkEq(int id);
-
+//DIF
 void maxAtk(int i);
 void maxDefense(int i, std::string s);
 C<char> compareChara(int i1, int i2);
@@ -92,7 +92,7 @@ const C<DeepPtr<Consumable>> getCharCons(int i) const;
 int getCharAtk(int i) const;
 int getCharDef(int i) const;
 const DeepPtr<Character> getChar(int i) const;
-
+//DIF
 C<std::string> getInfoChar(int i) const;
 
 

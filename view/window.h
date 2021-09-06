@@ -84,7 +84,6 @@ public:
     void setWithColor(QString s,QColor color);
 
     void setTabName(QString s);
-    void removeTab(int index);
     void refresh();
 
     ~Window();

@@ -442,6 +442,7 @@ void Collection::exportChara(int i, std::string filename){
     catch(err_fileNotCreated){std::cout<<"Il file non è stato creato"<<std::endl;}
 }
 
+//Metodo che crea un default character
 void Collection::createDefaultChar()
 {
     charas.push_back(DeepPtr<Character> (new Character()));
@@ -653,6 +654,7 @@ void Collection::maxDefense(int i,std::string s)
     }
 }
 
+//Metodo che ritorna una lista con i valori che indicano le differenze tra due character
 C<char> Collection::compareChara(int i1, int i2)
 {
     C<char> comp;
@@ -673,10 +675,9 @@ C<char> Collection::compareChara(int i1, int i2)
 
 }
 
+//Metodo utilizzato per comparare due valori
 char Collection::compareValue(int x, int y)
 {
-    std::cout<<std::to_string(x)<<std::endl;
-    std::cout<<std::to_string(y)<<std::endl;
     if (x < y)
     {
         return '<';
@@ -692,7 +693,7 @@ char Collection::compareValue(int x, int y)
 }
 
 
-
+//Ritorna una lista con i nomidei vari character
 const C<std::string> Collection::getCharsName() const
 {
     C<std::string> l;

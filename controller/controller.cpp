@@ -16,9 +16,7 @@ void Controller::refreshTab()
 {
     if(activeTab >= 0 && !tabs.isEmpty()){
     getBoxItems();
-    std::cout<<"fatto il get box"<<std::endl;
     setWindowChar();
-    std::cout<<"settato il char"<<std::endl;
     }
 }
 
@@ -193,11 +191,9 @@ void Controller::eliminateObj(){
 void Controller::setWindowChar(){
 
     int idChar = tabs[activeTab]->getId();
-    std::cout<<"char id: "+ std::to_string(idChar)<<std::endl;
     QString name = QString::fromStdString(col->getCharName(idChar));
     tabs[activeTab]->setBuildName(name);
 
-    std::cout<<"messo il nome"<<std::endl;
 
     C<int> stats = col->getCharStats(idChar);
     QList<QString> statsQ;
@@ -207,13 +203,11 @@ void Controller::setWindowChar(){
     }
     tabs[activeTab]->setStats(statsQ);
 
-    std::cout<<"stat"<<std::endl;
 
     DeepPtr<Weapon> w = col->getCharWeapon(idChar);
     int id = w->getId();
     tabs[activeTab]->setWeapon(id);
 
-    std::cout<<"arma"<<std::endl;
 
     C<DeepPtr<Armor>> a = col->getCharArmor(idChar);
     QList<int> ls;
@@ -223,7 +217,6 @@ void Controller::setWindowChar(){
     }
     tabs[activeTab]->setArmor(ls);
 
-    std::cout<<"armor"<<std::endl;
 
     prevId.clear();
     C<DeepPtr<Consumable>> inv = col->getCharCons(idChar);
@@ -235,7 +228,6 @@ void Controller::setWindowChar(){
     }
     tabs[activeTab]->setItems(x);
 
-    std::cout<<"oggetti"<<std::endl;
 
     calc();
 
@@ -362,7 +354,6 @@ void Controller::getInfoChar(QListWidgetItem *i)
         window->setWithColor(("Name : " + stats[0]+"\n\n"),Qt::black);
         for(int j = 1;j < stats.length(); j++){
             window->setWithColor((stats[j]+"\n"),colorCompare((*i)));
-            std::cout<<(*i)<<std::endl;
             i++;
         }
     }
@@ -486,22 +477,20 @@ void Controller::defaultChar()
 void Controller::deleteChar()
 {
     int ind = window->getIndSelChar();
-    bool found = false;
-    int i = 0;
-    while (i < tabs.count() && !found)
+    int i = -1;
+    for (int j = 0; j < tabs.count(); j++)
     {
-        if (tabs[i]->getId() == ind)
+        int i2 = tabs[j]->getId();
+        if(i2 == ind)
         {
-            found = true;
+            i = j;
+        }else if (i != -1 && i2 > ind){
+            tabs[j]->setId(i2-1);
         }
-        else{
-            i++;
-        }
-
     }
-    if (found)
+    if (i != -1)
     {
-        window->removeTab(i+1);
+        window->closeTab(i+1);
     }
     col->deleteChar(ind);
     refreshWindow();

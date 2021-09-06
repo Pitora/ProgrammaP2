@@ -88,6 +88,9 @@ void Window::addCommand(QHBoxLayout *main)
 void Window::refresh()
 {
     characters->clear();
+    comp->setCheckState(Qt::Unchecked);
+    compareBox1->clear();
+    compareBox2->clear();
     characters->addItems(controller->getCharNames());
 }
 
@@ -177,14 +180,6 @@ void Window::setWithColor(QString s, QColor color)
 void Window::setTabName(QString s)
 {
     tab->setTabText(tab->currentIndex(),s);
-}
-
-void Window::removeTab(int index)
-{
-    if(index != 0){
-        controller->deleteTab(index);
-        tab->removeTab(index);
-    }
 }
 
 void Window::addTab(QListWidgetItem *i)
