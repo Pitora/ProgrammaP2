@@ -69,6 +69,13 @@ private:
     QLabel* dex_lbl;
     QLabel* aim_lbl;
 
+    QLabel* sword_lbl;
+    QLabel* helm_lbl;
+    QLabel* chest_lbl;
+    QLabel* gloves_lbl;
+    QLabel* boots_lbl;
+    QLabel* belt_lbl;
+
     QLineEdit* vit_text;
     QLineEdit* str_text;
     QLineEdit* dex_text;
@@ -76,7 +83,7 @@ private:
 
     Controller* controller;
 
-    void addCommand(QVBoxLayout *layout);
+    void addCommand(QHBoxLayout *layout);
     void addLabel(QHBoxLayout* layout);
 };
 

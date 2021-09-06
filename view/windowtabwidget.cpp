@@ -3,23 +3,16 @@
 
 windowtabwidget::windowtabwidget(QWidget *parent) : QWidget(parent)
 {
-    QVBoxLayout* main = new QVBoxLayout;
+    QHBoxLayout* main = new QHBoxLayout;
     addCommand(main);
     setLayout(main);
     //setMinimumSize(1024,600);
 }
 
-void windowtabwidget::addCommand(QVBoxLayout *layout)
+void windowtabwidget::addCommand(QHBoxLayout *layout)
 {
-    QHBoxLayout* hLayout = new QHBoxLayout;
-    QFormLayout* form = new QFormLayout;
-
-    layout->addLayout(hLayout);
-    hLayout->addLayout(form);
-
-    form->setRowWrapPolicy(QFormLayout::WrapAllRows);
-    form->setVerticalSpacing(10);
-    form->setContentsMargins(11,20,0,0);
+    QVBoxLayout* layoutCharacter = new QVBoxLayout;
+    layout->addLayout(layoutCharacter);
 
     weapon_box = new SmartComboBox(this);
     helm_box = new SmartComboBox(this);
@@ -30,31 +23,81 @@ void windowtabwidget::addCommand(QVBoxLayout *layout)
     item2_box = new SmartComboBox(this);
     item3_box = new SmartComboBox(this);
 
-    weapon_box->setFixedWidth(250);
-    helm_box->setFixedWidth(250);
-    chest_box->setFixedWidth(250);
-    gloves_box->setFixedWidth(250);
-    boots_box->setFixedWidth(250);
-    item1_box->setFixedWidth(250);
-    item2_box->setFixedWidth(250);
-    item3_box->setFixedWidth(250);
+    weapon_box->setMinimumWidth(250);
+    helm_box->setMinimumWidth(250);
+    chest_box->setMinimumWidth(250);
+    gloves_box->setMinimumWidth(250);
+    boots_box->setMinimumWidth(250);
+    item1_box->setMinimumWidth(250);
+    item2_box->setMinimumWidth(250);
+    item3_box->setMinimumWidth(250);
 
-    form->addRow("Weapon",weapon_box);
-    form->addRow("Helm",helm_box);
-    form->addRow("Chest",chest_box);
-    form->addRow("Gloves",gloves_box);
-    form->addRow("Boots",boots_box);
-    form->addRow("Item1",item1_box);
-    form->addRow("Item2",item2_box);
-    form->addRow("Item3",item3_box);
+    QLabel* weap_lb = new QLabel("Weapon");
+    QLabel* helm_lb = new QLabel("Helm");
+    QLabel* chest_lb = new QLabel("Chest");
+    QLabel* gloves_lb = new QLabel("Gloves");
+    QLabel* boots_lb = new QLabel("Boots");
+    QLabel* item1_lb = new QLabel("Item1");
+    QLabel* item2_lb = new QLabel("Item2");
+    QLabel* item3_lb = new QLabel("Item3");
 
-    hLayout->addSpacing(200);
+    layoutCharacter->addWidget(weap_lb);
+    layoutCharacter->addWidget(weapon_box);
+    layoutCharacter->addWidget(helm_lb);
+    layoutCharacter->addWidget(helm_box);
+    layoutCharacter->addWidget(chest_lb);
+    layoutCharacter->addWidget(chest_box);
+    layoutCharacter->addWidget(gloves_lb);
+    layoutCharacter->addWidget(gloves_box);
+    layoutCharacter->addWidget(boots_lb);
+    layoutCharacter->addWidget(boots_box);
+    layoutCharacter->addWidget(item1_lb);
+    layoutCharacter->addWidget(item1_box);
+    layoutCharacter->addWidget(item2_lb);
+    layoutCharacter->addWidget(item2_box);
+    layoutCharacter->addWidget(item3_lb);
+    layoutCharacter->addWidget(item3_box);
 
-    addLabel(hLayout);
+    addLabel(layout);
 }
 
 void windowtabwidget::addLabel(QHBoxLayout *layout)
 {
+
+    sword_lbl  = new QLabel();
+    helm_lbl   = new QLabel();
+    chest_lbl  = new QLabel();
+    gloves_lbl = new QLabel();
+    boots_lbl  = new QLabel();
+    belt_lbl   = new QLabel();
+/*
+    QVBoxLayout* swordLayout = new QVBoxLayout();
+    layout->addLayout(swordLayout);
+
+    swordLayout->addWidget(sword_lbl);
+    sword_lbl->setPixmap(QPixmap("assets/b_sword.png"));
+
+    QVBoxLayout* armorLayout = new QVBoxLayout();
+    layout->addLayout(armorLayout);
+
+    armorLayout->addWidget(helm_lbl);
+    helm_lbl->setPixmap(QPixmap("assets/b_helm.png"));
+
+    QHBoxLayout* chestLayout = new QHBoxLayout();
+    armorLayout->addLayout(chestLayout);
+
+    chestLayout->addWidget(chest_lbl);
+    chestLayout->addWidget(gloves_lbl);
+
+    chest_lbl->setPixmap(QPixmap("assets/b_chest.png"));
+    gloves_lbl->setPixmap(QPixmap("assets/b_gloves.png"));
+
+    armorLayout->addWidget(belt_lbl);
+    belt_lbl->setPixmap(QPixmap("assets/b_belt.png"));
+
+    armorLayout->addWidget(boots_lbl);
+    boots_lbl->setPixmap(QPixmap("assets/b_boots.png"));*/
+
     QFormLayout* midLayout = new QFormLayout;
     QFormLayout* rightLayout = new QFormLayout;
 
@@ -116,8 +159,6 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     optimize = new QPushButton("Optimize");
     midLayout->addWidget(optimize);
 
-
-
     vit_lbl->setText("Affect the DEF");
     str_lbl->setText("Affect the ATK with heavy weapons");
     dex_lbl->setText("Affect the ATK with light weapons");
@@ -131,6 +172,8 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     rightLayout->addRow(str_lbl);
     rightLayout->addRow(dex_lbl);
     rightLayout->addRow(aim_lbl);
+
+
 
 }
 

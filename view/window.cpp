@@ -102,7 +102,7 @@ Window::Window(QWidget *parent) : QWidget(parent){
     addMenu(main);
     addCommand(main);
     setLayout(main);
-    setMinimumSize(1024,600);
+    setMinimumSize(1100,600);
 
 }
 
