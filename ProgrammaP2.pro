@@ -68,3 +68,12 @@ HEADERS += \
 
 
 DISTFILES += \
+    assets/b_char.png \
+    assets/redboots_char.png \
+    assets/redchest_char.png \
+    assets/redgloves_char.png \
+    assets/redhelm_char.png \
+    assets/reditem1_char.png \
+    assets/reditem2_char.png \
+    assets/reditem3_char.png \
+    assets/redsword_char.png

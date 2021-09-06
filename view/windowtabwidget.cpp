@@ -58,45 +58,27 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     layoutCharacter->addWidget(item3_lb);
     layoutCharacter->addWidget(item3_box);
 
+    connect(weapon_box,SIGNAL(highlighted(int)),this,SLOT(changeWeaponImage(int)));
+    connect(helm_box,SIGNAL(highlighted(int)),this,SLOT(changeHelmImage(int)));
+    connect(chest_box,SIGNAL(highlighted(int)),this,SLOT(changeChestImage(int)));
+    connect(gloves_box,SIGNAL(highlighted(int)),this,SLOT(changeGlovesImage(int)));
+    connect(boots_box,SIGNAL(highlighted(int)),this,SLOT(changeBootsImage(int)));
+    connect(item1_box,SIGNAL(highlighted(int)),this,SLOT(changeItem1Image(int)));
+    connect(item2_box,SIGNAL(highlighted(int)),this,SLOT(changeItem2Image(int)));
+    connect(item3_box,SIGNAL(highlighted(int)),this,SLOT(changeItem3Image(int)));
+
     addLabel(layout);
 }
 
 void windowtabwidget::addLabel(QHBoxLayout *layout)
 {
 
-    sword_lbl  = new QLabel();
-    helm_lbl   = new QLabel();
-    chest_lbl  = new QLabel();
-    gloves_lbl = new QLabel();
-    boots_lbl  = new QLabel();
-    belt_lbl   = new QLabel();
-/*
-    QVBoxLayout* swordLayout = new QVBoxLayout();
-    layout->addLayout(swordLayout);
+    char_lbl  = new QLabel();
+    layout->addWidget(char_lbl);
 
-    swordLayout->addWidget(sword_lbl);
-    sword_lbl->setPixmap(QPixmap("assets/b_sword.png"));
-
-    QVBoxLayout* armorLayout = new QVBoxLayout();
-    layout->addLayout(armorLayout);
-
-    armorLayout->addWidget(helm_lbl);
-    helm_lbl->setPixmap(QPixmap("assets/b_helm.png"));
-
-    QHBoxLayout* chestLayout = new QHBoxLayout();
-    armorLayout->addLayout(chestLayout);
-
-    chestLayout->addWidget(chest_lbl);
-    chestLayout->addWidget(gloves_lbl);
-
-    chest_lbl->setPixmap(QPixmap("assets/b_chest.png"));
-    gloves_lbl->setPixmap(QPixmap("assets/b_gloves.png"));
-
-    armorLayout->addWidget(belt_lbl);
-    belt_lbl->setPixmap(QPixmap("assets/b_belt.png"));
-
-    armorLayout->addWidget(boots_lbl);
-    boots_lbl->setPixmap(QPixmap("assets/b_boots.png"));*/
+    char_lbl->setPixmap(QPixmap("assets/b_char"));
+    char_lbl->setScaledContents(true);
+    char_lbl->setMinimumSize(300,500);
 
     QFormLayout* midLayout = new QFormLayout;
     QFormLayout* rightLayout = new QFormLayout;
@@ -301,4 +283,44 @@ void windowtabwidget::setItems(QList<int> l)
 void windowtabwidget::setId(int i){id = i;}
 
 int windowtabwidget::getId(){ return id;}
+
+void windowtabwidget::changeWeaponImage(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/redsword_char.png"));
+}
+
+void windowtabwidget::changeHelmImage(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/redhelm_char.png"));
+}
+
+void windowtabwidget::changeChestImage(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/redchest_char.png"));
+}
+
+void windowtabwidget::changeGlovesImage(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/redgloves_char.png"));
+}
+
+void windowtabwidget::changeBootsImage(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/redboots_char.png"));
+}
+
+void windowtabwidget::changeItem1Image(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/reditem1_char.png"));
+}
+
+void windowtabwidget::changeItem2Image(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/reditem2_char.png"));
+}
+
+void windowtabwidget::changeItem3Image(int i)
+{
+    char_lbl->setPixmap(QPixmap("assets/reditem3_char.png"));
+}
 

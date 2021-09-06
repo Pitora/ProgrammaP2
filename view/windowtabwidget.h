@@ -44,6 +44,14 @@ public:
 signals:
 
 public slots:
+    void changeWeaponImage(int i);
+    void changeHelmImage(int i);
+    void changeChestImage(int i);
+    void changeGlovesImage(int i);
+    void changeBootsImage(int i);
+    void changeItem1Image(int i);
+    void changeItem2Image(int i);
+    void changeItem3Image(int i);
 
 private:
 
@@ -69,12 +77,7 @@ private:
     QLabel* dex_lbl;
     QLabel* aim_lbl;
 
-    QLabel* sword_lbl;
-    QLabel* helm_lbl;
-    QLabel* chest_lbl;
-    QLabel* gloves_lbl;
-    QLabel* boots_lbl;
-    QLabel* belt_lbl;
+    QLabel* char_lbl;
 
     QLineEdit* vit_text;
     QLineEdit* str_text;
