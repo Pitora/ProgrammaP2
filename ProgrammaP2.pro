@@ -76,4 +76,5 @@ DISTFILES += \
     assets/reditem1_char.png \
     assets/reditem2_char.png \
     assets/reditem3_char.png \
-    assets/redsword_char.png
+    assets/redsword_char.png \
+    assets/scroll.jpg

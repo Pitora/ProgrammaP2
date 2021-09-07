@@ -7,6 +7,8 @@
 void Window::addMenu(QHBoxLayout *layout){
     QMenuBar* menu_bar = new QMenuBar(this);
 
+    menu_bar->setStyleSheet("selection-background-color : grey");
+
     file = new QMenu("File",menu_bar);
     create = new QMenu("Options",menu_bar);
     menu_bar->addMenu(file);
@@ -29,14 +31,35 @@ void Window::addCommand(QHBoxLayout *main)
     main->addWidget(tab);
 
     QHBoxLayout* menuL = new QHBoxLayout(menu);
+    QVBoxLayout* buildLayout = new QVBoxLayout();
+    menuL->addLayout(buildLayout);
+
+    QLabel* build = new QLabel("BUILD LIST");
+    build->setFont(QFont("Ubuntu",15));
+    buildLayout->addWidget(build);
+
     characters = new QListWidget(this);
     characters->setMinimumSize(200,500);
     characters->setMaximumWidth(350);
-    characters->setFont(QFont("Ubuntu",15));
-    menuL->addWidget(characters);
+    characters->setFont(QFont("Ubuntu",17));
+    buildLayout->addWidget(characters);
+    characters->setStyleSheet(" background-color : rgb(241,217,156)");
+    //characters->setAttribute(Qt::WA_NoSystemBackground);
 
     QVBoxLayout* layoutR = new QVBoxLayout();
     menuL->addLayout(layoutR);
+
+    QHBoxLayout* compL = new QHBoxLayout();
+    layoutR->addLayout(compL);
+
+    QLabel* c1 = new QLabel("Build 1");
+    c1->setFont(QFont("Ubuntu",15));
+    QLabel* c2 = new QLabel("Build 2");
+    c2->setFont(QFont("Ubuntu",15));
+
+    compL->addWidget(c1);
+    compL->addWidget(c2);
+
     QHBoxLayout* layoutCompare = new QHBoxLayout();
     layoutR->addLayout(layoutCompare);
     compareBox1 = new QTextEdit();
@@ -44,11 +67,13 @@ void Window::addCommand(QHBoxLayout *main)
 
     compareBox1->setReadOnly(true);
     compareBox1->setMinimumSize(300,420);
-    compareBox1->setFontPointSize(15);
+    compareBox1->setFontPointSize(19);
+    compareBox1->setStyleSheet(" background-color : rgb(241,217,156)");
 
     compareBox2->setReadOnly(true);
     compareBox2->setMinimumSize(300,420);
-    compareBox2->setFontPointSize(15);
+    compareBox2->setFontPointSize(19);
+    compareBox2->setStyleSheet(" background-color : rgb(241,217,156)");
 
     layoutCompare->addWidget(compareBox1);
     layoutCompare->addWidget(compareBox2);
@@ -58,7 +83,7 @@ void Window::addCommand(QHBoxLayout *main)
     comp = new QCheckBox();
     comboLayout->addWidget(comp);
     comboLayout->setAlignment(comp,Qt::AlignHCenter);
-    comp->setText("Compare");
+    comp->setText("COMPARE");
     comp->setMinimumSize(100,80);
     comp->setMaximumHeight(400);
     comp->setFont(QFont("Ubuntu",15));
@@ -77,6 +102,9 @@ void Window::addCommand(QHBoxLayout *main)
     def->setMaximumWidth(300);
 
     layoutButton->addWidget(import);
+    //import->setStyleSheet("QPushButton{background-color: rgba(255,255,255,0)}");
+    //import->setFlat(true);
+    import->setObjectName("import");
     layoutButton->addWidget(exp);
     layoutButton->addWidget(del);
     layoutButton->addWidget(def);
@@ -98,11 +126,13 @@ void Window::refresh()
 Window::Window(QWidget *parent) : QWidget(parent){
 
     setWindowTitle("Build Creator");
+    this->setObjectName("window");
     QHBoxLayout* main = new QHBoxLayout;
     addMenu(main);
     addCommand(main);
     setLayout(main);
-    setMinimumSize(1200,700);
+    this->setStyleSheet(" background-color : rgb(245,210,113)");
+    setMinimumSize(1208,700);
 
 }
 

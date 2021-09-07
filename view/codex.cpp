@@ -6,46 +6,36 @@ Codex::Codex(Controller *c,QList<QString> list,QList<int> id, QWidget *parent) :
     controller = c;
     setWindowTitle("Codex");
     setMinimumSize(500,600);
-
-    QHBoxLayout* backLayout = new QHBoxLayout();
-    QWidget* background = new QWidget();
-    backLayout->addWidget(background);
-
-    setAutoFillBackground(true);
-    /*QPixmap back("assets/codex.jpg");
-    //back = back.scaled(this->size(),Qt::IgnoreAspectRatio);
-    QPalette pal = this->palette();
-    pal.setBrush(QPalette::Window,back);
-    setPalette(pal);*/
+    setStyleSheet("background-color : rgb(155,131,68)");
 
     QHBoxLayout* main = new QHBoxLayout();
 
-    background->setLayout(main);
+    setLayout(main);
 
     QVBoxLayout* listLayout = new QVBoxLayout();
 
     sort_item = new SmartComboBox(this);
+    sort_item->setStyleSheet("QComboBox{selection-background-color : grey}");
+    sort_item->setFont(QFont("Ubuntu",15));
     main->addLayout(listLayout);
+
     listLayout->addWidget(sort_item);
+
     cont = new QListWidget();
     listLayout->addWidget(cont);
+    cont->setFont(QFont("Ubuntu",15));
 
     details = new QTextEdit();
+    details->setFontPointSize(15);
 
-    //background->setStyleSheet("{border-image:url(assets/codex.jpg)");
-    //background->setStyleSheet("background-image:url(assets/codex.jpg)");
-    //details->setStyleSheet("background-color: rgba(0,0,0,0)");
     details->setAttribute(Qt::WA_NoSystemBackground);
     cont->setAttribute(Qt::WA_NoSystemBackground);
-
-    setLayout(backLayout);
 
     QVBoxLayout* rightLayout = new QVBoxLayout();
     main->addLayout(rightLayout);
     rightLayout->addWidget(details);
     rightLayout->setContentsMargins(0,32,0,0);
     rightLayout->setSpacing(20);
-    //details->setGeometry(270,60,220,440);
 
 
 
@@ -59,10 +49,7 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
 {
 
     cont->clear();
-    //cont->setGeometry(20,60,220,490);
-    //cont->setFrameShape(QFrame::NoFrame);
 
-    //sort_item->setGeometry(20,20,200,25);
     sort_item->addItem("All",QVariant(0));
     sort_item->addItem("<Weapon>",QVariant(1));
     sort_item->addItem("__Melee",QVariant(2));
@@ -75,11 +62,6 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
     sort_item->addItem("<Consumable>",QVariant(10));
     sort_item->addItem("__Buff",QVariant(11));
     sort_item->addItem("__Healing",QVariant(12));
-
-
-    /*QPalette pal = cont->palette();
-    pal.setColor(QPalette::Base,pal.color(QPalette::Window));
-    cont->setPalette(pal);*/
 
 
     for(int i = 0; i < l.size();i++){

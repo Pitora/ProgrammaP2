@@ -31,6 +31,24 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     item1_box->setMinimumWidth(250);
     item2_box->setMinimumWidth(250);
     item3_box->setMinimumWidth(250);
+    weapon_box->setFont(QFont("Ubuntu",15));
+    helm_box->setFont(QFont("Ubuntu",15));
+    chest_box->setFont(QFont("Ubuntu",15));
+    gloves_box->setFont(QFont("Ubuntu",15));
+    boots_box->setFont(QFont("Ubuntu",15));
+    item1_box->setFont(QFont("Ubuntu",15));
+    item2_box->setFont(QFont("Ubuntu",15));
+    item3_box->setFont(QFont("Ubuntu",15));
+
+
+    weapon_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    helm_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    chest_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    gloves_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    boots_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    item1_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    item2_box->setStyleSheet("QComboBox{selection-background-color : grey}");
+    item3_box->setStyleSheet("QComboBox{selection-background-color : grey}");
 
     QLabel* weap_lb = new QLabel("Weapon");
     QLabel* helm_lb = new QLabel("Helm");
@@ -40,6 +58,15 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     QLabel* item1_lb = new QLabel("Item1");
     QLabel* item2_lb = new QLabel("Item2");
     QLabel* item3_lb = new QLabel("Item3");
+
+    weap_lb->setFont(QFont("Ubuntu",15));
+    helm_lb->setFont(QFont("Ubuntu",15));
+    chest_lb->setFont(QFont("Ubuntu",15));
+    gloves_lb->setFont(QFont("Ubuntu",15));
+    boots_lb->setFont(QFont("Ubuntu",15));
+    item1_lb->setFont(QFont("Ubuntu",15));
+    item2_lb->setFont(QFont("Ubuntu",15));
+    item3_lb->setFont(QFont("Ubuntu",15));
 
     layoutCharacter->addWidget(weap_lb);
     layoutCharacter->addWidget(weapon_box);
@@ -60,14 +87,14 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
 
     layoutCharacter->
 
-    connect(weapon_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(helm_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(chest_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(gloves_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(boots_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(item1_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(item2_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
-    connect(item3_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(weapon_box,SIGNAL(highlighted(int)),this,SLOT(changeWeaponImage(int)));
+    connect(helm_box,SIGNAL(highlighted(int)),this,SLOT(changeHelmImage(int)));
+    connect(chest_box,SIGNAL(highlighted(int)),this,SLOT(changeChestImage(int)));
+    connect(gloves_box,SIGNAL(highlighted(int)),this,SLOT(changeGlovesImage(int)));
+    connect(boots_box,SIGNAL(highlighted(int)),this,SLOT(changeBootsImage(int)));
+    connect(item1_box,SIGNAL(highlighted(int)),this,SLOT(changeItem1Image(int)));
+    connect(item2_box,SIGNAL(highlighted(int)),this,SLOT(changeItem2Image(int)));
+    connect(item3_box,SIGNAL(highlighted(int)),this,SLOT(changeItem3Image(int)));
 
     addLabel(layout);
 }
@@ -81,11 +108,9 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     layout->addWidget(char_lbl);
     layout->addStretch(50);
 
-
     char_lbl->setPixmap(QPixmap("assets/b_char"));
     char_lbl->setScaledContents(true);
     char_lbl->setMaximumSize(400,500);
-
 
     QVBoxLayout* statLayout = new QVBoxLayout();
     layout->addLayout(statLayout);
@@ -96,22 +121,38 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
 
     build_name->setPlaceholderText("Build Name");
     build_name->setMaximumWidth(200);
-    build_name->setFrame(QFrame::NoFrame);
+    build_name->setFont(QFont("Ubuntu",15));
+    build_name->setStyleSheet(" background-color : rgb(241,217,156)");
 
     vit_lbl = new QLabel("VIT : ");
     str_lbl = new QLabel("STR : ");
     dex_lbl = new QLabel("DEX : ");
     aim_lbl = new QLabel("AIM : ");
 
+    vit_lbl->setFont(QFont("Ubuntu",15));
+    str_lbl->setFont(QFont("Ubuntu",15));
+    dex_lbl->setFont(QFont("Ubuntu",15));
+    aim_lbl->setFont(QFont("Ubuntu",15));
+
     vit_text = new QLineEdit();
     str_text = new QLineEdit();
     dex_text = new QLineEdit();
     aim_text = new QLineEdit();
 
-    vit_lbl->setFixedWidth(40);
-    str_lbl->setFixedWidth(40);
-    dex_lbl->setFixedWidth(40);
-    aim_lbl->setFixedWidth(40);
+    vit_text->setFont(QFont("Ubuntu",15));
+    str_text->setFont(QFont("Ubuntu",15));
+    dex_text->setFont(QFont("Ubuntu",15));
+    aim_text->setFont(QFont("Ubuntu",15));
+
+    vit_lbl->setFixedWidth(50);
+    str_lbl->setFixedWidth(50);
+    dex_lbl->setFixedWidth(50);
+    aim_lbl->setFixedWidth(50);
+
+    vit_text->setStyleSheet(" background-color : rgb(241,217,156)");
+    str_text->setStyleSheet(" background-color : rgb(241,217,156)");
+    dex_text->setStyleSheet(" background-color : rgb(241,217,156)");
+    aim_text->setStyleSheet(" background-color : rgb(241,217,156)");
 
     vit_text->setMaximumSize(50,30);
     str_text->setMaximumSize(50,30);
@@ -122,34 +163,38 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     statLayout->addLayout(vitL);
     vitL->addWidget(vit_lbl);
     vitL->addWidget(vit_text);
-    vitL->addWidget(new QLabel("Affect the DEF"));
+    QLabel* a = new QLabel("Affect the DEF");
+    a->setFont(QFont("Ubuntu",15));
+    vitL->addWidget(a);
 
     QHBoxLayout* strL = new QHBoxLayout();
     statLayout->addLayout(strL);
     strL->addWidget(str_lbl);
     strL->addWidget(str_text);
-    strL->addWidget(new QLabel("Affect the ATK with heavy weapons"));
+    QLabel* b = new QLabel("Affect the ATK with heavy weapons");
+    b->setFont(QFont("Ubuntu",15));
+    strL->addWidget(b);
 
     QHBoxLayout* dexL = new QHBoxLayout();
     statLayout->addLayout(dexL);
     dexL->addWidget(dex_lbl);
     dexL->addWidget(dex_text);
-    dexL->addWidget(new QLabel("Affect the ATK with light weapons"));
+    QLabel* c = new QLabel("Affect the ATK with light weapons");
+    c->setFont(QFont("Ubuntu",15));
+    dexL->addWidget(c);
 
     QHBoxLayout* aimL = new QHBoxLayout();
     statLayout->addLayout(aimL);
     aimL->addWidget(aim_lbl);
     aimL->addWidget(aim_text);
-    aimL->addWidget(new QLabel("Affect the ATK with Ranged weapons"));
+    QLabel* d = new QLabel("Affect the ATK with ranged weapons");
+    d->setFont(QFont("Ubuntu",15));
+    aimL->addWidget(d);
 
     vit_text->setValidator(new QIntValidator(0,9999,this));
     str_text->setValidator(new QIntValidator(0,9999,this));
     dex_text->setValidator(new QIntValidator(0,9999,this));
     aim_text->setValidator(new QIntValidator(0,9999,this));
-    vit_text->setFrame(false);
-    str_text->setFrame(false);
-    dex_text->setFrame(false);
-    aim_text->setFrame(false);
 
     QVBoxLayout* atkLayout = new QVBoxLayout();
     statLayout->addLayout(atkLayout);
@@ -157,103 +202,18 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     atk_lbl = new QLabel("ATK : ");
     def_lbl = new QLabel("DEF : ");
 
-    atk_lbl->setMaximumWidth(150);
-    def_lbl->setMaximumWidth(150);
+    atk_lbl->setFont(QFont("Ubuntu",30));
+    def_lbl->setFont(QFont("Ubuntu",30));
 
     atkLayout->addWidget(atk_lbl);
     atkLayout->addWidget(def_lbl);
-    //atkLayout->setAlignment(atk_lbl,Qt::AlignLeft);
-    //atkLayout->setAlignment(def_lbl,Qt::AlignLeft);
 
     optimize = new QPushButton("Optimize");
 
+    statLayout->insertSpacing(6,20);
     statLayout->addWidget(optimize);
+    optimize->setFont(QFont("Ubuntu",15));
     optimize->setFixedWidth(100);
-
-    //statLayout->setAlignment(optimize,Qt::AlignLeft);
-
-    /*descLayout->addWidget(new QLabel("Affect the DEF"));
-    descLayout->addWidget(new QLabel("Affect the ATK with heavy weapons"));
-    descLayout->addWidget(new QLabel("Affect the ATK with light weapons"));
-    descLayout->addWidget(new QLabel("Affect the ATK with ranged weapons"));
-
-
-    QFormLayout* midLayout = new QFormLayout;
-    QFormLayout* rightLayout = new QFormLayout;
-
-    midLayout->setContentsMargins(11,20,0,0);
-    layout->addLayout(midLayout);
-    layout->addLayout(rightLayout);
-    midLayout->setSpacing(30);
-
-    build_name = new QLineEdit();
-    atk_lbl = new QLabel();
-    def_lbl = new QLabel();
-    vit_lbl = new QLabel();
-    str_lbl = new QLabel();
-    dex_lbl = new QLabel();
-    aim_lbl = new QLabel();
-
-    vit_text = new QLineEdit();
-    str_text = new QLineEdit();
-    dex_text = new QLineEdit();
-    aim_text = new QLineEdit();
-
-    build_name->setPlaceholderText("Build Name");
-    QPalette pal = build_name->palette();
-    pal.setColor(QPalette::Base,pal.color(QPalette::Window));
-    build_name->setPalette(pal);
-    build_name->setFrame(QFrame::NoFrame);
-    build_name->setFixedWidth(200);
-    atk_lbl->setText("ATK : ");
-    def_lbl->setText("DEF : ");
-
-    vit_text->setMaximumWidth(70);
-    str_text->setMaximumWidth(70);
-    dex_text->setMaximumWidth(70);
-    aim_text->setMaximumWidth(70);
-
-    vit_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    str_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    dex_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    aim_text->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-
-    vit_text->setValidator(new QIntValidator(0,9999,this));
-    str_text->setValidator(new QIntValidator(0,9999,this));
-    dex_text->setValidator(new QIntValidator(0,9999,this));
-    aim_text->setValidator(new QIntValidator(0,9999,this));
-
-    vit_text->setFrame(false);
-    str_text->setFrame(false);
-    dex_text->setFrame(false);
-    aim_text->setFrame(false);
-
-    midLayout->addWidget(build_name);
-    midLayout->addRow("VIT : ", vit_text);
-    midLayout->addRow("STR : ", str_text);
-    midLayout->addRow("DEX : ", dex_text);
-    midLayout->addRow("AIM : ", aim_text);
-    midLayout->addWidget(atk_lbl);
-    midLayout->addWidget(def_lbl);
-
-    optimize = new QPushButton("Optimize");
-    midLayout->addWidget(optimize);
-
-    vit_lbl->setText("Affect the DEF");
-    str_lbl->setText("Affect the ATK with heavy weapons");
-    dex_lbl->setText("Affect the ATK with light weapons");
-    aim_lbl->setText("Affect the ATK with ranged weapons");
-
-    QSpacerItem* space = new QSpacerItem(17,20);
-    rightLayout->setContentsMargins(11,20,0,0);
-    rightLayout->setSpacing(35);
-    rightLayout->addItem(space);
-    rightLayout->addRow(vit_lbl);
-    rightLayout->addRow(str_lbl);
-    rightLayout->addRow(dex_lbl);
-    rightLayout->addRow(aim_lbl);
-*/
-
 
 }
 
@@ -379,41 +339,44 @@ void windowtabwidget::setItems(QList<int> l)
     item3_box->setCurrentIndex(item3_box->findData(l[2]));
 }
 
-void windowtabwidget::changeImage(int)
+void windowtabwidget::changeWeaponImage(int)
 {
-    QWidget* q = this->focusWidget();
-    if(q == weapon_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/redsword_char.png"));
-    }
-    else if(q == helm_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/redhelm_char.png"));
-    }
-    else if (q == chest_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/redchest_char.png"));
-    }
-    else if (q == gloves_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/redgloves_char.png"));
-    }
-    else if (q == boots_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/redboots_char.png"));
-    }
-    else if (q == item1_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/reditem1_char.png"));
-    }
-    else if(q == item2_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/reditem2_char.png"));
-    }
-    else if (q == item3_box)
-    {
-        char_lbl->setPixmap(QPixmap("assets/reditem3_char.png"));
-    }
+    char_lbl->setPixmap(QPixmap("assets/redsword_char.png"));
+}
+
+void windowtabwidget::changeHelmImage(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/redhelm_char.png"));
+}
+
+void windowtabwidget::changeChestImage(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/redchest_char.png"));
+}
+
+void windowtabwidget::changeGlovesImage(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/redgloves_char.png"));
+}
+
+void windowtabwidget::changeBootsImage(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/redboots_char.png"));
+}
+
+void windowtabwidget::changeItem1Image(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/reditem1_char.png"));
+}
+
+void windowtabwidget::changeItem2Image(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/reditem2_char.png"));
+}
+
+void windowtabwidget::changeItem3Image(int)
+{
+    char_lbl->setPixmap(QPixmap("assets/reditem3_char.png"));
 }
 
 void windowtabwidget::setId(int i){id = i;}

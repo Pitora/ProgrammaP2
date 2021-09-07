@@ -215,6 +215,8 @@ AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
 
     c = cont;
 
+    setStyleSheet("background-color: rgb(160,150,150)");
+
     QFormLayout* main = new QFormLayout;
     setLayout(main);
 

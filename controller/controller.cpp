@@ -63,7 +63,7 @@ QColor Controller::colorCompare(char c)
 {
     if(c == '>'){return Qt::red;}
     if(c == '='){return Qt::blue;}
-    if(c == '<'){return Qt::green;}
+    if(c == '<'){return Qt::darkGreen;}
     return Qt::black;
 }
 

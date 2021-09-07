@@ -46,7 +46,14 @@ public:
 signals:
 
 public slots:
-    void changeImage(int);
+    void changeWeaponImage(int);
+    void changeHelmImage(int);
+    void changeChestImage(int);
+    void changeGlovesImage(int);
+    void changeBootsImage(int);
+    void changeItem1Image(int);
+    void changeItem2Image(int);
+    void changeItem3Image(int);
 
 private:
 
