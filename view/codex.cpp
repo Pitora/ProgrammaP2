@@ -5,23 +5,64 @@ Codex::Codex(Controller *c,QList<QString> list,QList<int> id, QWidget *parent) :
 {
     controller = c;
     setWindowTitle("Codex");
-    setFixedSize(500,600);
+    setMinimumSize(500,600);
+
+    QHBoxLayout* backLayout = new QHBoxLayout();
+    QWidget* background = new QWidget();
+    backLayout->addWidget(background);
+
+    setAutoFillBackground(true);
+    /*QPixmap back("assets/codex.jpg");
+    //back = back.scaled(this->size(),Qt::IgnoreAspectRatio);
+    QPalette pal = this->palette();
+    pal.setBrush(QPalette::Window,back);
+    setPalette(pal);*/
+
+    QHBoxLayout* main = new QHBoxLayout();
+
+    background->setLayout(main);
+
+    QVBoxLayout* listLayout = new QVBoxLayout();
+
+    sort_item = new SmartComboBox(this);
+    main->addLayout(listLayout);
+    listLayout->addWidget(sort_item);
+    cont = new QListWidget();
+    listLayout->addWidget(cont);
+
+    details = new QTextEdit();
+
+    //background->setStyleSheet("{border-image:url(assets/codex.jpg)");
+    //background->setStyleSheet("background-image:url(assets/codex.jpg)");
+    //details->setStyleSheet("background-color: rgba(0,0,0,0)");
+    details->setAttribute(Qt::WA_NoSystemBackground);
+    cont->setAttribute(Qt::WA_NoSystemBackground);
+
+    setLayout(backLayout);
+
+    QVBoxLayout* rightLayout = new QVBoxLayout();
+    main->addLayout(rightLayout);
+    rightLayout->addWidget(details);
+    rightLayout->setContentsMargins(0,32,0,0);
+    rightLayout->setSpacing(20);
+    //details->setGeometry(270,60,220,440);
+
+
 
     addScrollArea(list,id);
-    addControls();
+    addControls(rightLayout);
 
 }
 
 //setta la scroll area e la textbox per i dettagli
 void Codex::addScrollArea(QList<QString> l,QList<int> id)
 {
-    cont = new QListWidget(this);
+
     cont->clear();
-    cont->setGeometry(20,60,220,490);
+    //cont->setGeometry(20,60,220,490);
     //cont->setFrameShape(QFrame::NoFrame);
 
-    sort_item = new SmartComboBox(this);
-    sort_item->setGeometry(20,20,200,25);
+    //sort_item->setGeometry(20,20,200,25);
     sort_item->addItem("All",QVariant(0));
     sort_item->addItem("<Weapon>",QVariant(1));
     sort_item->addItem("__Melee",QVariant(2));
@@ -36,9 +77,10 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
     sort_item->addItem("__Healing",QVariant(12));
 
 
-    QPalette pal = cont->palette();
+    /*QPalette pal = cont->palette();
     pal.setColor(QPalette::Base,pal.color(QPalette::Window));
-    cont->setPalette(pal);
+    cont->setPalette(pal);*/
+
 
     for(int i = 0; i < l.size();i++){
         QListWidgetItem* item = new QListWidgetItem();
@@ -47,10 +89,8 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
         cont->addItem(item);
     }
 
-    details = new QTextEdit(this);
-    details->setGeometry(270,60,220,440);
     details->setReadOnly(true);
-    details->setPalette(pal);
+    //details->setPalette(pal);
 
     details->setReadOnly(true);
     details->setFrameShape(QFrame::NoFrame);
@@ -60,15 +100,22 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
 }
 
 //setta i bottoni
-void Codex::addControls()
+void Codex::addControls(QVBoxLayout* layout)
 {
+
+    QHBoxLayout* buttonsLayout = new QHBoxLayout();
+    layout->addLayout(buttonsLayout);
     remove_item = new QPushButton("Remove",this);
     import_item = new QPushButton("Import",this);
     export_item = new QPushButton("Export",this);
 
-    remove_item->setGeometry(260,520,60,30);
-    import_item->setGeometry(330,520,60,30);
-    export_item->setGeometry(400,520,60,30);
+    //remove_item->setGeometry(260,520,60,30);
+    //import_item->setGeometry(330,520,60,30);
+    //export_item->setGeometry(400,520,60,30);
+
+    buttonsLayout->addWidget(remove_item);
+    buttonsLayout->addWidget(import_item);
+    buttonsLayout->addWidget(export_item);
 
     remove_item->setEnabled(false);
     export_item->setEnabled(false);

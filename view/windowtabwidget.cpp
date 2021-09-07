@@ -6,7 +6,6 @@ windowtabwidget::windowtabwidget(QWidget *parent) : QWidget(parent)
     QHBoxLayout* main = new QHBoxLayout;
     addCommand(main);
     setLayout(main);
-    //setMinimumSize(1024,600);
 }
 
 void windowtabwidget::addCommand(QHBoxLayout *layout)
@@ -73,13 +72,109 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
 void windowtabwidget::addLabel(QHBoxLayout *layout)
 {
 
+    layout->setMargin(30);
     char_lbl  = new QLabel();
+    layout->addStretch(50);
     layout->addWidget(char_lbl);
+    layout->addStretch(50);
+
 
     char_lbl->setPixmap(QPixmap("assets/b_char"));
     char_lbl->setScaledContents(true);
-    char_lbl->setMinimumSize(300,500);
+    char_lbl->setMaximumSize(400,500);
 
+
+    QVBoxLayout* statLayout = new QVBoxLayout();
+    layout->addLayout(statLayout);
+    build_name = new QLineEdit();
+    statLayout->addWidget(build_name);
+
+    statLayout->setMargin(50);
+
+    build_name->setPlaceholderText("Build Name");
+    build_name->setMaximumWidth(200);
+    build_name->setFrame(QFrame::NoFrame);
+
+    vit_lbl = new QLabel("VIT : ");
+    str_lbl = new QLabel("STR : ");
+    dex_lbl = new QLabel("DEX : ");
+    aim_lbl = new QLabel("AIM : ");
+
+    vit_text = new QLineEdit();
+    str_text = new QLineEdit();
+    dex_text = new QLineEdit();
+    aim_text = new QLineEdit();
+
+    vit_lbl->setFixedWidth(40);
+    str_lbl->setFixedWidth(40);
+    dex_lbl->setFixedWidth(40);
+    aim_lbl->setFixedWidth(40);
+
+    vit_text->setMaximumSize(50,30);
+    str_text->setMaximumSize(50,30);
+    dex_text->setMaximumSize(50,30);
+    aim_text->setMaximumSize(50,30);
+
+    QHBoxLayout* vitL = new QHBoxLayout();
+    statLayout->addLayout(vitL);
+    vitL->addWidget(vit_lbl);
+    vitL->addWidget(vit_text);
+    vitL->addWidget(new QLabel("Affect the DEF"));
+
+    QHBoxLayout* strL = new QHBoxLayout();
+    statLayout->addLayout(strL);
+    strL->addWidget(str_lbl);
+    strL->addWidget(str_text);
+    strL->addWidget(new QLabel("Affect the ATK with heavy weapons"));
+
+    QHBoxLayout* dexL = new QHBoxLayout();
+    statLayout->addLayout(dexL);
+    dexL->addWidget(dex_lbl);
+    dexL->addWidget(dex_text);
+    dexL->addWidget(new QLabel("Affect the ATK with light weapons"));
+
+    QHBoxLayout* aimL = new QHBoxLayout();
+    statLayout->addLayout(aimL);
+    aimL->addWidget(aim_lbl);
+    aimL->addWidget(aim_text);
+    aimL->addWidget(new QLabel("Affect the ATK with Ranged weapons"));
+
+    vit_text->setValidator(new QIntValidator(0,9999,this));
+    str_text->setValidator(new QIntValidator(0,9999,this));
+    dex_text->setValidator(new QIntValidator(0,9999,this));
+    aim_text->setValidator(new QIntValidator(0,9999,this));
+    vit_text->setFrame(false);
+    str_text->setFrame(false);
+    dex_text->setFrame(false);
+    aim_text->setFrame(false);
+
+    QVBoxLayout* atkLayout = new QVBoxLayout();
+    statLayout->addLayout(atkLayout);
+
+    atk_lbl = new QLabel("ATK : ");
+    def_lbl = new QLabel("DEF : ");
+
+    atk_lbl->setMaximumWidth(150);
+    def_lbl->setMaximumWidth(150);
+
+    atkLayout->addWidget(atk_lbl);
+    atkLayout->addWidget(def_lbl);
+    //atkLayout->setAlignment(atk_lbl,Qt::AlignLeft);
+    //atkLayout->setAlignment(def_lbl,Qt::AlignLeft);
+
+    optimize = new QPushButton("Optimize");
+
+    statLayout->addWidget(optimize);
+    optimize->setFixedWidth(100);
+
+    //statLayout->setAlignment(optimize,Qt::AlignLeft);
+
+    /*descLayout->addWidget(new QLabel("Affect the DEF"));
+    descLayout->addWidget(new QLabel("Affect the ATK with heavy weapons"));
+    descLayout->addWidget(new QLabel("Affect the ATK with light weapons"));
+    descLayout->addWidget(new QLabel("Affect the ATK with ranged weapons"));
+
+    /*
     QFormLayout* midLayout = new QFormLayout;
     QFormLayout* rightLayout = new QFormLayout;
 
@@ -154,7 +249,7 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     rightLayout->addRow(str_lbl);
     rightLayout->addRow(dex_lbl);
     rightLayout->addRow(aim_lbl);
-
+*/
 
 
 }
