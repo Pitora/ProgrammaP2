@@ -337,18 +337,19 @@ void Controller::optimize()
     refreshTab();
 }
 
-void Controller::getInfoChar(QListWidgetItem *i)
+void Controller::getInfoChar(QListWidgetItem *)
 {
-    C<std::string> s = col->getInfoChar(window->getIndSelChar());
+    int index = window->getIndSelChar();
+    C<std::string> s = col->getInfoChar(index);
     QList<QString> stats;
     for(auto i = s.begin();i != s.end(); ++i){
         stats.append(QString::fromStdString(*i));
     }
     if(!window->getCheckValue()){
-        activeChar = window->getIndSelChar();
+        activeChar = index;
         window->refreshCompare(stats);
     }else{
-        C<char> o = col->compareChara(activeChar,window->getIndSelChar());
+        C<char> o = col->compareChara(activeChar,index);
         auto i = o.begin();
         window->clearCompare();
         window->setWithColor(("Name : " + stats[0]+"\n\n"),Qt::black);

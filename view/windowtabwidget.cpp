@@ -22,6 +22,7 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     item2_box = new SmartComboBox(this);
     item3_box = new SmartComboBox(this);
 
+
     weapon_box->setMinimumWidth(250);
     helm_box->setMinimumWidth(250);
     chest_box->setMinimumWidth(250);
@@ -57,14 +58,16 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     layoutCharacter->addWidget(item3_lb);
     layoutCharacter->addWidget(item3_box);
 
-    connect(weapon_box,SIGNAL(highlighted(int)),this,SLOT(changeWeaponImage(int)));
-    connect(helm_box,SIGNAL(highlighted(int)),this,SLOT(changeHelmImage(int)));
-    connect(chest_box,SIGNAL(highlighted(int)),this,SLOT(changeChestImage(int)));
-    connect(gloves_box,SIGNAL(highlighted(int)),this,SLOT(changeGlovesImage(int)));
-    connect(boots_box,SIGNAL(highlighted(int)),this,SLOT(changeBootsImage(int)));
-    connect(item1_box,SIGNAL(highlighted(int)),this,SLOT(changeItem1Image(int)));
-    connect(item2_box,SIGNAL(highlighted(int)),this,SLOT(changeItem2Image(int)));
-    connect(item3_box,SIGNAL(highlighted(int)),this,SLOT(changeItem3Image(int)));
+    layoutCharacter->
+
+    connect(weapon_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(helm_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(chest_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(gloves_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(boots_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(item1_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(item2_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
+    connect(item3_box,SIGNAL(highlighted(int)),this,SLOT(changeImage(int)));
 
     addLabel(layout);
 }
@@ -174,7 +177,7 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     descLayout->addWidget(new QLabel("Affect the ATK with light weapons"));
     descLayout->addWidget(new QLabel("Affect the ATK with ranged weapons"));
 
-    /*
+
     QFormLayout* midLayout = new QFormLayout;
     QFormLayout* rightLayout = new QFormLayout;
 
@@ -273,6 +276,7 @@ void windowtabwidget::setController(Controller *c)
     connect(item1_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem1(QVariant)));
     connect(item2_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem2(QVariant)));
     connect(item3_box,SIGNAL(activated(QVariant)),controller,SLOT(changeItem3(QVariant)));
+
 
     connect(optimize,SIGNAL(clicked()),controller,SLOT(optimize()));
 }
@@ -375,47 +379,50 @@ void windowtabwidget::setItems(QList<int> l)
     item3_box->setCurrentIndex(item3_box->findData(l[2]));
 }
 
+void windowtabwidget::changeImage(int)
+{
+    QWidget* q = this->focusWidget();
+    if(q == weapon_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/redsword_char.png"));
+    }
+    else if(q == helm_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/redhelm_char.png"));
+    }
+    else if (q == chest_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/redchest_char.png"));
+    }
+    else if (q == gloves_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/redgloves_char.png"));
+    }
+    else if (q == boots_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/redboots_char.png"));
+    }
+    else if (q == item1_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/reditem1_char.png"));
+    }
+    else if(q == item2_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/reditem2_char.png"));
+    }
+    else if (q == item3_box)
+    {
+        char_lbl->setPixmap(QPixmap("assets/reditem3_char.png"));
+    }
+}
+
 void windowtabwidget::setId(int i){id = i;}
 
 int windowtabwidget::getId(){ return id;}
 
-void windowtabwidget::changeWeaponImage(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/redsword_char.png"));
-}
 
-void windowtabwidget::changeHelmImage(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/redhelm_char.png"));
-}
 
-void windowtabwidget::changeChestImage(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/redchest_char.png"));
-}
 
-void windowtabwidget::changeGlovesImage(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/redgloves_char.png"));
-}
 
-void windowtabwidget::changeBootsImage(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/redboots_char.png"));
-}
 
-void windowtabwidget::changeItem1Image(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/reditem1_char.png"));
-}
-
-void windowtabwidget::changeItem2Image(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/reditem2_char.png"));
-}
-
-void windowtabwidget::changeItem3Image(int i)
-{
-    char_lbl->setPixmap(QPixmap("assets/reditem3_char.png"));
-}
 

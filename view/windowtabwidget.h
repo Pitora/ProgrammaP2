@@ -38,20 +38,15 @@ public:
     void setArmor(QList<int> l);
     void setItems(QList<int> l);
 
+
+
     void setId(int i);
     int getId();
 
 signals:
 
 public slots:
-    void changeWeaponImage(int i);
-    void changeHelmImage(int i);
-    void changeChestImage(int i);
-    void changeGlovesImage(int i);
-    void changeBootsImage(int i);
-    void changeItem1Image(int i);
-    void changeItem2Image(int i);
-    void changeItem3Image(int i);
+    void changeImage(int);
 
 private:
 
