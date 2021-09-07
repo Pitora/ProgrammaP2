@@ -84,7 +84,7 @@ std::string Weapon::getInfo() const{
 
 int Weapon::calcAttack(int cStr, int cDex, int cAim) const
 {
-    return raw_attack_value+(cStr*scaling_str)+(cDex*scaling_dex)+(cAim*scaling_aim);
+    //return raw_attack_value+(cStr*scaling_str)+(cDex*scaling_dex)+(cAim*scaling_aim);
 }
 
 

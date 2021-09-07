@@ -6,11 +6,12 @@
 //aggiunge la barra dei menu  e setta i comandi relativi
 void Window::addMenu(QHBoxLayout *layout){
     QMenuBar* menu_bar = new QMenuBar(this);
-
     menu_bar->setStyleSheet("selection-background-color : grey");
 
     file = new QMenu("File",menu_bar);
     create = new QMenu("Options",menu_bar);
+    file->setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
+    create->setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
     menu_bar->addMenu(file);
     menu_bar->addMenu(create);
     create->addAction(new QAction("Create Weapon",file));
@@ -44,7 +45,9 @@ void Window::addCommand(QHBoxLayout *main)
     characters->setFont(QFont("Ubuntu",17));
     buildLayout->addWidget(characters);
     characters->setStyleSheet(" background-color : rgb(241,217,156)");
-    //characters->setAttribute(Qt::WA_NoSystemBackground);
+    QLabel* help =new QLabel("Click once to show build preview\nDouble click to modify build");
+    help->setFont(QFont("Ubuntu",10,-1,true));
+    buildLayout->addWidget(help);
 
     QVBoxLayout* layoutR = new QVBoxLayout();
     menuL->addLayout(layoutR);
@@ -87,6 +90,7 @@ void Window::addCommand(QHBoxLayout *main)
     comp->setMinimumSize(100,80);
     comp->setMaximumHeight(400);
     comp->setFont(QFont("Ubuntu",15));
+    comp->setDisabled(true);
 
     QHBoxLayout* layoutButton = new QHBoxLayout();
     layoutR->addLayout(layoutButton);
@@ -102,8 +106,6 @@ void Window::addCommand(QHBoxLayout *main)
     def->setMaximumWidth(300);
 
     layoutButton->addWidget(import);
-    //import->setStyleSheet("QPushButton{background-color: rgba(255,255,255,0)}");
-    //import->setFlat(true);
     import->setObjectName("import");
     layoutButton->addWidget(exp);
     layoutButton->addWidget(del);
@@ -116,6 +118,7 @@ void Window::addCommand(QHBoxLayout *main)
 void Window::refresh()
 {
     characters->clear();
+    comp->setDisabled(true);
     comp->setCheckState(Qt::Unchecked);
     compareBox1->clear();
     compareBox2->clear();
@@ -125,6 +128,7 @@ void Window::refresh()
 //setta la view
 Window::Window(QWidget *parent) : QWidget(parent){
 
+
     setWindowTitle("Build Creator");
     this->setObjectName("window");
     QHBoxLayout* main = new QHBoxLayout;
@@ -132,7 +136,8 @@ Window::Window(QWidget *parent) : QWidget(parent){
     addCommand(main);
     setLayout(main);
     this->setStyleSheet(" background-color : rgb(245,210,113)");
-    setMinimumSize(1208,700);
+    this->setMinimumSize(1300,700);
+    setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
 
 }
 
@@ -171,6 +176,7 @@ void Window::showMessage(QString wrn)
 
 int Window::getIndSelChar()
 {
+    comp->setDisabled(false);
     return characters->currentRow();
 }
 
@@ -222,6 +228,7 @@ void Window::addTab(QListWidgetItem *i)
         newTab->setController(controller);
         controller->addTab(newTab);
         tab->addTab(newTab,i->text());
+        tab->tabBar()->tabButton((tab->count()-1),QTabBar::RightSide)->setCursor(this->cursor());
     }
 }
 

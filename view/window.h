@@ -48,6 +48,8 @@ private:
 
     Controller* controller;
 
+    QCursor* curs;
+
     void addMenu(QHBoxLayout *layout);
 
     void addCommand(QHBoxLayout *layout);

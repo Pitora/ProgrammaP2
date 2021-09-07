@@ -7,6 +7,7 @@ Codex::Codex(Controller *c,QList<QString> list,QList<int> id, QWidget *parent) :
     setWindowTitle("Codex");
     setMinimumSize(500,600);
     setStyleSheet("background-color : rgb(155,131,68)");
+    setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
 
     QHBoxLayout* main = new QHBoxLayout();
 

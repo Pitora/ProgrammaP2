@@ -38,7 +38,7 @@ public:
     void setArmor(QList<int> l);
     void setItems(QList<int> l);
 
-
+    void resetImage();
 
     void setId(int i);
     int getId();

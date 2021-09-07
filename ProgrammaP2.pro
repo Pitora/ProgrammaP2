@@ -77,4 +77,11 @@ DISTFILES += \
     assets/reditem2_char.png \
     assets/reditem3_char.png \
     assets/redsword_char.png \
-    assets/scroll.jpg
+    assets/scroll.jpg \
+    assets/aimicon.png \
+    assets/atkicon.png \
+    assets/deficon.png \
+    assets/dexicon.png \
+    assets/stricon.png \
+    assets/viticon.png \
+    assets/cursor.png

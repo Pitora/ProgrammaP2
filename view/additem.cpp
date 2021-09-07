@@ -25,6 +25,22 @@ void AddItem::addControlsWeapon(QFormLayout *layout)
      rld_time = new QLineEdit;
      magazine = new QLineEdit;
 
+
+     name->setStyleSheet("background-color: rgb(201, 193, 193)");
+     durability->setStyleSheet("background-color: rgb(201, 193, 193)");
+     weight->setStyleSheet("background-color: rgb(201, 193, 193)");
+     rarity->setStyleSheet("background-color: rgb(201, 193, 193)");
+     cost->setStyleSheet("background-color: rgb(201, 193, 193)");
+     raw_atk->setStyleSheet("background-color: rgb(201, 193, 193)");
+     crit->setStyleSheet("background-color: rgb(201, 193, 193)");
+     scStr->setStyleSheet("background-color: rgb(201, 193, 193)");
+     scDex->setStyleSheet("background-color: rgb(201, 193, 193)");
+     scAim->setStyleSheet("background-color: rgb(201, 193, 193)");
+
+     recoil->setStyleSheet("background-color: rgb(201, 193, 193)");
+     rld_time->setStyleSheet("background-color: rgb(201, 193, 193)");
+     magazine->setStyleSheet("background-color: rgb(201, 193, 193)");
+
      save = new QPushButton("Save");
 
      addEffect();
@@ -109,6 +125,10 @@ void AddItem::addControlsArmor(QFormLayout *layout)
     type->addItem("GLOVES");
     type->addItem("BOOTS");
 
+    defense->setStyleSheet("background-color: rgb(201, 193, 193)");
+    name->setStyleSheet("background-color: rgb(201, 193, 193)");
+    durability->setStyleSheet("background-color: rgb(201, 193, 193)");
+
     addEffect();
 
     defense->setValidator(new QIntValidator(0,9999,this));
@@ -143,6 +163,10 @@ void AddItem::addControlsConsumable(QFormLayout *layout)
 
     type->addItem("BUFF");
     type->addItem("HEALING");
+
+    name->setStyleSheet("background-color: rgb(201, 193, 193)");
+    potency->setStyleSheet("background-color: rgb(201, 193, 193)");
+    duration->setStyleSheet("background-color: rgb(201, 193, 193)");
 
     percentage->addItem("10");
     percentage->addItem("25");
@@ -216,6 +240,7 @@ AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
     c = cont;
 
     setStyleSheet("background-color: rgb(160,150,150)");
+    setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
 
     QFormLayout* main = new QFormLayout;
     setLayout(main);

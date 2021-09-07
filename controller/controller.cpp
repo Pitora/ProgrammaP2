@@ -17,6 +17,7 @@ void Controller::refreshTab()
     if(activeTab >= 0 && !tabs.isEmpty()){
     getBoxItems();
     setWindowChar();
+    tabs[activeTab]->resetImage();
     }
 }
 

@@ -31,6 +31,7 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     item1_box->setMinimumWidth(250);
     item2_box->setMinimumWidth(250);
     item3_box->setMinimumWidth(250);
+
     weapon_box->setFont(QFont("Ubuntu",15));
     helm_box->setFont(QFont("Ubuntu",15));
     chest_box->setFont(QFont("Ubuntu",15));
@@ -39,7 +40,6 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     item1_box->setFont(QFont("Ubuntu",15));
     item2_box->setFont(QFont("Ubuntu",15));
     item3_box->setFont(QFont("Ubuntu",15));
-
 
     weapon_box->setStyleSheet("QComboBox{selection-background-color : grey}");
     helm_box->setStyleSheet("QComboBox{selection-background-color : grey}");
@@ -85,8 +85,6 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     layoutCharacter->addWidget(item3_lb);
     layoutCharacter->addWidget(item3_box);
 
-    layoutCharacter->
-
     connect(weapon_box,SIGNAL(highlighted(int)),this,SLOT(changeWeaponImage(int)));
     connect(helm_box,SIGNAL(highlighted(int)),this,SLOT(changeHelmImage(int)));
     connect(chest_box,SIGNAL(highlighted(int)),this,SLOT(changeChestImage(int)));
@@ -102,7 +100,6 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
 void windowtabwidget::addLabel(QHBoxLayout *layout)
 {
 
-    layout->setMargin(30);
     char_lbl  = new QLabel();
     layout->addStretch(50);
     layout->addWidget(char_lbl);
@@ -113,6 +110,7 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     char_lbl->setMaximumSize(400,500);
 
     QVBoxLayout* statLayout = new QVBoxLayout();
+    statLayout->setSpacing(10);
     layout->addLayout(statLayout);
     build_name = new QLineEdit();
     statLayout->addWidget(build_name);
@@ -124,10 +122,10 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     build_name->setFont(QFont("Ubuntu",15));
     build_name->setStyleSheet(" background-color : rgb(241,217,156)");
 
-    vit_lbl = new QLabel("VIT : ");
-    str_lbl = new QLabel("STR : ");
-    dex_lbl = new QLabel("DEX : ");
-    aim_lbl = new QLabel("AIM : ");
+    vit_lbl = new QLabel("VIT ");
+    str_lbl = new QLabel("STR ");
+    dex_lbl = new QLabel("DEX ");
+    aim_lbl = new QLabel("AIM ");
 
     vit_lbl->setFont(QFont("Ubuntu",15));
     str_lbl->setFont(QFont("Ubuntu",15));
@@ -161,6 +159,11 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
 
     QHBoxLayout* vitL = new QHBoxLayout();
     statLayout->addLayout(vitL);
+    QLabel* v_icon = new QLabel();
+    v_icon->setPixmap(QPixmap("assets/viticon.png"));
+    v_icon->setScaledContents(true);
+    v_icon->setFixedSize(40,40);
+    vitL->addWidget(v_icon);
     vitL->addWidget(vit_lbl);
     vitL->addWidget(vit_text);
     QLabel* a = new QLabel("Affect the DEF");
@@ -169,6 +172,11 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
 
     QHBoxLayout* strL = new QHBoxLayout();
     statLayout->addLayout(strL);
+    QLabel* s_icon = new QLabel();
+    s_icon->setPixmap(QPixmap("assets/stricon.png"));
+    s_icon->setScaledContents(true);
+    s_icon->setFixedSize(40,40);
+    strL->addWidget(s_icon);
     strL->addWidget(str_lbl);
     strL->addWidget(str_text);
     QLabel* b = new QLabel("Affect the ATK with heavy weapons");
@@ -177,6 +185,11 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
 
     QHBoxLayout* dexL = new QHBoxLayout();
     statLayout->addLayout(dexL);
+    QLabel* d_icon = new QLabel();
+    d_icon->setPixmap(QPixmap("assets/dexicon.png"));
+    d_icon->setScaledContents(true);
+    d_icon->setFixedSize(40,40);
+    dexL->addWidget(d_icon);
     dexL->addWidget(dex_lbl);
     dexL->addWidget(dex_text);
     QLabel* c = new QLabel("Affect the ATK with light weapons");
@@ -185,6 +198,11 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
 
     QHBoxLayout* aimL = new QHBoxLayout();
     statLayout->addLayout(aimL);
+    QLabel* a_icon = new QLabel();
+    a_icon->setPixmap(QPixmap("assets/aimicon.png"));
+    a_icon->setScaledContents(true);
+    a_icon->setFixedSize(40,40);
+    aimL->addWidget(a_icon);
     aimL->addWidget(aim_lbl);
     aimL->addWidget(aim_text);
     QLabel* d = new QLabel("Affect the ATK with ranged weapons");
@@ -196,21 +214,33 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     dex_text->setValidator(new QIntValidator(0,9999,this));
     aim_text->setValidator(new QIntValidator(0,9999,this));
 
-    QVBoxLayout* atkLayout = new QVBoxLayout();
+    QHBoxLayout* atkLayout = new QHBoxLayout();
     statLayout->addLayout(atkLayout);
 
-    atk_lbl = new QLabel("ATK : ");
-    def_lbl = new QLabel("DEF : ");
+    atk_lbl = new QLabel("ATK ");
+    QLabel* atk_icon = new QLabel();
+    atk_icon->setPixmap(QPixmap("assets/atkicon.png"));
+    atk_icon->setScaledContents(true);
+    atk_icon->setFixedSize(50,50);
+    atkLayout->addWidget(atk_icon);
+    atkLayout->addWidget(atk_lbl);
 
+
+    def_lbl = new QLabel("DEF ");
     atk_lbl->setFont(QFont("Ubuntu",30));
     def_lbl->setFont(QFont("Ubuntu",30));
-
-    atkLayout->addWidget(atk_lbl);
-    atkLayout->addWidget(def_lbl);
+    QHBoxLayout* defLayout = new QHBoxLayout();
+    statLayout->addLayout(defLayout);
+    QLabel* def_icon = new QLabel();
+    def_icon->setPixmap(QPixmap("assets/deficon.png"));
+    def_icon->setScaledContents(true);
+    def_icon->setFixedSize(50,50);
+    defLayout->addWidget(def_icon);
+    defLayout->addWidget(def_lbl);
 
     optimize = new QPushButton("Optimize");
 
-    statLayout->insertSpacing(6,20);
+    statLayout->insertSpacing(7,20);
     statLayout->addWidget(optimize);
     optimize->setFont(QFont("Ubuntu",15));
     optimize->setFixedWidth(100);
@@ -244,8 +274,8 @@ void windowtabwidget::setController(Controller *c)
 //imposta l'attacco e la difesa
 void windowtabwidget::calcDmgDef(int a, int d)
 {
-    atk_lbl->setText("ATK : " + QString::number(a));
-    def_lbl->setText("DEF : " + QString::number(d));
+    atk_lbl->setText("ATK  " + QString::number(a));
+    def_lbl->setText("DEF  " + QString::number(d));
 }
 
 //carica le combobox
@@ -337,6 +367,11 @@ void windowtabwidget::setItems(QList<int> l)
     item1_box->setCurrentIndex(item1_box->findData(l[0]));
     item2_box->setCurrentIndex(item2_box->findData(l[1]));
     item3_box->setCurrentIndex(item3_box->findData(l[2]));
+}
+
+void windowtabwidget::resetImage()
+{
+    char_lbl->setPixmap(QPixmap("assets/b_char.png"));
 }
 
 void windowtabwidget::changeWeaponImage(int)
