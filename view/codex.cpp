@@ -7,7 +7,7 @@ Codex::Codex(Controller *c,QList<QString> list,QList<int> id, QWidget *parent) :
 
     setWindowTitle("Codex");
     setMinimumSize(500,600);
-    setStyleSheet("background-color : rgb(155,131,68)");
+    setStyleSheet("background-color : rgb(49, 163, 112)");
     setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
 
     QHBoxLayout* main = new QHBoxLayout();
@@ -32,7 +32,7 @@ void Codex::addCommands(QHBoxLayout *layout)
     /* crea e setta la lista */
     cont = new QListWidget();
     cont->setFont(QFont("Ubuntu",15));
-    cont->setAttribute(Qt::WA_NoSystemBackground);
+    cont->setStyleSheet("QListWidget{background-color : rgb(62, 207, 142)}");
 
     /* aggiunge lista e combobox al layout */
     listLayout->addWidget(sort_item);
@@ -47,7 +47,7 @@ void Codex::addCommands(QHBoxLayout *layout)
 
     /* crea e setta la box dettagli */
     details = new QTextEdit();
-    details->setFontPointSize(15);
+    details->setFontPointSize(20);
     details->setReadOnly(true);
     details->setFrameShape(QFrame::NoFrame);
     details->setAttribute(Qt::WA_NoSystemBackground);

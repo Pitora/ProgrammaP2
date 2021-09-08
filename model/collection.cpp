@@ -68,11 +68,11 @@ Collection::~Collection(){
 void Collection::initialize(){
     std::cout<<"Sono stati generati i valori default"<<std::endl;
     if (!checkId(0)){
-        add("Broken Helm", "HELM", "NO EFFECT", 5, 50);
+        add("Broken helm", "HELM", "NO EFFECT", 5, 50);
         add("Broken chest", "CHEST", "NO EFFECT", 10, 50);
         add("Broken gloves", "GLOVES", "NO EFFECT", 4, 50);
         add("Broken boots", "BOOTS", "NO EFFECT", 7, 50);
-        add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "slash", "NO EFFECT", 500);
+        add("Broken sword", 2, 100, 1, 10, 5, 1, 1, 1, "SLASH", "NO EFFECT", 500);
         add("Broken bow", 1, 100, 1, 0, 10, 1, 1, 2, 100, 5, 300);
         add("Bad apple", "ALL STATS UP", 1, 50);
         add("Broken glass of water", "HP", 1);

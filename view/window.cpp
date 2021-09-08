@@ -140,20 +140,26 @@ void Window::addButtons(QVBoxLayout *layout)
     del->setMaximumWidth(300);
     def->setMaximumWidth(300);
 
+    exp->setDisabled(true);
+    del->setDisabled(true);
+
+    layoutButton->addWidget(def);
     layoutButton->addWidget(import);
     layoutButton->addWidget(exp);
     layoutButton->addWidget(del);
-    layoutButton->addWidget(def);
 }
 
+//refresha la view
 void Window::refresh()
 {
     characters->clear();
+    characters->addItems(controller->getCharNames());
     comp->setDisabled(true);
     comp->setCheckState(Qt::Unchecked);
     compareBox1->clear();
     compareBox2->clear();
-    characters->addItems(controller->getCharNames());
+    exp->setDisabled(false);
+    del->setDisabled(false);
 }
 
 //setta la view
@@ -197,6 +203,7 @@ void Window::setController(Controller *c){
 
 }
 
+//messageBox per warnings
 void Window::showMessage(QString wrn)
 {
     QMessageBox* warning = new QMessageBox();
@@ -210,6 +217,8 @@ void Window::showMessage(QString wrn)
 int Window::getIndSelChar()
 {
     comp->setDisabled(false);
+    exp->setDisabled(false);
+    del->setDisabled(false);
     return characters->currentRow();
 }
 
