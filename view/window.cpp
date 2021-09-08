@@ -132,7 +132,7 @@ void Window::addButtons(QVBoxLayout *layout)
 
     import = new QPushButton("Import Build");
     exp = new QPushButton("Export Build");
-    def = new QPushButton("Default Build");
+    def = new QPushButton("New Default Build");
     del = new QPushButton("Delete Build");
 
     import->setMaximumWidth(300);
@@ -158,8 +158,8 @@ void Window::refresh()
     comp->setCheckState(Qt::Unchecked);
     compareBox1->clear();
     compareBox2->clear();
-    exp->setDisabled(false);
-    del->setDisabled(false);
+    exp->setDisabled(true);
+    del->setDisabled(true);
 }
 
 //setta la view

@@ -414,15 +414,15 @@ void Controller::sortCodex(QVariant i)
         codex->refreshCodex(getItemsNames("Armor","GLOVES"),getItemsId("Armor","GLOVES"));
         break;
     case 8:
-        codex->refreshCodex(getItemsNames("Armor","BOOTS"),getItemsId("Armor","BOOST"));
+        codex->refreshCodex(getItemsNames("Armor","BOOTS"),getItemsId("Armor","BOOTS"));
         break;
-    case 10:
+    case 9:
         codex->refreshCodex(getItemsNames("Consumable","all"),getItemsId("Consumable","all"));
         break;
-    case 11:
+    case 10:
         codex->refreshCodex(getItemsNames("Consumable","Buff"),getItemsId("Consumable","Buff"));
         break;
-    case 12:
+    case 11:
         codex->refreshCodex(getItemsNames("Consumable","Healing"),getItemsId("Consumable","Healing"));
         break;
     default:

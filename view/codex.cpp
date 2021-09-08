@@ -70,12 +70,12 @@ void Codex::setCommands(QList<QString> l,QList<int> id)
     sort_item->addItem("__Ranged",QVariant(3));
     sort_item->addItem("<Armor>",QVariant(4));
     sort_item->addItem("__Helm",QVariant(5));
-    sort_item->addItem("__Chest",QVariant(7));
-    sort_item->addItem("__Gloves",QVariant(8));
-    sort_item->addItem("__Boots",QVariant(9));
-    sort_item->addItem("<Consumable>",QVariant(10));
-    sort_item->addItem("__Buff",QVariant(11));
-    sort_item->addItem("__Healing",QVariant(12));
+    sort_item->addItem("__Chest",QVariant(6));
+    sort_item->addItem("__Gloves",QVariant(7));
+    sort_item->addItem("__Boots",QVariant(8));
+    sort_item->addItem("<Consumable>",QVariant(9));
+    sort_item->addItem("__Buff",QVariant(10));
+    sort_item->addItem("__Healing",QVariant(11));
 
     for(int i = 0; i < l.size();i++){
         QListWidgetItem* item = new QListWidgetItem();
