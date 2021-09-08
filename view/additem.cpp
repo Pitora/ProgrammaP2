@@ -234,6 +234,17 @@ void AddItem::addItemEffect(QString s)
     }
 }
 
+void AddItem::showMessageC(QString wrn)
+{
+    QMessageBox* warning = new QMessageBox();
+    warning->setWindowTitle("Warning");
+    warning->setText(wrn);
+    warning->setIcon(QMessageBox::Warning);
+    warning->exec();
+}
+
+
+
 //setta il controller e il layout e decide quale controlli aggiungere alla finestra
 AddItem::AddItem(int i, Controller* cont, QWidget *parent) : QDialog(parent){
 
@@ -314,6 +325,8 @@ void AddItem::getArmorData()
         c->createArmor(armor_name,armor_type,armor_resistance,armor_defense,armor_durability);
         c->refreshTab();
         close();
+    }else{
+        showMessageC(QString("Please, fill the name."));
     }
 }
 
@@ -343,6 +356,8 @@ void AddItem::getWeaponData()
         }
         c->refreshTab();
         close();
+    }else{
+        showMessageC(QString("Please, fill the name."));
     }
 
 
@@ -364,5 +379,7 @@ void AddItem::getConsumableData()
         }
         c->refreshTab();
         close();
+    }else{
+        showMessageC(QString("Please, fill the name."));
     }
 }

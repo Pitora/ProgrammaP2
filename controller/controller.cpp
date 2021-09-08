@@ -1,5 +1,7 @@
 #include "controller.h"
 
+//Inizio public
+
 Controller::Controller(QObject *parent) : QObject(parent)
 {
 
@@ -27,7 +29,7 @@ void Controller::refreshWindow()
     window->refresh();
 }
 
-//restituisce una lista con i nomi degli oggetti
+//restituisce una lista con i nomi degli oggetti (filtrabile)
 QList<QString> Controller::getItemsNames(std::string type , std::string type2)
 {
    C<DeepPtr<Obj>> a;
@@ -39,6 +41,7 @@ QList<QString> Controller::getItemsNames(std::string type , std::string type2)
    return names;
 }
 
+//restituisce una lista con gli id degli oggetti (filtrabile)
 QList<int> Controller::getItemsId(std::string type , std::string type2)
 {
    C<DeepPtr<Obj>> a;
@@ -50,6 +53,7 @@ QList<int> Controller::getItemsId(std::string type , std::string type2)
    return id;
 }
 
+//restituisce una lista con i nomi delle build
 QList<QString> Controller::getCharNames()
 {
     C<std::string> names;
@@ -61,6 +65,7 @@ QList<QString> Controller::getCharNames()
     return a;
 }
 
+//restituiscce in base al carattere un colore
 QColor Controller::colorCompare(char c)
 {
     if(c == '>'){return Qt::red;}
@@ -68,6 +73,11 @@ QColor Controller::colorCompare(char c)
     if(c == '<'){return Qt::darkGreen;}
     return Qt::black;
 }
+
+//Fine public
+
+
+//Inizio public slots
 
 //calcola i valori di attacco e def
 void Controller::calc() {
@@ -184,8 +194,12 @@ void Controller::createBuff(QString n, QString e, int p, int d){
 void Controller::eliminateObj(){
     QVariant id = codex->getSelectedItem()->data(Qt::UserRole);
     if(!id.isNull()){
-        col->remove(id.toInt());
-        sortCodex(codex->getSortInd());
+        if (id.toInt() > 7){
+            col->remove(id.toInt());
+            sortCodex(codex->getSortInd());
+        }else{
+            window->showMessage(QString("Default Object can't de deleted."));
+        }
     }
 }
 
@@ -285,23 +299,13 @@ void Controller::changeItem3(QVariant id)
     prevId[2] = id.toInt();
 }
 
-void Controller::maxAtt()
-{
-    col->maxAtk(tabs[activeTab]->getId());
-    refreshTab();
-}
-
-void Controller::maxDef()
-{
-    col->maxDefense(tabs[activeTab]->getId(), "MAXIMIXE");
-    refreshTab();
-}
-
+//aggiunge un tab alla lista del controller
 void Controller::addTab(windowtabwidget *t)
 {
     tabs.append(t);
 }
 
+//rimuove un tab dalla lista del controller
 void Controller::deleteTab(int index)
 {
     if((index-1) == activeTab){
@@ -310,6 +314,7 @@ void Controller::deleteTab(int index)
     tabs.removeAt(index-1);
 }
 
+//cambia il numero salvato in memoria del tab attivo e refresha
 void Controller::changeTab(int i)
 {
     activeTab = i-1;
@@ -320,6 +325,7 @@ void Controller::changeTab(int i)
     }
 }
 
+//Controlla se è aperta un tab ccon l'id dato
 bool Controller::isTabOpen(int index)
 {
     for (auto i = tabs.begin(); i != tabs.end(); ++i)
@@ -332,6 +338,7 @@ bool Controller::isTabOpen(int index)
     return false;
 }
 
+//ottimizza la build
 void Controller::optimize()
 {
     col->maxAtk(tabs[activeTab]->getId());
@@ -339,6 +346,7 @@ void Controller::optimize()
     refreshTab();
 }
 
+//restituisce la preview di una build (e si occupa del compare se è la seconda selezionata)
 void Controller::getInfoChar(QListWidgetItem *)
 {
     int index = window->getIndSelChar();
@@ -377,53 +385,7 @@ void Controller::showCodex()
     codex->exec();
 }
 
-void Controller::importChar()  //per importare
-{
-    try {
-        QString path = window->importCharDialog();
-        col->importChara(path.toStdString());
-        refreshWindow();
-    } catch (std::runtime_error exc) {
-        std::cout<<"Errore prima dell'importazione"<<std::endl;
-
-    }
-}
-
-void Controller::importObj()  //per importare
-{
-    try {
-        QString path = codex->showImportDialog();
-        col->importObj(path.toStdString());
-        sortCodex(codex->getSortInd());
-    } catch (std::runtime_error exc) {
-        std::cout<<"Errore prima dell'importazione"<<std::endl;
-    }
-
-}
-
-void Controller::exportChar()  //per esportare
-{
-    try {
-        QString path = window->exportCharDialog();
-        col->exportChara(window->getIndSelChar(), path.toStdString());
-    } catch (std::runtime_error exc) {
-        std::cout<<"Errore prima dell'esportazione"<<std::endl;
-    }
-
-}
-
-void Controller::exportObj()  //per esportare
-{
-    try {
-        QString path = codex->showExpDialog();
-        int id = codex->getSelectedItem()->data(Qt::UserRole).toInt();
-        col->exportObj(id,path.toStdString());
-    } catch (std::runtime_error exc) {
-        std::cout<<"Errore prima dell'esportazione"<<std::endl;
-    }
-
-}
-
+//filtra la lista in Codex
 void Controller::sortCodex(QVariant i)
 {
     switch (i.toInt()) {
@@ -469,32 +431,89 @@ void Controller::sortCodex(QVariant i)
 
 }
 
+void Controller::importChar()  //per importare build
+{
+    try {
+        QString path = window->importCharDialog();
+        col->importChara(path.toStdString());
+        refreshWindow();
+    } catch (std::runtime_error exc) {
+        std::cout<<"Error before importation"<<std::endl;
+
+    }
+}
+
+void Controller::importObj()  //per importare oggetti
+{
+    try {
+        QString path = codex->showImportDialog();
+        col->importObj(path.toStdString());
+        sortCodex(codex->getSortInd());
+    } catch (std::runtime_error exc) {
+        std::cout<<"Error before importation"<<std::endl;
+    }
+
+}
+
+void Controller::exportChar()  //per esportare build
+{
+    try {
+        QString path = window->exportCharDialog();
+        col->exportChara(window->getIndSelChar(), path.toStdString());
+    } catch (std::runtime_error exc) {
+        std::cout<<"Error before exportation"<<std::endl;
+    }
+
+}
+
+void Controller::exportObj()  //per esportare oggetti
+{
+    try {
+        QString path = codex->showExpDialog();
+        int id = codex->getSelectedItem()->data(Qt::UserRole).toInt();
+        col->exportObj(id,path.toStdString());
+    } catch (std::runtime_error exc) {
+        std::cout<<"Error before exportation"<<std::endl;
+    }
+
+}
+
+
+//crea un personaggio di default
 void Controller::defaultChar()
 {
     col->createDefaultChar();
     refreshWindow();
 }
 
+//Elimina un personaggio
 void Controller::deleteChar()
 {
     int ind = window->getIndSelChar();
-    int i = -1;
-    for (int j = 0; j < tabs.count(); j++)
-    {
-        int i2 = tabs[j]->getId();
-        if(i2 == ind)
+    if (ind != 0){
+        int i = -1;
+        for (int j = 0; j < tabs.count(); j++)
         {
-            i = j;
-        }else if (i != -1 && i2 > ind){
-            tabs[j]->setId(i2-1);
+            int i2 = tabs[j]->getId();
+            if(i2 == ind)
+            {
+                i = j;
+            }else if (i2 > ind)
+            {
+                tabs[j]->setId(i2-1);
+            }
         }
+        if (i != -1)
+        {
+            window->closeTab(i+1);
+        }
+        col->deleteChar(ind);
+        refreshWindow();
+    }else{
+        window->showMessage(QString("First build can't be deleted."));
     }
-    if (i != -1)
-    {
-        window->closeTab(i+1);
-    }
-    col->deleteChar(ind);
-    refreshWindow();
 }
+
+//Fine public slots
 
 

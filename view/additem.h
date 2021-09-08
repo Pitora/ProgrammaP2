@@ -58,6 +58,8 @@ private:
     void addEffect();
     void addItemEffect(QString s);
 
+    void showMessageC(QString wrn);
+
 
 public:
     explicit AddItem(int i,Controller* cont,QWidget *parent = nullptr);

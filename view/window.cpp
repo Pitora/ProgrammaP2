@@ -200,6 +200,7 @@ void Window::setController(Controller *c){
 void Window::showMessage(QString wrn)
 {
     QMessageBox* warning = new QMessageBox();
+    warning->setWindowTitle("Warning");
     warning->setText(wrn);
     warning->setIcon(QMessageBox::Warning);
     warning->exec();
@@ -267,6 +268,8 @@ void Window::addTab(QListWidgetItem *i)
         controller->addTab(newTab);
         tab->addTab(newTab,i->text());
         tab->tabBar()->tabButton((tab->count()-1),QTabBar::RightSide)->setCursor(this->cursor());
+    }else{
+        showMessage(QString("This build is already open."));
     }
 }
 

@@ -512,7 +512,7 @@ void Collection::modifyCharArmorAlt(int i, int id)
               C<DeepPtr<Obj>>::const_iterator it = getIter(id);
               charas[i]->changeArmorEq(*it);
         }else throw err_sameObject();
-    }catch(err_sameObject){std::cout<<"L'oggetto è gia equipaggiato."<<std::endl;}
+    }catch(err_sameObject){/*std::cout<<"L'oggetto è gia equipaggiato."<<std::endl;*/}  //Tramite metodi come optimize viene invocato molte volte. Si può de-commentare senza causare problemi.
 }
 
 
@@ -618,12 +618,12 @@ void Collection::maxAtk(int i)
     }
 }
 
-//Metodo che cambia l'armatura del chara i perché abbia la più alta difesa. E' possibile specificare un tipo di resistenza per poter avere tutta l'armatura con quella resistenza (se possibile)
+//Metodo che cambia l'armatura del chara i affinché abbia la più alta difesa. E' possibile specificare un tipo di resistenza per poter avere tutta l'armatura con quella resistenza (se possibile)
 void Collection::maxDefense(int i,std::string s)
 {
     int p1,p2,p3,p4;
     p1 = p2 = p3 = p4 = -1;
-    for (C<DeepPtr<Obj>>::const_iterator it = list.begin(); it != list.end(); it++) //possibile modifica : interazione diretta con il character piuttosto del metodo secondario
+    for (C<DeepPtr<Obj>>::const_iterator it = list.begin(); it != list.end(); it++)
     {
         if (Armor* a = dynamic_cast<Armor*>(&(*(*it))))
         {
@@ -675,7 +675,7 @@ C<char> Collection::compareChara(int i1, int i2)
 
 }
 
-//Metodo utilizzato per comparare due valori
+//Metodo utilizzato per comparare due valori e avere un char (<,>,=) di ritorno
 char Collection::compareValue(int x, int y)
 {
     if (x < y)

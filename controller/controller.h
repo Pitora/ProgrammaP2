@@ -74,32 +74,28 @@ public slots:
     void changeItem1(QVariant id);
     void changeItem2(QVariant id);
     void changeItem3(QVariant id);
-    void maxAtt();
-    void maxDef();
 
+    //New
     void addTab(windowtabwidget* t);
     void deleteTab(int index);
     void changeTab(int i);
     bool isTabOpen(int index);
 
     void optimize();
-    void getInfoChar(QListWidgetItem* i);
 
+    void getInfoChar(QListWidgetItem* i);
     void getInfoObj(QListWidgetItem *item);
 
     void showCodex();
+    void sortCodex(QVariant i);
 
     void importChar();
     void importObj();
     void exportChar();
     void exportObj();
 
-    void sortCodex(QVariant i);
-
     void defaultChar();
     void deleteChar();
-    //void infoChar();
-    //void compareChar();
 
 };
 

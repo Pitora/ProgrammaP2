@@ -104,7 +104,7 @@ void windowtabwidget::addLabelChar(QHBoxLayout *layout)
 {
 
     char_lbl  = new QLabel();   
-    char_lbl->setPixmap(QPixmap("assets/b_char"));
+    char_lbl->setPixmap(QPixmap("assets/b_char.png"));
     char_lbl->setScaledContents(true);
     char_lbl->setMaximumSize(400,500);
 
