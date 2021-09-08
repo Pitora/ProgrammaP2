@@ -1,5 +1,6 @@
 #include "smartcombobox.h"
 
+//variante dell'evento activated
 void SmartComboBox::triggerVariantActivated(int index)
 {
     activated(itemData(index));

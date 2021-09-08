@@ -11,7 +11,7 @@ void Controller::setCollection(Collection* c){ col = c;}
 void Controller::setCodex(Codex* co){codex = co;}
 void Controller::setAddItem(AddItem* a){ add = a;}
 
-//refresha la main window
+//refresha una tab
 void Controller::refreshTab()
 {
     if(activeTab >= 0 && !tabs.isEmpty()){
@@ -21,6 +21,7 @@ void Controller::refreshTab()
     }
 }
 
+//refresha la main window
 void Controller::refreshWindow()
 {
     window->refresh();
@@ -375,8 +376,6 @@ void Controller::showCodex()
     codex = new Codex(this,getItemsNames("all",""),getItemsId("all",""));
     codex->exec();
 }
-
-
 
 void Controller::importChar()  //per importare
 {

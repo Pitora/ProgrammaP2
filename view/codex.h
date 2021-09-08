@@ -7,10 +7,9 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QTextEdit>
-#include <QList>
 #include <QListWidget>
-#include "smartcombobox.h"
 #include <utility>
+#include "smartcombobox.h"
 
 class Controller;
 
@@ -29,7 +28,8 @@ private:
 public:
     explicit Codex(Controller* cont, QList<QString> list, QList<int> id, QWidget *parent = nullptr);
 
-    void addScrollArea(QList<QString> l, QList<int> id);
+    void addCommands(QHBoxLayout* layout);
+    void setCommands(QList<QString> l, QList<int> id);
     void addControls(QVBoxLayout *layout);
 
     void refreshCodex(QList<QString> l, QList<int> id);

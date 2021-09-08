@@ -4,49 +4,62 @@
 Codex::Codex(Controller *c,QList<QString> list,QList<int> id, QWidget *parent) : QDialog(parent)
 {
     controller = c;
+
     setWindowTitle("Codex");
     setMinimumSize(500,600);
     setStyleSheet("background-color : rgb(155,131,68)");
     setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
 
     QHBoxLayout* main = new QHBoxLayout();
-
     setLayout(main);
 
-    QVBoxLayout* listLayout = new QVBoxLayout();
+    addCommands(main);
+    setCommands(list,id);
 
+}
+
+//aggiunge e crea lista, combobox e box dettagli
+void Codex::addCommands(QHBoxLayout *layout)
+{
+    QVBoxLayout* listLayout = new QVBoxLayout(); //crea il layout con combobox e lista
+    layout->addLayout(listLayout);
+
+    /* crea e setta la combobox */
     sort_item = new SmartComboBox(this);
     sort_item->setStyleSheet("QComboBox{selection-background-color : grey}");
     sort_item->setFont(QFont("Ubuntu",15));
-    main->addLayout(listLayout);
 
-    listLayout->addWidget(sort_item);
-
+    /* crea e setta la lista */
     cont = new QListWidget();
-    listLayout->addWidget(cont);
     cont->setFont(QFont("Ubuntu",15));
-
-    details = new QTextEdit();
-    details->setFontPointSize(15);
-
-    details->setAttribute(Qt::WA_NoSystemBackground);
     cont->setAttribute(Qt::WA_NoSystemBackground);
 
+    /* aggiunge lista e combobox al layout */
+    listLayout->addWidget(sort_item);
+    listLayout->addWidget(cont);
+
+    /*  crea il layout con box dettagli e bottoni */
     QVBoxLayout* rightLayout = new QVBoxLayout();
-    main->addLayout(rightLayout);
-    rightLayout->addWidget(details);
     rightLayout->setContentsMargins(0,32,0,0);
     rightLayout->setSpacing(20);
 
+    layout->addLayout(rightLayout);
 
+    /* crea e setta la box dettagli */
+    details = new QTextEdit();
+    details->setFontPointSize(15);
+    details->setReadOnly(true);
+    details->setFrameShape(QFrame::NoFrame);
+    details->setAttribute(Qt::WA_NoSystemBackground);
 
-    addScrollArea(list,id);
+    rightLayout->addWidget(details);
+
     addControls(rightLayout);
 
 }
 
-//setta la scroll area e la textbox per i dettagli
-void Codex::addScrollArea(QList<QString> l,QList<int> id)
+//setta la scroll area e la combobox
+void Codex::setCommands(QList<QString> l,QList<int> id)
 {
 
     cont->clear();
@@ -64,7 +77,6 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
     sort_item->addItem("__Buff",QVariant(11));
     sort_item->addItem("__Healing",QVariant(12));
 
-
     for(int i = 0; i < l.size();i++){
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(l[i]);
@@ -72,17 +84,11 @@ void Codex::addScrollArea(QList<QString> l,QList<int> id)
         cont->addItem(item);
     }
 
-    details->setReadOnly(true);
-    //details->setPalette(pal);
-
-    details->setReadOnly(true);
-    details->setFrameShape(QFrame::NoFrame);
-
     connect(cont,SIGNAL(itemClicked(QListWidgetItem*)),controller,SLOT(getInfoObj(QListWidgetItem*)));
     connect(sort_item,SIGNAL(activated(QVariant)),controller,SLOT(sortCodex(QVariant)));
 }
 
-//setta i bottoni
+//setta e aggiunge i bottoni
 void Codex::addControls(QVBoxLayout* layout)
 {
 
@@ -91,10 +97,6 @@ void Codex::addControls(QVBoxLayout* layout)
     remove_item = new QPushButton("Remove",this);
     import_item = new QPushButton("Import",this);
     export_item = new QPushButton("Export",this);
-
-    //remove_item->setGeometry(260,520,60,30);
-    //import_item->setGeometry(330,520,60,30);
-    //export_item->setGeometry(400,520,60,30);
 
     buttonsLayout->addWidget(remove_item);
     buttonsLayout->addWidget(import_item);

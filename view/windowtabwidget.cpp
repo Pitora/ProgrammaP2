@@ -5,9 +5,13 @@ windowtabwidget::windowtabwidget(QWidget *parent) : QWidget(parent)
 {
     QHBoxLayout* main = new QHBoxLayout;
     addCommand(main);
+    addLabelChar(main);
+    addStatsCommands(main);
+    setLblAndTxt();
     setLayout(main);
 }
 
+//aggiunge e setta le label e le combobox della build
 void windowtabwidget::addCommand(QHBoxLayout *layout)
 {
     QVBoxLayout* layoutCharacter = new QVBoxLayout;
@@ -21,7 +25,6 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     item1_box = new SmartComboBox(this);
     item2_box = new SmartComboBox(this);
     item3_box = new SmartComboBox(this);
-
 
     weapon_box->setMinimumWidth(250);
     helm_box->setMinimumWidth(250);
@@ -94,58 +97,186 @@ void windowtabwidget::addCommand(QHBoxLayout *layout)
     connect(item2_box,SIGNAL(highlighted(int)),this,SLOT(changeItem2Image(int)));
     connect(item3_box,SIGNAL(highlighted(int)),this,SLOT(changeItem3Image(int)));
 
-    addLabel(layout);
 }
 
-void windowtabwidget::addLabel(QHBoxLayout *layout)
+//aggiunge e setta la label con l'immagine del Character
+void windowtabwidget::addLabelChar(QHBoxLayout *layout)
 {
 
-    char_lbl  = new QLabel();
-    layout->addStretch(50);
-    layout->addWidget(char_lbl);
-    layout->addStretch(50);
-
+    char_lbl  = new QLabel();   
     char_lbl->setPixmap(QPixmap("assets/b_char"));
     char_lbl->setScaledContents(true);
     char_lbl->setMaximumSize(400,500);
 
-    QVBoxLayout* statLayout = new QVBoxLayout();
+    layout->addStretch(50);
+    layout->addWidget(char_lbl);
+    layout->addStretch(50);
+
+}
+
+//aggiunge i layout per i comandi relativi alle stats
+void windowtabwidget::addStatsCommands(QHBoxLayout *layout)
+{
+
+    QVBoxLayout* statLayout = new QVBoxLayout(); //crea e setta il layout contenente tutte le label e text edit delle stats
     statLayout->setSpacing(10);
     layout->addLayout(statLayout);
-    build_name = new QLineEdit();
-    statLayout->addWidget(build_name);
-
     statLayout->setMargin(50);
 
+    /* crea e posiziona il text edit del nome della build */
+    build_name = new QLineEdit();
     build_name->setPlaceholderText("Build Name");
     build_name->setMaximumWidth(200);
     build_name->setFont(QFont("Ubuntu",15));
     build_name->setStyleSheet(" background-color : rgb(241,217,156)");
 
+    statLayout->addWidget(build_name);
+
+    /* crea le label e le text edit */
     vit_lbl = new QLabel("VIT ");
     str_lbl = new QLabel("STR ");
     dex_lbl = new QLabel("DEX ");
     aim_lbl = new QLabel("AIM ");
-
-    vit_lbl->setFont(QFont("Ubuntu",15));
-    str_lbl->setFont(QFont("Ubuntu",15));
-    dex_lbl->setFont(QFont("Ubuntu",15));
-    aim_lbl->setFont(QFont("Ubuntu",15));
 
     vit_text = new QLineEdit();
     str_text = new QLineEdit();
     dex_text = new QLineEdit();
     aim_text = new QLineEdit();
 
-    vit_text->setFont(QFont("Ubuntu",15));
-    str_text->setFont(QFont("Ubuntu",15));
-    dex_text->setFont(QFont("Ubuntu",15));
-    aim_text->setFont(QFont("Ubuntu",15));
+    /* crea il layout per i comandi relativi a vit li setta e li posiziona */
+    QHBoxLayout* vitL = new QHBoxLayout();
+    statLayout->addLayout(vitL);
+
+    QLabel* v_icon = new QLabel();
+    v_icon->setPixmap(QPixmap("assets/viticon.png"));
+    v_icon->setScaledContents(true);
+    v_icon->setFixedSize(40,40);
+
+    QLabel* descVit = new QLabel("Affect the DEF");
+    descVit->setFont(QFont("Ubuntu",15));
+
+    vitL->addWidget(v_icon);
+    vitL->addWidget(vit_lbl);
+    vitL->addWidget(vit_text);
+    vitL->addWidget(descVit);
+
+    /* crea il layout per i comandi relativi a str li setta e li posiziona */
+    QHBoxLayout* strL = new QHBoxLayout();
+    statLayout->addLayout(strL);
+
+    QLabel* s_icon = new QLabel();
+    s_icon->setPixmap(QPixmap("assets/stricon.png"));
+    s_icon->setScaledContents(true);
+    s_icon->setFixedSize(40,40);
+
+    QLabel* descStr = new QLabel("Affect the ATK with heavy weapons");
+    descStr->setFont(QFont("Ubuntu",15));
+
+    strL->addWidget(s_icon);
+    strL->addWidget(str_lbl);
+    strL->addWidget(str_text);
+    strL->addWidget(descStr);
+
+    /* crea il layout per i comandi relativi a dex li setta e li posiziona */
+    QHBoxLayout* dexL = new QHBoxLayout();
+    statLayout->addLayout(dexL);
+
+    QLabel* d_icon = new QLabel();
+    d_icon->setPixmap(QPixmap("assets/dexicon.png"));
+    d_icon->setScaledContents(true);
+    d_icon->setFixedSize(40,40);
+
+    QLabel* descDex = new QLabel("Affect the ATK with light weapons");
+    descDex->setFont(QFont("Ubuntu",15));
+
+    dexL->addWidget(d_icon);
+    dexL->addWidget(dex_lbl);
+    dexL->addWidget(dex_text);
+    dexL->addWidget(descDex);
+
+    /* crea il layout per i comandi relativi a aim li setta e li posiziona */
+    QHBoxLayout* aimL = new QHBoxLayout();
+    statLayout->addLayout(aimL);
+
+    QLabel* a_icon = new QLabel();
+    a_icon->setPixmap(QPixmap("assets/aimicon.png"));
+    a_icon->setScaledContents(true);
+    a_icon->setFixedSize(40,40);
+
+    QLabel* descAim = new QLabel("Affect the ATK with ranged weapons");
+    descAim->setFont(QFont("Ubuntu",15));
+
+    aimL->addWidget(a_icon);
+    aimL->addWidget(aim_lbl);
+    aimL->addWidget(aim_text);
+    aimL->addWidget(descAim);
+
+    addParamCommands(statLayout);
+}
+
+//aggiunge i layout per atk e def e il bottone optimize
+void windowtabwidget::addParamCommands(QVBoxLayout *layout)
+{
+    //setta il layout e i comandi per la label atk
+    QHBoxLayout* atkLayout = new QHBoxLayout();
+    layout->addLayout(atkLayout);
+
+    atk_lbl = new QLabel("ATK ");
+    atk_lbl->setFont(QFont("Ubuntu",30));
+
+    QLabel* atk_icon = new QLabel();
+    atk_icon->setPixmap(QPixmap("assets/atkicon.png"));
+    atk_icon->setScaledContents(true);
+    atk_icon->setFixedSize(50,50);
+
+    atkLayout->addWidget(atk_icon);
+    atkLayout->addWidget(atk_lbl);
+
+    //setta il layout e i comandi per la label def
+    QHBoxLayout* defLayout = new QHBoxLayout();
+    layout->addLayout(defLayout);
+
+    def_lbl = new QLabel("DEF ");
+    def_lbl->setFont(QFont("Ubuntu",30));
+
+    QLabel* def_icon = new QLabel();
+    def_icon->setPixmap(QPixmap("assets/deficon.png"));
+    def_icon->setScaledContents(true);
+    def_icon->setFixedSize(50,50);
+
+    defLayout->addWidget(def_icon);
+    defLayout->addWidget(def_lbl);
+
+    //aggiunge il bottone optimize
+    optimize = new QPushButton("Optimize");
+
+    optimize->setFont(QFont("Ubuntu",15));
+    optimize->setFixedWidth(100);
+
+    layout->addWidget(optimize);
+    layout->insertSpacing(7,20);
+
+}
+
+//setta le label e i textedit delle stat
+void windowtabwidget::setLblAndTxt()
+{
+    //settings lbl
+    vit_lbl->setFont(QFont("Ubuntu",15));
+    str_lbl->setFont(QFont("Ubuntu",15));
+    dex_lbl->setFont(QFont("Ubuntu",15));
+    aim_lbl->setFont(QFont("Ubuntu",15));
 
     vit_lbl->setFixedWidth(50);
     str_lbl->setFixedWidth(50);
     dex_lbl->setFixedWidth(50);
     aim_lbl->setFixedWidth(50);
+
+    //settings textedit
+    vit_text->setFont(QFont("Ubuntu",15));
+    str_text->setFont(QFont("Ubuntu",15));
+    dex_text->setFont(QFont("Ubuntu",15));
+    aim_text->setFont(QFont("Ubuntu",15));
 
     vit_text->setStyleSheet(" background-color : rgb(241,217,156)");
     str_text->setStyleSheet(" background-color : rgb(241,217,156)");
@@ -157,96 +288,13 @@ void windowtabwidget::addLabel(QHBoxLayout *layout)
     dex_text->setMaximumSize(50,30);
     aim_text->setMaximumSize(50,30);
 
-    QHBoxLayout* vitL = new QHBoxLayout();
-    statLayout->addLayout(vitL);
-    QLabel* v_icon = new QLabel();
-    v_icon->setPixmap(QPixmap("assets/viticon.png"));
-    v_icon->setScaledContents(true);
-    v_icon->setFixedSize(40,40);
-    vitL->addWidget(v_icon);
-    vitL->addWidget(vit_lbl);
-    vitL->addWidget(vit_text);
-    QLabel* a = new QLabel("Affect the DEF");
-    a->setFont(QFont("Ubuntu",15));
-    vitL->addWidget(a);
-
-    QHBoxLayout* strL = new QHBoxLayout();
-    statLayout->addLayout(strL);
-    QLabel* s_icon = new QLabel();
-    s_icon->setPixmap(QPixmap("assets/stricon.png"));
-    s_icon->setScaledContents(true);
-    s_icon->setFixedSize(40,40);
-    strL->addWidget(s_icon);
-    strL->addWidget(str_lbl);
-    strL->addWidget(str_text);
-    QLabel* b = new QLabel("Affect the ATK with heavy weapons");
-    b->setFont(QFont("Ubuntu",15));
-    strL->addWidget(b);
-
-    QHBoxLayout* dexL = new QHBoxLayout();
-    statLayout->addLayout(dexL);
-    QLabel* d_icon = new QLabel();
-    d_icon->setPixmap(QPixmap("assets/dexicon.png"));
-    d_icon->setScaledContents(true);
-    d_icon->setFixedSize(40,40);
-    dexL->addWidget(d_icon);
-    dexL->addWidget(dex_lbl);
-    dexL->addWidget(dex_text);
-    QLabel* c = new QLabel("Affect the ATK with light weapons");
-    c->setFont(QFont("Ubuntu",15));
-    dexL->addWidget(c);
-
-    QHBoxLayout* aimL = new QHBoxLayout();
-    statLayout->addLayout(aimL);
-    QLabel* a_icon = new QLabel();
-    a_icon->setPixmap(QPixmap("assets/aimicon.png"));
-    a_icon->setScaledContents(true);
-    a_icon->setFixedSize(40,40);
-    aimL->addWidget(a_icon);
-    aimL->addWidget(aim_lbl);
-    aimL->addWidget(aim_text);
-    QLabel* d = new QLabel("Affect the ATK with ranged weapons");
-    d->setFont(QFont("Ubuntu",15));
-    aimL->addWidget(d);
-
     vit_text->setValidator(new QIntValidator(0,9999,this));
     str_text->setValidator(new QIntValidator(0,9999,this));
     dex_text->setValidator(new QIntValidator(0,9999,this));
     aim_text->setValidator(new QIntValidator(0,9999,this));
-
-    QHBoxLayout* atkLayout = new QHBoxLayout();
-    statLayout->addLayout(atkLayout);
-
-    atk_lbl = new QLabel("ATK ");
-    QLabel* atk_icon = new QLabel();
-    atk_icon->setPixmap(QPixmap("assets/atkicon.png"));
-    atk_icon->setScaledContents(true);
-    atk_icon->setFixedSize(50,50);
-    atkLayout->addWidget(atk_icon);
-    atkLayout->addWidget(atk_lbl);
-
-
-    def_lbl = new QLabel("DEF ");
-    atk_lbl->setFont(QFont("Ubuntu",30));
-    def_lbl->setFont(QFont("Ubuntu",30));
-    QHBoxLayout* defLayout = new QHBoxLayout();
-    statLayout->addLayout(defLayout);
-    QLabel* def_icon = new QLabel();
-    def_icon->setPixmap(QPixmap("assets/deficon.png"));
-    def_icon->setScaledContents(true);
-    def_icon->setFixedSize(50,50);
-    defLayout->addWidget(def_icon);
-    defLayout->addWidget(def_lbl);
-
-    optimize = new QPushButton("Optimize");
-
-    statLayout->insertSpacing(7,20);
-    statLayout->addWidget(optimize);
-    optimize->setFont(QFont("Ubuntu",15));
-    optimize->setFixedWidth(100);
-
 }
 
+//setta il controller
 void windowtabwidget::setController(Controller *c)
 {
     controller = c;
@@ -369,6 +417,7 @@ void windowtabwidget::setItems(QList<int> l)
     item3_box->setCurrentIndex(item3_box->findData(l[2]));
 }
 
+//metodi per cambiare l'immagine del personaggio nella label
 void windowtabwidget::resetImage()
 {
     char_lbl->setPixmap(QPixmap("assets/b_char.png"));
@@ -414,8 +463,10 @@ void windowtabwidget::changeItem3Image(int)
     char_lbl->setPixmap(QPixmap("assets/reditem3_char.png"));
 }
 
+//imposta l'id del widget
 void windowtabwidget::setId(int i){id = i;}
 
+//ritorna l'id del widget
 int windowtabwidget::getId(){ return id;}
 
 

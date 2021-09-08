@@ -7,13 +7,9 @@
 #include <QWidget>
 #include <QLabel>
 #include <QComboBox>
-#include <QTabWidget>
 #include <QPushButton>
-#include <QHBoxLayout>
 #include <QLineEdit>
-#include <QVBoxLayout>
 #include <QFormLayout>
-#include <QSpacerItem>
 #include <utility>
 
 class Controller;

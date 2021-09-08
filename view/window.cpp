@@ -5,35 +5,50 @@
 
 //aggiunge la barra dei menu  e setta i comandi relativi
 void Window::addMenu(QHBoxLayout *layout){
+
     QMenuBar* menu_bar = new QMenuBar(this);
     menu_bar->setStyleSheet("selection-background-color : grey");
 
     file = new QMenu("File",menu_bar);
     create = new QMenu("Options",menu_bar);
+
     file->setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
     create->setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
+
     menu_bar->addMenu(file);
     menu_bar->addMenu(create);
+
     create->addAction(new QAction("Create Weapon",file));
     create->addAction(new QAction("Create Armor Piece",file));
     create->addAction(new QAction("Create Consumable",file));
     create->addAction(new QAction("Codex",file));
     file->addAction(new QAction("Quit",file));
+
     layout->setMenuBar(menu_bar);
 }
 
-void Window::addCommand(QHBoxLayout *main)
+//aggiunge il tab widget con la pagina iniziale
+void Window::addTab(QHBoxLayout *main)
 {
     tab = new QTabWidget();
     QWidget* menu = new QWidget();
+
     tab->addTab(menu,"Menu");
     tab->setTabsClosable(true);
     tab->tabBar()->tabButton(0,QTabBar::RightSide)->setVisible(false);
     main->addWidget(tab);
 
     QHBoxLayout* menuL = new QHBoxLayout(menu);
+    addList(menuL);
+
+    addCompareCommands(menuL);
+}
+
+//aggiunge la listbox e le label sottostanti
+void Window::addList(QHBoxLayout *layout)
+{
     QVBoxLayout* buildLayout = new QVBoxLayout();
-    menuL->addLayout(buildLayout);
+    layout->addLayout(buildLayout);
 
     QLabel* build = new QLabel("BUILD LIST");
     build->setFont(QFont("Ubuntu",15));
@@ -43,28 +58,37 @@ void Window::addCommand(QHBoxLayout *main)
     characters->setMinimumSize(200,500);
     characters->setMaximumWidth(350);
     characters->setFont(QFont("Ubuntu",17));
-    buildLayout->addWidget(characters);
     characters->setStyleSheet(" background-color : rgb(241,217,156)");
+    buildLayout->addWidget(characters);
+
     QLabel* help =new QLabel("Click once to show build preview\nDouble click to modify build");
     help->setFont(QFont("Ubuntu",10,-1,true));
     buildLayout->addWidget(help);
+}
 
-    QVBoxLayout* layoutR = new QVBoxLayout();
-    menuL->addLayout(layoutR);
+//aggiunge le label,le combobox e il checkbox del compare
+void Window::addCompareCommands(QHBoxLayout *layout)
+{
+    QVBoxLayout* layoutR = new QVBoxLayout();       //layout il layout della label build , dei box compare del bottone compare e dei bottoni import,del,def,exp
+    layout->addLayout(layoutR);
 
-    QHBoxLayout* compL = new QHBoxLayout();
+    QHBoxLayout* compL = new QHBoxLayout();        //layout con le label build 1 e 2
     layoutR->addLayout(compL);
 
     QLabel* c1 = new QLabel("Build 1");
-    c1->setFont(QFont("Ubuntu",15));
     QLabel* c2 = new QLabel("Build 2");
+
+    c1->setFont(QFont("Ubuntu",15));
     c2->setFont(QFont("Ubuntu",15));
 
     compL->addWidget(c1);
     compL->addWidget(c2);
 
+    /*crea e setta il layout con i compare box */
+
     QHBoxLayout* layoutCompare = new QHBoxLayout();
     layoutR->addLayout(layoutCompare);
+
     compareBox1 = new QTextEdit();
     compareBox2 = new QTextEdit();
 
@@ -81,19 +105,30 @@ void Window::addCommand(QHBoxLayout *main)
     layoutCompare->addWidget(compareBox1);
     layoutCompare->addWidget(compareBox2);
 
-    QHBoxLayout* comboLayout = new QHBoxLayout();
-    layoutR->addLayout(comboLayout);
+    /* creazione layout bottone compare e personalizzazione checkbox*/
+
+    QHBoxLayout* compLayout = new QHBoxLayout();
+    layoutR->addLayout(compLayout);
+
     comp = new QCheckBox();
-    comboLayout->addWidget(comp);
-    comboLayout->setAlignment(comp,Qt::AlignHCenter);
+    compLayout->addWidget(comp);
+    compLayout->setAlignment(comp,Qt::AlignHCenter);
     comp->setText("COMPARE");
     comp->setMinimumSize(100,80);
     comp->setMaximumHeight(400);
     comp->setFont(QFont("Ubuntu",15));
     comp->setDisabled(true);
+    connect(comp,SIGNAL(clicked(bool)),this,SLOT(lockCompare(bool)));
 
+    addButtons(layoutR);
+
+}
+
+//aggiunge i bottoni import,exp,del e def
+void Window::addButtons(QVBoxLayout *layout)
+{
     QHBoxLayout* layoutButton = new QHBoxLayout();
-    layoutR->addLayout(layoutButton);
+    layout->addLayout(layoutButton);
 
     import = new QPushButton("Import Build");
     exp = new QPushButton("Export Build");
@@ -106,13 +141,9 @@ void Window::addCommand(QHBoxLayout *main)
     def->setMaximumWidth(300);
 
     layoutButton->addWidget(import);
-    import->setObjectName("import");
     layoutButton->addWidget(exp);
     layoutButton->addWidget(del);
     layoutButton->addWidget(def);
-
-    connect(comp,SIGNAL(clicked(bool)),this,SLOT(lockCompare(bool)));
-
 }
 
 void Window::refresh()
@@ -128,15 +159,15 @@ void Window::refresh()
 //setta la view
 Window::Window(QWidget *parent) : QWidget(parent){
 
-
     setWindowTitle("Build Creator");
-    this->setObjectName("window");
+
     QHBoxLayout* main = new QHBoxLayout;
     addMenu(main);
-    addCommand(main);
+    addTab(main);
     setLayout(main);
-    this->setStyleSheet(" background-color : rgb(245,210,113)");
-    this->setMinimumSize(1300,700);
+
+    setStyleSheet(" background-color : rgb(245,210,113)");
+    setMinimumSize(1300,700);
     setCursor(QCursor(QPixmap("assets/cursor.png"),0,0));
 
 }
@@ -174,17 +205,20 @@ void Window::showMessage(QString wrn)
     warning->exec();
 }
 
+//ritorna l'indice della build selezionata
 int Window::getIndSelChar()
 {
     comp->setDisabled(false);
     return characters->currentRow();
 }
 
+//ritorna il valore della checkbox
 bool Window::getCheckValue()
 {
     return comp->isChecked();
 }
 
+//esegue un refresh delle textbox
 void Window::refreshCompare(QList<QString> list)
 {
     if(!comp->isChecked()){
@@ -201,11 +235,13 @@ void Window::refreshCompare(QList<QString> list)
     }
 }
 
+//svuota il comparebox2
 void Window::clearCompare()
 {
     compareBox2->clear();
 }
 
+//aggiunge una riga colorata nella box compare
 void Window::setWithColor(QString s, QColor color)
 {
     compareBox2->setTextColor(color);
@@ -213,11 +249,13 @@ void Window::setWithColor(QString s, QColor color)
     compareBox2->setTextColor(Qt::black);
 }
 
+//cambia nome alla tab
 void Window::setTabName(QString s)
 {
     tab->setTabText(tab->currentIndex(),s);
 }
 
+//apre una tab
 void Window::addTab(QListWidgetItem *i)
 {
     int j = characters->currentRow();
@@ -232,6 +270,7 @@ void Window::addTab(QListWidgetItem *i)
     }
 }
 
+//chiude una tab
 void Window::closeTab(int index)
 {
     if(index != 0){
@@ -240,6 +279,7 @@ void Window::closeTab(int index)
     }
 }
 
+//blocca la checkbox
 void Window::lockCompare(bool clicked)
 {
     if(!clicked){

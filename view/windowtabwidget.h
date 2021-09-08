@@ -2,20 +2,12 @@
 #define WINDOWTABWIDGET_H
 
 #include <QWidget>
-#include <QWidget>
 #include <QLabel>
-#include <QList>
-#include <QString>
 #include <QComboBox>
-#include <QMenuBar>
-#include <QMenu>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QVBoxLayout>
-#include <QFormLayout>
-#include <QSpacerItem>
-#include <QFileDialog>
 #include <utility>
 #include "smartcombobox.h"
 
@@ -89,7 +81,14 @@ private:
     Controller* controller;
 
     void addCommand(QHBoxLayout *layout);
-    void addLabel(QHBoxLayout* layout);
+
+    void addLabelChar(QHBoxLayout* layout);
+
+    void addStatsCommands(QHBoxLayout* layout);
+
+    void addParamCommands(QVBoxLayout* layout);
+
+    void setLblAndTxt();
 };
 
 #endif // WINDOWTABWIDGET_H

@@ -3,8 +3,6 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QList>
-#include <QString>
 #include <QComboBox>
 #include <QMenuBar>
 #include <QMenu>
@@ -13,12 +11,11 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QVBoxLayout>
-#include <QFormLayout>
 #include <QFileDialog>
 #include <QCheckBox>
-#include <utility>
 #include <QTextEdit>
 #include <QMessageBox>
+#include <utility>
 #include "smartcombobox.h"
 #include "windowtabwidget.h"
 
@@ -52,7 +49,13 @@ private:
 
     void addMenu(QHBoxLayout *layout);
 
-    void addCommand(QHBoxLayout *layout);
+    void addTab(QHBoxLayout *layout);
+
+    void addList(QHBoxLayout* layout);
+
+    void addCompareCommands(QHBoxLayout* layout);
+
+    void addButtons(QVBoxLayout* layout);
 
 public slots:
     void addTab(QListWidgetItem* i);
